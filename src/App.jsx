@@ -1,3 +1,4 @@
+
 import styled from "styled-components";
 import Button from "./components/Button";
 
@@ -11,10 +12,13 @@ const FlexBox = styled.div`
   border: 1px solid black;
 `;
 
+
+
 function App() {
   return (
     <>
       <div>
+
         <FlexBox>
           <Button width="155px" height="34px" $borderRadius="none">
             회원가입
@@ -26,6 +30,9 @@ function App() {
           </Button>
         </FlexBox>
       </div>
+
+      
+
     </>
   );
 }
