@@ -14,6 +14,7 @@ module.exports = {
   settings: { react: { version: '18.2' } },
   plugins: ['react-refresh'],
   rules: {
+    properties: 'always',
     indent: ['error', 2], // 들여쓰기 2칸만 허용
     'no-var': 'error', // // var 키워드 사용 금지
     'require-await': 'error', // async 함수 내부에 await 키워드가 없으면 오류 발생
