@@ -1,6 +1,6 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { palette } from "../styles/palette";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { palette } from '../styles/palette';
 
 const ButtonStyled = styled.button`
   display: inline-flex;
@@ -11,13 +11,13 @@ const ButtonStyled = styled.button`
   outline: none;
 
   ${({
-    width = "50px",
-    height = "25px",
-    $buttonColor = "mainGreen",
-    $fontColor = "white",
-    $fontSize = "12px",
-    fontWeight = "bold",
-    $borderRadius = "4px",
+    width = '50px',
+    height = '25px',
+    $buttonColor = 'mainGreen',
+    $fontColor = 'white',
+    $fontSize = '12px',
+    fontWeight = 'bold',
+    $borderRadius = '4px',
   }) => css`
     width: ${width};
     height: ${height};
