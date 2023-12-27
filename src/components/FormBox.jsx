@@ -4,6 +4,7 @@ import Input from './Input';
 import Button from './Button';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
+import { darken } from './../styles/ColorMixin';
 
 const CheckInputBox = styled.div`
   display: flex;
@@ -16,6 +17,7 @@ const CheckInputBox = styled.div`
 
     &:hover {
       color: ${palette.mainGreen};
+      ${darken(0.4)}
     }
   }
 `;

@@ -1,14 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from '../styles/palette';
-
-const lighten = (value) => css`
-  filter: brightness(${value + 1});
-`;
-
-const darken = (value) => css`
-  filter: brightness(${1 - value});
-`;
+import { darken } from './../styles/ColorMixin';
 
 const ButtonStyled = styled.button`
   display: inline-flex;
