@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from '../styles/palette';
 
@@ -10,7 +10,7 @@ const InputStyled = styled.input`
   cursor: pointer;
   outline: none;
 
-  ${({ width = '362px', height = '29px', $borderColor = 'mainGreen', $fontColor = 'maingray' }) => css`
+  ${({ width = '362px', height = '30px', $borderColor = 'mainGreen', $fontColor = 'maingray' }) => css`
     width: ${width};
     height: ${height};
     color: ${palette[$fontColor]};
@@ -21,12 +21,14 @@ const InputStyled = styled.input`
   `}
 `;
 // placehoder를 쓰지 말자는 반응도 있다. 고려해볼것
-const Input = ({ type = 'text', $placeholder = 'placeholder를 입력해주세요', ...rest }) => {
-  return (
-    <>
-      <InputStyled type={type} placeholder={$placeholder} {...rest} />
-    </>
-  );
-};
+const Input = forwardRef(
+  ({ type = 'text', $placeholder = 'placeholder를 입력해주세요', autoComplete = 'off', ...rest }, ref) => {
+    return (
+      <>
+        <InputStyled type={type} placeholder={$placeholder} ref={ref} autoComplete={autoComplete} {...rest} />
+      </>
+    );
+  },
+);
 
 export default Input;
