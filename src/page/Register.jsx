@@ -7,6 +7,7 @@ const Register = () => {
     <>
       <Title />
       <FormBox />
+
     </>
   );
 };

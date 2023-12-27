@@ -2,6 +2,14 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from '../styles/palette';
 
+const lighten = (value) => css`
+  filter: brightness(${value + 1});
+`;
+
+const darken = (value) => css`
+  filter: brightness(${1 - value});
+`;
+
 const ButtonStyled = styled.button`
   display: inline-flex;
   justify-content: center;
@@ -26,6 +34,9 @@ const ButtonStyled = styled.button`
     font-size: ${$fontSize};
     background-color: ${palette[$buttonColor]};
     border-radius: ${$borderRadius};
+    &:disabled {
+      ${darken(0.2)};
+    }
   `}
 `;
 

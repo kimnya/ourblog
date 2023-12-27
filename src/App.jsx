@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { GlobalStyle } from './styles/GlobalStyle';
 import Register from './page/Register';
 
+
+
 const Wrap = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -15,7 +17,11 @@ function App() {
     <>
       <GlobalStyle />
       <Wrap>
+
         <Register />
+
+  
+
       </Wrap>
     </>
   );
