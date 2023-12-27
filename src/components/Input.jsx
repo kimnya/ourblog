@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from '../styles/palette';
 
@@ -21,12 +21,14 @@ const InputStyled = styled.input`
   `}
 `;
 // placehoder를 쓰지 말자는 반응도 있다. 고려해볼것
-const Input = ({ type = 'text', $placeholder = 'placeholder를 입력해주세요', ...rest }) => {
-  return (
-    <>
-      <InputStyled type={type} placeholder={$placeholder} {...rest} />
-    </>
-  );
-};
+const Input = forwardRef(
+  ({ type = 'text', $placeholder = 'placeholder를 입력해주세요', onChange = '', ...rest }, ref) => {
+    return (
+      <>
+        <InputStyled type={type} placeholder={$placeholder} onChange={onChange} ref={ref} {...rest} />
+      </>
+    );
+  },
+);
 
 export default Input;
