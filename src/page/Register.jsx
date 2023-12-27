@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import Input from '../components/Input';
-import Button from '../components/Button';
+import React from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
-import FormBox from '../components/FormBox';
 
 const Title = styled.h1`
   margin: 0 auto;
@@ -27,7 +24,7 @@ const Register = () => {
   return (
     <>
       <Title>our blog</Title>
-      <FormBox />
+      {/* <FormBox /> */}
       {/* <Input value={inputValue.userName} id='userName' $placeholder='userName' onChange={changeInputValue} />
       <Input value={inputValue.eamil} id='eamil' $placeholder='eamil' onChange={changeInputValue} />
       <Input
