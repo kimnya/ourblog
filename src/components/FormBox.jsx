@@ -26,10 +26,11 @@ const Form = styled.form`
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
-  height: 420px;
+  height: ${({ type }) => (type === 'register' ? '320px' : '160px')};
   & small {
+    width: 362px;
     color: red;
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
 
@@ -37,34 +38,35 @@ const Label = styled.label`
   display: none;
 `;
 
-const FormBox = () => {
+const FormBox = ({ type }) => {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
     getValues,
   } = useForm();
+
   return (
     <>
-      <Form
-        noValidate
-        onSubmit={handleSubmit((data) => {
-          alert(JSON.stringify(data));
-        })}
-      >
-        <Label htmlFor='userName'>userName</Label>
-        <Input
-          {...register('userName', {
-            required: '이름을 입력해주세요.',
-            pattern: {
-              value: /^[a-zA-z가-힣]{2,12}$/,
-              message: '특수기호나 숫자는 사용할 수 없습니다.',
-            },
-          })}
-          id='userName'
-          $placeholder='userName'
-        />
-        {errors.userName && <small>{errors.userName.message}</small>}
+      <Form type={type} onSubmit={handleSubmit(() => alert(getValues('eamil')))}>
+        {type === 'register' && (
+          <>
+            <Label htmlFor='userName'>userName</Label>
+            <Input
+              {...register('userName', {
+                required: '이름을 입력해주세요.',
+                pattern: {
+                  value: /^[a-zA-z가-힣]{2,12}$/,
+                  message: '특수기호나 숫자는 사용할 수 없습니다.',
+                },
+              })}
+              id='userName'
+              $placeholder='userName'
+            />
+            {type === 'register' && errors.userName && <small>{errors.userName.message}</small>}
+          </>
+        )}
+
         <CheckInputBox>
           <Label htmlFor='email'>email</Label>
           <Input
@@ -79,10 +81,9 @@ const FormBox = () => {
             id='eamil'
             $placeholder='eamil'
           />
-          <a href='#'>email 중복체크 </a>
+          {type === 'register' && <a href='#'>email 중복체크 </a>}
         </CheckInputBox>
-        {errors.eamil && <small>{errors.eamil.message}</small>}
-
+        {type === 'register' && errors.eamil && <small>{errors.eamil.message}</small>}
         <Label htmlFor='password'>password</Label>
         <Input
           {...register('password', {
@@ -96,41 +97,46 @@ const FormBox = () => {
           id='password'
           $placeholder='password'
         />
-        {errors.password && <small>{errors.password.message}</small>}
+        {type === 'register' && errors.password && <small>{errors.password.message}</small>}
 
-        <Label htmlFor='reEnterPassword'>reEnterPassword</Label>
-        <Input
-          {...register('reEnterPassword', {
-            required: 'password를 한번 더 확인해주세요.',
-            validate: {
-              check: (val) => {
-                if (getValues('password') !== val) {
-                  return '비밀번호가 일치하지 않습니다.';
-                }
-              },
-            },
-          })}
-          type='password'
-          id='reEnterPassword'
-          $placeholder='re-enter password'
-        />
-        {errors.reEnterPassword && <small>{errors.reEnterPassword.message}</small>}
+        {type === 'register' && (
+          <>
+            <Label htmlFor='reEnterPassword'>reEnterPassword</Label>
+            <Input
+              {...register('reEnterPassword', {
+                required: 'password를 한번 더 확인해주세요.',
+                validate: {
+                  check: (val) => {
+                    if (getValues('password') !== val) {
+                      return '비밀번호가 일치하지 않습니다.';
+                    }
+                  },
+                },
+              })}
+              type='password'
+              id='reEnterPassword'
+              $placeholder='re-enter password'
+            />
+            {errors.reEnterPassword && <small>{errors.reEnterPassword.message}</small>}
 
-        <Label htmlFor='nickname'>nickname</Label>
-        <Input
-          {...register('nickname', {
-            required: 'nickname을 입력해주세요.',
-            pattern: {
-              value: /^[a-zA-z가-힣]{1,30}$/,
-              message: '특수기호나 숫자를 사용할 수 없습니다.',
-            },
-          })}
-          id='nickname'
-          $placeholder='nickname'
-        />
-        {errors.nickname && <small>{errors.nickname.message}</small>}
+            <Label htmlFor='nickname'>nickname</Label>
+            <Input
+              {...register('nickname', {
+                required: 'nickname을 입력해주세요.',
+                pattern: {
+                  value: /^[a-zA-z가-힣]{1,30}$/,
+                  message: '특수기호나 숫자를 사용할 수 없습니다.',
+                },
+              })}
+              id='nickname'
+              $placeholder='nickname'
+            />
+            {errors.nickname && <small>{errors.nickname.message}</small>}
+          </>
+        )}
+
         <Button disabled={isSubmitting} width='362px' height='29px' $borderRadius='none'>
-          회원가입
+          {type === 'register' ? '회원가입' : '로그인'}
         </Button>
       </Form>
     </>

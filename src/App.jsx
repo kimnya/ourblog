@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { GlobalStyle } from './styles/GlobalStyle';
 import Register from './page/Register';
+import Login from './page/Login';
 
 const Wrap = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ function App() {
     <>
       <GlobalStyle />
       <Wrap>
+        {/* <Login /> */}
         <Register />
       </Wrap>
     </>
