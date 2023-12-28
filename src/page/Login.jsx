@@ -2,13 +2,15 @@ import React from 'react';
 import FormBox from '../components/FormBox';
 import Title from '../components/Title';
 
-const Register = () => {
+const Login = () => {
+  const onSubmit = () => {};
+
   return (
     <>
       <Title />
-      <FormBox type='register' />
+      <FormBox type='login' />
     </>
   );
 };
 
-export default Register;
+export default Login;
