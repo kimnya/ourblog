@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from './Input';
 import Button from './Button';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import { darken } from './../styles/ColorMixin';
+import axios from 'axios';
 
 const CheckInputBox = styled.div`
   display: flex;
   flex-flow: column nowrap;
-
   > a {
     align-self: flex-end;
     margin-top: 5px;
@@ -48,7 +48,12 @@ const FormBox = ({ type }) => {
 
   return (
     <>
-      <Form type={type} onSubmit={handleSubmit(() => alert(getValues('eamil')))}>
+      <Form
+        type={type}
+        onSubmit={handleSubmit((e) => {
+          console.log(e);
+        })}
+      >
         {type === 'register' && (
           <>
             <Label htmlFor='userName'>userName</Label>
@@ -67,22 +72,33 @@ const FormBox = ({ type }) => {
           </>
         )}
 
-        <CheckInputBox>
-          <Label htmlFor='email'>email</Label>
-          <Input
-            {...register('eamil', {
-              required: 'email을 입력해주세요.',
-              pattern: {
-                value: /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/,
-                message: 'email 형식을 맞춰 입력해주세요.',
-              },
-            })}
-            type='email'
-            id='eamil'
-            $placeholder='eamil'
-          />
-          {type === 'register' && <a href='#'>email 중복체크 </a>}
-        </CheckInputBox>
+        <Label htmlFor='email'>email</Label>
+        <Input
+          {...register('email', {
+            required: 'email을 입력해주세요.',
+            pattern: {
+              value: /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/,
+              message: 'email 형식을 맞춰 입력해주세요.',
+            },
+
+            onBlur: async (fieldValue) => {
+              const response = await axios
+                .post(`http://localhost:8081/member/checkEmail`, {
+                  fieldValue,
+                })
+                .then(function (response) {
+                  response === '200' && alert('사용가능한 아이디입니다.');
+                })
+                .catch(function (error) {
+                  console.log('통신에 실패했습니다.');
+                });
+            },
+          })}
+          type='email'
+          id='email'
+          $placeholder='email'
+        />
+
         {type === 'register' && errors.eamil && <small>{errors.eamil.message}</small>}
         <Label htmlFor='password'>password</Label>
         <Input
