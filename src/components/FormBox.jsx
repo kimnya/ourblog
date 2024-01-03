@@ -76,15 +76,18 @@ const FormBox = ({ type, registerSubmit, loginSubmit }) => {
                   },
                   params: { email: getValues('email') },
                 })
-                .then(function (response) {
+                .then((response) => {
                   if (response.status === 200) {
                     alert('사용가능한 아이디입니다.');
-                  } else if (response.status === 400) {
-                    alert('사용중인 아이디입니다.');
+                    // } else if (response.status === 400) {
+                    //   alert('사용중인 아이디입니다.');
                   }
                 })
-                .catch(function (error) {
-                  console.log('통신에 실패했습니다');
+                .catch((err) => {
+                  const resp = err.response;
+                  if (resp.status === 400) {
+                    alert(resp.data);
+                  }
                 });
             },
           })}
@@ -93,7 +96,7 @@ const FormBox = ({ type, registerSubmit, loginSubmit }) => {
           $placeholder='email'
         />
 
-        {type === 'register' && errors.eamil && <small>{errors.eamil.message}</small>}
+        {type === 'register' && errors.email && <small>{errors.email.message}</small>}
         <Label htmlFor='password'>password</Label>
         <Input
           {...register('password', {
@@ -139,22 +142,23 @@ const FormBox = ({ type, registerSubmit, loginSubmit }) => {
                 },
                 onBlur: async () => {
                   await axios
-                    .get(`http://localhost:8081/api/member/checkNickname`, {
+                    .get(`http://localhost:8081/api/member/nickName`, {
                       headers: {
                         'Content-type': 'application/json',
                         'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
                       },
-                      params: { nickname: getValues('nickname') },
+                      params: { nickName: getValues('nickName') },
                     })
-                    .then(function (response) {
+                    .then((response) => {
                       if (response.status === 200) {
                         alert('사용가능한 닉네임입니다.');
-                      } else if (response.status === 400) {
-                        alert('사용중인 사용중인 닉네임입니다.');
                       }
                     })
-                    .catch(function (error) {
-                      console.log('통신에 실패했습니다');
+                    .catch((err) => {
+                      const resp = err.response;
+                      if (resp.status === 400) {
+                        alert(resp.data);
+                      }
                     });
                 },
               })}
