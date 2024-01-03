@@ -45,6 +45,13 @@ const registerSubmit = async (data) => {
       console.log('회원가입에 실패했습니다');
     });
 };
+
+
+const registSubmit = (data) => {
+  alert(data);
+};
+
+
 const Register = () => {
   const {
     register,
@@ -56,6 +63,7 @@ const Register = () => {
   return (
     <>
       <Title />
+
       <Form
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
@@ -187,6 +195,7 @@ const Register = () => {
           회원가입
         </Button>
       </Form>
+
     </>
   );
 };
