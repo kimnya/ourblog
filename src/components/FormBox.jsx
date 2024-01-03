@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from './Input';
 import Button from './Button';
 import styled from 'styled-components';
 
+
 import axios from 'axios';
+
+import { palette } from '../styles/palette';
+import { darken } from './../styles/ColorMixin';
+import axios from 'axios';
+
 
 const Form = styled.form`
   display: flex;
@@ -34,12 +40,14 @@ const FormBox = ({ type, registerSubmit, loginSubmit }) => {
     <>
       <Form
         type={type}
+
         onSubmit={handleSubmit((data) => {
           {
             type === 'register' ? registerSubmit(data) : loginSubmit(data);
           }
           console.log(data);
-        })}
+
+        
       >
         {type === 'register' && (
           <>
@@ -67,6 +75,7 @@ const FormBox = ({ type, registerSubmit, loginSubmit }) => {
               value: /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/,
               message: 'email 형식을 맞춰 입력해주세요.',
             },
+
             onBlur: async () => {
               await axios
                 .get(`http://localhost:8081/api/member/checkEmail`, {
@@ -88,6 +97,7 @@ const FormBox = ({ type, registerSubmit, loginSubmit }) => {
                   if (resp.status === 400) {
                     alert(resp.data);
                   }
+
                 });
             },
           })}
@@ -96,7 +106,11 @@ const FormBox = ({ type, registerSubmit, loginSubmit }) => {
           $placeholder='email'
         />
 
+
         {type === 'register' && errors.email && <small>{errors.email.message}</small>}
+
+       
+
         <Label htmlFor='password'>password</Label>
         <Input
           {...register('password', {

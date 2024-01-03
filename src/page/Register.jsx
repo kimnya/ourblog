@@ -27,11 +27,19 @@ const registerSubmit = async (data) => {
     });
 };
 
+const registSubmit = (data) => {
+  alert(data);
+};
+
 const Register = () => {
   return (
     <>
       <Title />
+
       <FormBox type='register' registerSubmit={registerSubmit} />
+
+      
+
     </>
   );
 };
