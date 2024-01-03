@@ -31,7 +31,7 @@ const loginSubmit = async (data) => {
       .then((response) => {
         if (response.status === 200) {
           alert('토큰요청 성공');
-          const token = response.headers.authorization;
+          const token = response.data.token;
           window.localStorage.setItem('token', token);
         }
       });
@@ -39,11 +39,16 @@ const loginSubmit = async (data) => {
     console.log('토큰요청이 실패했습니다');
   }
 
+  const token = window.localStorage.getItem('token');
+  try {
 
-    const token = window.localStorage.getItem('token');
+
+
+
 
  
   try {
+
 
     await axios
       .get('http://localhost:8081/api/member/me', {
@@ -56,7 +61,7 @@ const loginSubmit = async (data) => {
         alert(`안녕하세요 ${data.name}님`);
       });
   } catch (e) {
-    console.error(e);
+    console.log(e);
   }
 };
 
