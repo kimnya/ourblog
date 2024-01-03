@@ -38,8 +38,13 @@ const loginSubmit = async (data) => {
   } catch (e) {
     console.log('토큰요청이 실패했습니다');
   }
-  try {
+
+
     const token = window.localStorage.getItem('token');
+
+ 
+  try {
+
     await axios
       .get('http://localhost:8081/api/member/me', {
         headers: {
