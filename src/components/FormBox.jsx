@@ -3,24 +3,14 @@ import { useForm } from 'react-hook-form';
 import Input from './Input';
 import Button from './Button';
 import styled from 'styled-components';
+
+
+import axios from 'axios';
+
 import { palette } from '../styles/palette';
 import { darken } from './../styles/ColorMixin';
 import axios from 'axios';
 
-const CheckInputBox = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  > a {
-    align-self: flex-end;
-    margin-top: 5px;
-    text-decoration: underline;
-
-    &:hover {
-      color: ${palette.mainGreen};
-      ${darken(0.4)}
-    }
-  }
-`;
 
 const Form = styled.form`
   display: flex;
@@ -38,7 +28,7 @@ const Label = styled.label`
   display: none;
 `;
 
-const FormBox = ({ type }) => {
+const FormBox = ({ type, registerSubmit, loginSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -50,9 +40,14 @@ const FormBox = ({ type }) => {
     <>
       <Form
         type={type}
-        onSubmit={handleSubmit((e) => {
-          console.log(e);
-        })}
+
+        onSubmit={handleSubmit((data) => {
+          {
+            type === 'register' ? registerSubmit(data) : loginSubmit(data);
+          }
+          console.log(data);
+
+        
       >
         {type === 'register' && (
           <>
@@ -81,16 +76,28 @@ const FormBox = ({ type }) => {
               message: 'email 형식을 맞춰 입력해주세요.',
             },
 
-            onBlur: async (fieldValue) => {
-              const response = await axios
-                .post(`http://localhost:8081/member/checkEmail`, {
-                  fieldValue,
+            onBlur: async () => {
+              await axios
+                .get(`http://localhost:8081/api/member/checkEmail`, {
+                  headers: {
+                    'Content-type': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
+                  },
+                  params: { email: getValues('email') },
                 })
-                .then(function (response) {
-                  response === '200' && alert('사용가능한 아이디입니다.');
+                .then((response) => {
+                  if (response.status === 200) {
+                    alert('사용가능한 아이디입니다.');
+                    // } else if (response.status === 400) {
+                    //   alert('사용중인 아이디입니다.');
+                  }
                 })
-                .catch(function (error) {
-                  console.log('통신에 실패했습니다.');
+                .catch((err) => {
+                  const resp = err.response;
+                  if (resp.status === 400) {
+                    alert(resp.data);
+                  }
+
                 });
             },
           })}
@@ -99,7 +106,11 @@ const FormBox = ({ type }) => {
           $placeholder='email'
         />
 
-        {type === 'register' && errors.eamil && <small>{errors.eamil.message}</small>}
+
+        {type === 'register' && errors.email && <small>{errors.email.message}</small>}
+
+       
+
         <Label htmlFor='password'>password</Label>
         <Input
           {...register('password', {
@@ -142,6 +153,27 @@ const FormBox = ({ type }) => {
                 pattern: {
                   value: /^[a-zA-z가-힣]{1,30}$/,
                   message: '특수기호나 숫자를 사용할 수 없습니다.',
+                },
+                onBlur: async () => {
+                  await axios
+                    .get(`http://localhost:8081/api/member/nickName`, {
+                      headers: {
+                        'Content-type': 'application/json',
+                        'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
+                      },
+                      params: { nickName: getValues('nickName') },
+                    })
+                    .then((response) => {
+                      if (response.status === 200) {
+                        alert('사용가능한 닉네임입니다.');
+                      }
+                    })
+                    .catch((err) => {
+                      const resp = err.response;
+                      if (resp.status === 400) {
+                        alert(resp.data);
+                      }
+                    });
                 },
               })}
               id='nickname'
