@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import FormBox from '../components/FormBox';
 import styled from 'styled-components';
 
 const Form = styled.form`
@@ -38,21 +37,6 @@ const loginSubmit = async (data) => {
   } catch (e) {
     console.log('토큰요청이 실패했습니다');
   }
-  const token = window.localStorage.getItem('token');
-  try {
-    await axios
-      .get('http://localhost:8081/api/member/me', {
-        headers: {
-          Authorization: token,
-          request: token,
-        },
-      })
-      .then((data) => {
-        alert(`안녕하세요 ${data.name}님`);
-      });
-  } catch (e) {
-    console.log(e);
-  }
 };
 
 const Login = () => {
@@ -60,7 +44,6 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-    getValues,
   } = useForm();
   return (
     <>
@@ -68,7 +51,6 @@ const Login = () => {
       <Form
         onSubmit={handleSubmit((data) => {
           loginSubmit(data);
-          console.log(data);
         })}
       >
         <label htmlFor='email'>email</label>
