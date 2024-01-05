@@ -6,6 +6,7 @@ import Input from '../components/Input';
 
 import styled from 'styled-components';
 import Button from '../components/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Form = styled.form`
   display: flex;
@@ -22,36 +23,43 @@ const Form = styled.form`
   }
 `;
 
-const registerSubmit = async (data) => {
-  await axios
-    .post('http://localhost:8081/api/member/join', {
-      headers: {
-        'Content-type': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:8081/', // 서버 domain
-      },
-      name: data.userName,
-      email: data.email,
-      password: data.password,
-      nickname: data.nickname,
-    })
-    .then(function (response) {
-      if (response.status === 200) {
-        alert(`반갑습니다. ${data.userName}님`);
-      } else if (response.status === 400) {
-        alert('사용중인 아이디입니다.');
-      }
-    })
-    .catch(function (error) {
-      console.log('회원가입에 실패했습니다');
-    });
-};
 const Register = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
     getValues,
+    reset,
+    resetField,
+    setFocus,
   } = useForm();
+
+  const registerSubmit = async (data) => {
+    await axios
+      .post('http://localhost:8081/api/member/join', {
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://localhost:8081/', // 서버 domain
+        },
+        name: data.userName,
+        email: data.email,
+        password: data.password,
+        nickname: data.nickname,
+      })
+      .then(function (response) {
+        if (response.status === 200) {
+          alert(`반갑습니다. ${data.userName}님`);
+          navigate('/login');
+        }
+      })
+      .catch((err) => {
+        const resp = err.response;
+        if (resp.status === 400) {
+          alert(resp.data);
+        }
+      });
+  };
 
   return (
     <>
@@ -59,8 +67,7 @@ const Register = () => {
       <Form
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
-
-          console.log(data);
+          reset();
         })}
       >
         <>
@@ -98,13 +105,17 @@ const Register = () => {
                 })
                 .then((response) => {
                   if (response.status === 200) {
-                    alert('사용가능한 아이디입니다.');
+                    if (getValues('email') !== '') {
+                      alert('사용가능한 이메일입니다.');
+                    }
                   }
                 })
                 .catch((err) => {
                   const resp = err.response;
                   if (resp.status === 400) {
                     alert(resp.data);
+                    resetField('email');
+                    setFocus('email');
                   }
                 });
             },
@@ -158,22 +169,26 @@ const Register = () => {
             },
             onBlur: async () => {
               await axios
-                .get(`http://localhost:8081/api/member/nickName`, {
+                .get(`http://localhost:8081/api/member/checkNickname`, {
                   headers: {
                     'Content-type': 'application/json',
                     'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
                   },
-                  params: { nickName: getValues('nickName') },
+                  params: { nickname: getValues('nickname') },
                 })
                 .then((response) => {
                   if (response.status === 200) {
-                    alert('사용가능한 닉네임입니다.');
+                    if (getValues('nickname') !== '') {
+                      alert('사용가능한 닉네임입니다.');
+                    }
                   }
                 })
                 .catch((err) => {
                   const resp = err.response;
                   if (resp.status === 400) {
                     alert(resp.data);
+                    resetField('nickname');
+                    setFocus('nickname');
                   }
                 });
             },

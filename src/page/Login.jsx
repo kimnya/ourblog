@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Form = styled.form`
   display: flex;
@@ -20,37 +21,47 @@ const Form = styled.form`
     font-size: 12px;
   }
 `;
-const loginSubmit = async (data) => {
-  try {
-    await axios
-      .post('http://localhost:8081/api/member/login', {
-        email: data.email,
-        password: data.password,
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          alert('토큰요청 성공');
-          const token = response.data.token;
-          window.localStorage.setItem('token', token);
-        }
-      });
-  } catch (e) {
-    console.log('토큰요청이 실패했습니다');
-  }
-};
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
+    reset,
+    setFocus,
   } = useForm();
+
+  const loginSubmit = async (data) => {
+    try {
+      await axios
+        .post('http://localhost:8081/api/member/login', {
+          email: data.email,
+          password: data.password,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            alert('토큰요청 성공');
+            const token = response.data.token;
+            window.localStorage.setItem('token', token);
+            navigate('/');
+          }
+        });
+    } catch (e) {
+      console.log('토큰요청이 실패했습니다');
+
+      setFocus('email');
+    }
+  };
+
   return (
     <>
       <Title />
       <Form
         onSubmit={handleSubmit((data) => {
           loginSubmit(data);
+          reset();
+          setFocus('email');
         })}
       >
         <label htmlFor='email'>email</label>

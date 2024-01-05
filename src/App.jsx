@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { GlobalStyle } from './styles/GlobalStyle';
 import Register from './page/Register';
 import Login from './page/Login';
+import MainPage from './page/MainPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Router from './components/Router';
 
 const Wrap = styled.div`
   display: flex;
@@ -16,8 +19,11 @@ function App() {
     <>
       <GlobalStyle />
       <Wrap>
-        {/* <Login /> */}
-        <Register />
+        <Routes>
+          <Route path='/' element={<MainPage />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+        </Routes>
       </Wrap>
     </>
   );
