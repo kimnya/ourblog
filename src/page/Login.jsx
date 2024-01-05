@@ -69,6 +69,7 @@ const Login = () => {
           {...register('email', {
             required: 'email을 입력해주세요.',
           })}
+          autoFocus
           type='email'
           id='email'
           $placeholder='email'

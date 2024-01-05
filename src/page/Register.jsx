@@ -80,6 +80,7 @@ const Register = () => {
                 message: '특수기호나 숫자는 사용할 수 없습니다.',
               },
             })}
+            autoFocus
             id='userName'
             $placeholder='userName'
           />
