@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Form = styled.form`
   display: flex;
@@ -35,16 +35,25 @@ const Login = () => {
   const loginSubmit = async (data) => {
     try {
       await axios
-        .post('http://localhost:8081/api/member/login', {
-          email: data.email,
-          password: data.password,
-        })
+        .post(
+          'http://localhost:8081/api/member/login',
+          {
+            email: data.email,
+            password: data.password,
+          },
+          {
+            withCredentials: true,
+          },
+        )
         .then((response) => {
           if (response.status === 200) {
             alert('토큰요청 성공');
-            const token = response.data.token;
-            window.localStorage.setItem('token', token);
+            const accessToken = response.data.accessToken;
+            const refreshToken = response.data.refreshToken;
+            window.localStorage.setItem('accessToken', accessToken);
+            window.localStorage.setItem('refreshToken', refreshToken);
             navigate('/');
+            console.log(response.data);
           }
         });
     } catch (e) {
@@ -56,7 +65,6 @@ const Login = () => {
 
   return (
     <>
-      <Title />
       <Form
         onSubmit={handleSubmit((data) => {
           loginSubmit(data);
@@ -91,6 +99,7 @@ const Login = () => {
           로그인
         </Button>
       </Form>
+      <Link to='/register'>회원가입</Link>
     </>
   );
 };

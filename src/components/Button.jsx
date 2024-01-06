@@ -17,13 +17,13 @@ const ButtonStyled = styled.button`
     $buttonColor = 'mainGreen',
     $fontColor = 'white',
     $fontSize = '12px',
-    fontWeight = 'bold',
+    $fontWeight = 'bold',
     $borderRadius = '4px',
   }) => css`
     width: ${width};
     height: ${height};
     color: ${palette[$fontColor]};
-    font-weight: ${fontWeight};
+    font-weight: ${$fontWeight};
     font-size: ${$fontSize};
     background-color: ${palette[$buttonColor]};
     border-radius: ${$borderRadius};
