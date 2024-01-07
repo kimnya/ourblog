@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoSunny } from 'react-icons/io5';
-import SideBar from './SideBar';
 import Title from './Title';
 import { FaMoon } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import styled from 'styled-components';
+import SideBar from './SideBar';
 
 const HeaderStyled = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100vw;
-  margin-top: 15px;
+  position: relative;
+  min-height: 100px;
+  > * {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  > a {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   > div {
+  }
+  > .mainpageIcons {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 150px;
+    right: 20px;
+    > * {
+      margin-left: 20px;
+    }
   }
 `;
 
@@ -52,11 +60,10 @@ const Header = () => {
 
   return (
     <>
-      {/* <SideBar isTogle={isTogle} sideBarToggleHandler={sideBarToggleHandler} /> */}
       <HeaderStyled>
-        <RxHamburgerMenu size={reactIconsSize} onClick={sideBarToggleHandler} />
+        <SideBar isTogle={isTogle} sideBarToggleHandler={sideBarToggleHandler} reactIconsSize={reactIconsSize} />
         <Title />
-        <div>
+        <div className='mainpageIcons'>
           {isTogle.darkMode ? (
             <IoSunny size={reactIconsSize} onClick={darkModeToggleHandler} />
           ) : (

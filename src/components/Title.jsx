@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
+import { Link } from 'react-router-dom';
 
 const TitleLogo = styled.h1`
   color: ${palette.mainGreen};
@@ -9,7 +10,11 @@ const TitleLogo = styled.h1`
 `;
 
 const Title = () => {
-  return <TitleLogo>ourblog</TitleLogo>;
+  return (
+    <Link to={'/'}>
+      <TitleLogo>ourblog</TitleLogo>
+    </Link>
+  );
 };
 
 export default Title;

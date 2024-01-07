@@ -37,7 +37,7 @@ const Register = () => {
 
   const registerSubmit = async (data) => {
     await axios
-      .post('http://localhost:8081/api/member/join', {
+      .post('http://localhost:8081/member/join', {
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': 'http://localhost:8081/', // 서버 domain
@@ -63,7 +63,7 @@ const Register = () => {
 
   return (
     <>
-      <Title />
+      <h1>회원가입</h1>
       <Form
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
@@ -97,7 +97,7 @@ const Register = () => {
             },
             onBlur: async () => {
               await axios
-                .get(`http://localhost:8081/api/member/checkEmail`, {
+                .get(`http://localhost:8081/member/checkEmail`, {
                   headers: {
                     'Content-type': 'application/json',
                     'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
@@ -170,7 +170,7 @@ const Register = () => {
             },
             onBlur: async () => {
               await axios
-                .get(`http://localhost:8081/api/member/checkNickname`, {
+                .get(`http://localhost:8081/member/checkNickname`, {
                   headers: {
                     'Content-type': 'application/json',
                     'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain

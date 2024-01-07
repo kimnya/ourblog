@@ -20,6 +20,10 @@ const Form = styled.form`
     color: red;
     font-size: 12px;
   }
+  & a {
+    align-self: flex-end;
+    text-decoration: underline;
+  }
 `;
 
 const Login = () => {
@@ -35,23 +39,17 @@ const Login = () => {
   const loginSubmit = async (data) => {
     try {
       await axios
-        .post(
-          'http://localhost:8081/api/member/login',
-          {
-            email: data.email,
-            password: data.password,
-          },
-          {
-            withCredentials: true,
-          },
-        )
+        .post('http://localhost:8081/member/login', {
+          email: data.email,
+          password: data.password,
+        })
         .then((response) => {
           if (response.status === 200) {
             alert('토큰요청 성공');
             const accessToken = response.data.accessToken;
-            const refreshToken = response.data.refreshToken;
+
             window.localStorage.setItem('accessToken', accessToken);
-            window.localStorage.setItem('refreshToken', refreshToken);
+
             navigate('/');
             console.log(response.data);
           }
@@ -65,6 +63,7 @@ const Login = () => {
 
   return (
     <>
+      <h1>로그인</h1>
       <Form
         onSubmit={handleSubmit((data) => {
           loginSubmit(data);
@@ -98,8 +97,8 @@ const Login = () => {
         <Button disabled={isSubmitting} width='362px' height='29px' $borderRadius='none'>
           로그인
         </Button>
+        <Link to='/register'>회원가입</Link>
       </Form>
-      <Link to='/register'>회원가입</Link>
     </>
   );
 };

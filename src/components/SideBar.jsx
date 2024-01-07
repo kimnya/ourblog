@@ -2,34 +2,44 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import CategryList from './CategryList';
 import { HiXMark } from 'react-icons/hi2';
-
+import { RxHamburgerMenu } from 'react-icons/rx';
 const SideBarStyle = styled.div`
+  left: 20px;
+`;
+
+const SideBarBox = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-end;
-  /* position: absolute; */
-  /* left: ${(props) => {
+  position: absolute;
+  left: ${(props) => {
     if (props.$isTogle.sideBar) {
-      return '15vw';
+      return '-25px';
     } else {
       return '-999px';
     }
-  }}; */
+  }};
+  top: -38px;
   width: 15vw;
   height: 100vh;
-  background-color: aqua;
+  background-color: #fff;
   transition: all 0.5s;
-  & > svg {
-    margin: 10px;
+  > svg {
+    margin: 0 0 15px 25px;
   }
 `;
 
-const SideBar = ({ sideBarToggleHandler, isTogle }) => {
+const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize }) => {
   return (
-    <SideBarStyle $isTogle={isTogle}>
-      <HiXMark size={'40px'} onClick={sideBarToggleHandler} />
-      <CategryList />
-    </SideBarStyle>
+    <>
+      <SideBarStyle $isTogle={isTogle}>
+        <RxHamburgerMenu size={reactIconsSize} onClick={sideBarToggleHandler} />
+        <SideBarBox $isTogle={isTogle}>
+          <HiXMark size={reactIconsSize} onClick={sideBarToggleHandler} />
+          <CategryList />
+        </SideBarBox>
+      </SideBarStyle>
+    </>
   );
 };
 
