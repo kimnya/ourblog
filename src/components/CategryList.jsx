@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 const CategoryBox = styled.div`
   height: 92vh;
-  border-top: 3px solid ${palette.mainGreen};
-  background-color: bisque;
+  border-top: 1px solid ${palette.mainGreen};
+  box-sizing: border-box;
   > div {
     display: flex;
     flex-direction: column;
