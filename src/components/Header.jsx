@@ -60,6 +60,7 @@ const Header = () => {
 
   return (
     <>
+      {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}
       <HeaderStyled>
         <SideBar isTogle={isTogle} sideBarToggleHandler={sideBarToggleHandler} reactIconsSize={reactIconsSize} />
         <Title />
@@ -71,7 +72,7 @@ const Header = () => {
           )}
 
           <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
-          {isTogle.logined === true ? (
+          {isTogle.logined === false ? (
             <p>{userName}/로그아웃</p>
           ) : (
             <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>

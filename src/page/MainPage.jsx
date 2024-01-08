@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import AticleList from '../components/AticleList';
 
 const MainPage = () => {
   return (
     <>
-      <div>메인페이지입니다.</div>
+      <AticleList />
     </>
   );
 };
