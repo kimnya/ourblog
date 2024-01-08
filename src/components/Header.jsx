@@ -72,7 +72,7 @@ const Header = () => {
           )}
 
           <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
-          {isTogle.logined === false ? (
+          {isTogle.logined === true ? (
             <p>{userName}/로그아웃</p>
           ) : (
             <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>

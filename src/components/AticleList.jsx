@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import a from './../asset/1.png';
 import b from './../asset/2.png';
@@ -141,11 +141,30 @@ const AticleListBox = ({ article }) => {
 };
 
 const AticleList = () => {
+  // const [aticleList, setAticleList] = useState();
+  // const [isLogined, setLogin] = useState(false);
+  // const articleData = async () => {
+  //   try {
+  //     await axios.get('http://localhost:8081/blog/list').then((response) => {
+  //       if (response.status === 200) {
+  //         console.log(response.data);
+  //         setAticleList(response.data);
+  //         setLogin(true);
+  //       }
+  //     });
+  //   } catch (e) {
+  //     console.log('게시물을 받아오지 못했습니다.');
+  //   }
+  // };
+  // useEffect(() => {
+  //   articleData();
+  // }, []);
+
   return (
     <>
       <AticleListStyle>
         {aticleList.map((article) => {
-          return <AticleListBox key={article.articleId} article={article} />;
+          return <AticleListBox key={article.id} article={article} />;
         })}
       </AticleListStyle>
     </>
