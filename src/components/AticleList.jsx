@@ -25,10 +25,11 @@ const AticleListBoxStyle = styled.div`
   justify-content: space-between;
   width: 282px;
   height: 339px;
-  border: 1px solid ${palette.mainGreen};
+  background-color: #fff;
+  /* border: 1px solid ${palette.mainGreen}; */
 
   > .articlePhotoBox {
-    width: 278px;
+    width: 282px;
     height: 154px;
 
     > img {
