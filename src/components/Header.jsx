@@ -3,7 +3,7 @@ import { IoSunny } from 'react-icons/io5';
 import Title from './Title';
 import { FaMoon } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import styled from 'styled-components';
 import SideBar from './SideBar';
@@ -56,7 +56,17 @@ const Header = () => {
   };
 
   const moveLogin = () => navigate('/login');
+
   const userName = '김냐'; //목업데이터
+
+  const logoutSubmit = (evt) => {
+    evt.preventDefault();
+
+    console.log(localStorage.getItem('accessToken'));
+    localStorage.removeItem('accessToken');
+    console.log('accessToken=' + localStorage.getItem('accessToken'));
+    setTogle((prev) => ({ ...prev, logined: !prev.logined }));
+  };
 
   return (
     <>
@@ -72,8 +82,10 @@ const Header = () => {
           )}
 
           <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
-          {isTogle.logined === true ? (
-            <p>{userName}/로그아웃</p>
+          {isTogle.logined === false ? (
+            <p>
+              {userName}/<Link onClick={logoutSubmit}>로그아웃</Link>
+            </p>
           ) : (
             <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>
               로그인

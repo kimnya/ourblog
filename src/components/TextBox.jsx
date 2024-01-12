@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import styled from 'styled-components';
 
 const TextBoxStyle = styled.p`
@@ -28,15 +28,34 @@ const TextInput = styled.textarea`
   }
 `;
 
-const Text = forwardRef(({ $textbox, $idx }, ref) => {
-  return <TextInput data-idx={$idx} ref={ref} placeholder={$textbox.text}></TextInput>;
+const Text = forwardRef(({ $textbox, $idx, setContentsValue }, ref) => {
+  const [articleContent, setArticleContent] = useState();
+
+  const articleWrite = (evt) => {
+    setArticleContent(evt.target.value);
+    setContentsValue(articleContent);
+  };
+  return (
+    <TextInput
+      onChange={articleWrite}
+      value={articleContent}
+      data-idx={$idx}
+      ref={ref}
+      placeholder={$textbox.text}
+    ></TextInput>
+  );
 });
 
-const TextBox = ({ $textbox, $textref, $idx }) => {
+const TextBox = ({ $textbox, $textref, $idx, setContentsValue }) => {
   return (
     <>
       <TextBoxStyle data-idx={$idx} $textbox={$textbox}>
-        <Text $textbox={$textbox} $idx={$idx} ref={(element) => ($textref.current[$idx] = element)} />
+        <Text
+          setContentsValue={setContentsValue}
+          $textbox={$textbox}
+          $idx={$idx}
+          ref={(element) => ($textref.current[$idx] = element)}
+        />
       </TextBoxStyle>
     </>
   );

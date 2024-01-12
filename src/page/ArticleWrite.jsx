@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TextBox from '../components/TextBox';
 import styled from 'styled-components';
+import Button from '../components/Button';
+import axios from 'axios';
 
 const ContentsBox = styled.div`
   height: 100vh;
@@ -27,13 +29,14 @@ const initTextBox = {
 const ArticleWrite = () => {
   const [textBoxes, setTextBoxes] = useState(initTextBox);
   const [focusIdx, setFocusIdx] = useState();
+  const [contentsValue, setContentsValue] = useState();
   const $textref = useRef([]);
 
-  const addTextLine = (e) => {
-    e.target.style.height = 'auto';
-    e.target.style.height = `${e.target.scrollHeight}px`;
-    if (e.key === 'Enter') {
-      const idx = parseInt(e.target.dataset.idx);
+  const addTextLine = (evt) => {
+    evt.target.style.height = 'auto';
+    evt.target.style.height = `${evt.target.scrollHeight}px`;
+    if (evt.key === 'Enter') {
+      const idx = parseInt(evt.target.dataset.idx);
       console.log(idx);
       setTextBoxes((prev) => ({
         ...prev,
@@ -52,16 +55,43 @@ const ArticleWrite = () => {
   useEffect(() => {
     console.log(focusIdx);
     $textref.current[focusIdx]?.focus();
+    console.log(contentsValue);
   }, [focusIdx]);
 
+  // const articlePost = async (evt) => {
+  //   evt.preventDefault();
+  //   await axios
+  //     .post('http://localhost:8081/posting/create', {
+  //       content: contentsValue,
+  //     })
+  //     .then((response) => {
+  //       alert('게시물작성 성공 ');
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.message);
+  //     });
+  // };// 게시물 포스트 호출 보류
   return (
     <>
-      <ContentsBox onKeyUp={addTextLine} id='content'>
-        {textBoxes.views.map((textbox, idx) => {
-          return <TextBox key={idx} $idx={idx} $textref={$textref} $textbox={textbox} />;
-        })}
-        {/* TextBox를map으로 동적생성 하기위해 initialData가 필요함 */}
-      </ContentsBox>
+      <form>
+        <ContentsBox onKeyUp={addTextLine} id='content'>
+          {textBoxes.views.map((textbox, idx) => {
+            return (
+              <TextBox
+                key={idx}
+                $idx={idx}
+                $textref={$textref}
+                setContentsValue={setContentsValue}
+                $textbox={textbox}
+              />
+            );
+          })}
+          {/* TextBox를map으로 동적생성 하기위해 initialData가 필요함 */}
+        </ContentsBox>
+        <Button width='200px' height='50px'>
+          제출
+        </Button>
+      </form>
     </>
   );
 };
