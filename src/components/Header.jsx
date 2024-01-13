@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoSunny } from 'react-icons/io5';
 import Title from './Title';
 import { FaMoon } from 'react-icons/fa';
@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import styled from 'styled-components';
 import SideBar from './SideBar';
+import axios from 'axios';
 
 const HeaderStyled = styled.div`
   position: relative;
@@ -61,12 +62,35 @@ const Header = () => {
 
   const logoutSubmit = (evt) => {
     evt.preventDefault();
-
     console.log(localStorage.getItem('accessToken'));
     localStorage.removeItem('accessToken');
     console.log('accessToken=' + localStorage.getItem('accessToken'));
     setTogle((prev) => ({ ...prev, logined: !prev.logined }));
   };
+
+  const getInfo = async () => {
+    await axios
+      .get('http://localhost:8081/member/info', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      })
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem('myInfo', response.data);
+        console.log(localStorage.getItem('myInfo'));
+      })
+      .catch((error) => {
+        error.message;
+      });
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      setTogle((prev) => ({ ...prev, logined: true }));
+    }
+    if (isTogle.logined === true) {
+      getInfo();
+    }
+  }, [isTogle.logined]);
 
   return (
     <>
@@ -82,7 +106,7 @@ const Header = () => {
           )}
 
           <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
-          {isTogle.logined === false ? (
+          {isTogle.logined === true ? (
             <p>
               {userName}/<Link onClick={logoutSubmit}>로그아웃</Link>
             </p>

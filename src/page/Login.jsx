@@ -52,6 +52,7 @@ const Login = () => {
 
             navigate('/');
             console.log(response.data);
+            console.log(localStorage.getItem('accessToken'));
           }
         });
     } catch (e) {

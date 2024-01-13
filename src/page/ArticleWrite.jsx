@@ -40,6 +40,7 @@ const ArticleWrite = () => {
       console.log(idx);
       setTextBoxes((prev) => ({
         ...prev,
+        ...(prev.views[idx].text = contentsValue),
         views: [
           ...prev.views.slice(0, idx + 1),
           { type: 'p', text: '성공' },
@@ -56,7 +57,7 @@ const ArticleWrite = () => {
     console.log(focusIdx);
     $textref.current[focusIdx]?.focus();
     console.log(contentsValue);
-  }, [focusIdx]);
+  }, [contentsValue, focusIdx]);
 
   // const articlePost = async (evt) => {
   //   evt.preventDefault();
@@ -86,7 +87,7 @@ const ArticleWrite = () => {
               />
             );
           })}
-          {/* TextBox를map으로 동적생성 하기위해 initialData가 필요함 */}
+          {/* TextBox를map으로 동적생성 하기위해 initialData에 데이터 추가가 필요함 */}
         </ContentsBox>
         <Button width='200px' height='50px'>
           제출

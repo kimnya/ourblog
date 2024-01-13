@@ -28,20 +28,20 @@ const TextInput = styled.textarea`
   }
 `;
 
-const Text = forwardRef(({ $textbox, $idx, setContentsValue }, ref) => {
+const Text = forwardRef(({ $idx, setContentsValue }, ref) => {
   const [articleContent, setArticleContent] = useState();
 
   const articleWrite = (evt) => {
     setArticleContent(evt.target.value);
     setContentsValue(articleContent);
-  };
+  }; //onChange 이벤트
   return (
     <TextInput
       onChange={articleWrite}
       value={articleContent}
       data-idx={$idx}
       ref={ref}
-      placeholder={$textbox.text}
+      placeholder='메모작성'
     ></TextInput>
   );
 });
@@ -50,12 +50,7 @@ const TextBox = ({ $textbox, $textref, $idx, setContentsValue }) => {
   return (
     <>
       <TextBoxStyle data-idx={$idx} $textbox={$textbox}>
-        <Text
-          setContentsValue={setContentsValue}
-          $textbox={$textbox}
-          $idx={$idx}
-          ref={(element) => ($textref.current[$idx] = element)}
-        />
+        <Text setContentsValue={setContentsValue} $idx={$idx} ref={(element) => ($textref.current[$idx] = element)} />
       </TextBoxStyle>
     </>
   );
