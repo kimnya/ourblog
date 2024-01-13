@@ -48,10 +48,11 @@ const Login = () => {
             alert('토큰요청 성공');
             const accessToken = response.data.accessToken;
 
-            window.localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('accessToken', accessToken);
 
             navigate('/');
             console.log(response.data);
+            console.log(localStorage.getItem('accessToken'));
           }
         });
     } catch (e) {
