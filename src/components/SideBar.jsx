@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import CategryList from './CategryList';
 import { HiXMark } from 'react-icons/hi2';
@@ -30,6 +30,13 @@ const SideBarBox = styled.div`
 `;
 
 const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize }) => {
+  useEffect(() => {
+    if (localStorage.getItem('myInfo')) {
+      localStorage.getItem('myInfo');
+    } else {
+      localStorage.setItem('myInfo', null);
+    }
+  }, [localStorage.getItem('myInfo')]);
   return (
     <>
       <SideBarStyle $isTogle={isTogle}>

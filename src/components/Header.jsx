@@ -74,8 +74,8 @@ const Header = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
       })
       .then((response) => {
-        console.log(response.data);
-        localStorage.setItem('myInfo', response.data);
+        console.log(JSON.stringify(response.data));
+        localStorage.setItem('myInfo', JSON.stringify(response.data));
         console.log(localStorage.getItem('myInfo'));
       })
       .catch((error) => {
@@ -86,12 +86,10 @@ const Header = () => {
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
       setTogle((prev) => ({ ...prev, logined: true }));
-    }
-    if (isTogle.logined === true) {
       getInfo();
     }
-  }, [isTogle.logined]);
-
+  }, [localStorage.getItem('accessToken')]);
+  const nickname = JSON.parse(localStorage.getItem('myInfo')).nickname;
   return (
     <>
       {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}
@@ -108,7 +106,7 @@ const Header = () => {
           <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
           {isTogle.logined === true ? (
             <p>
-              {userName}/<Link onClick={logoutSubmit}>로그아웃</Link>
+              {nickname} /<Link onClick={logoutSubmit}>로그아웃</Link>
             </p>
           ) : (
             <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>

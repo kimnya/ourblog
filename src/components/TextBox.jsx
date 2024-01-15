@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const TextBoxStyle = styled.p`
@@ -28,17 +28,11 @@ const TextInput = styled.textarea`
   }
 `;
 
-const Text = forwardRef(({ $idx, setContentsValue }, ref) => {
-  const [articleContent, setArticleContent] = useState();
-
-  const articleWrite = (evt) => {
-    setArticleContent(evt.target.value);
-    setContentsValue(articleContent);
-  }; //onChange 이벤트
+const Text = forwardRef(({ $idx, $textbox, articleWrite }, ref) => {
   return (
     <TextInput
       onChange={articleWrite}
-      value={articleContent}
+      value={$textbox.text}
       data-idx={$idx}
       ref={ref}
       placeholder='메모작성'
@@ -46,11 +40,16 @@ const Text = forwardRef(({ $idx, setContentsValue }, ref) => {
   );
 });
 
-const TextBox = ({ $textbox, $textref, $idx, setContentsValue }) => {
+const TextBox = ({ $textbox, $textref, $idx, articleWrite }) => {
   return (
     <>
       <TextBoxStyle data-idx={$idx} $textbox={$textbox}>
-        <Text setContentsValue={setContentsValue} $idx={$idx} ref={(element) => ($textref.current[$idx] = element)} />
+        <Text
+          $textbox={$textbox}
+          articleWrite={articleWrite}
+          $idx={$idx}
+          ref={(element) => ($textref.current[$idx] = element)}
+        />
       </TextBoxStyle>
     </>
   );
