@@ -33,6 +33,8 @@ const HeaderStyled = styled.div`
 `;
 
 const Header = () => {
+  const [myInfo, setMyInfo] = useState([]);
+
   const [isTogle, setTogle] = useState({
     sideBar: false,
     darkMode: false,
@@ -58,13 +60,10 @@ const Header = () => {
 
   const moveLogin = () => navigate('/login');
 
-  const userName = '김냐'; //목업데이터
-
   const logoutSubmit = (evt) => {
     evt.preventDefault();
-    console.log(localStorage.getItem('accessToken'));
     localStorage.removeItem('accessToken');
-    console.log('accessToken=' + localStorage.getItem('accessToken'));
+    setMyInfo('');
     setTogle((prev) => ({ ...prev, logined: !prev.logined }));
   };
 
@@ -74,9 +73,8 @@ const Header = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
       })
       .then((response) => {
-        console.log(JSON.stringify(response.data));
-        localStorage.setItem('myInfo', JSON.stringify(response.data));
-        console.log(localStorage.getItem('myInfo'));
+        setMyInfo(response.data);
+        setTogle((prev) => ({ ...prev, logined: !prev.logined }));
       })
       .catch((error) => {
         error.message;
@@ -85,16 +83,21 @@ const Header = () => {
 
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
-      setTogle((prev) => ({ ...prev, logined: true }));
       getInfo();
     }
   }, [localStorage.getItem('accessToken')]);
-  const nickname = JSON.parse(localStorage.getItem('myInfo')).nickname;
+
   return (
     <>
       {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}
+
       <HeaderStyled>
-        <SideBar isTogle={isTogle} sideBarToggleHandler={sideBarToggleHandler} reactIconsSize={reactIconsSize} />
+        <SideBar
+          myInfo={myInfo}
+          isTogle={isTogle}
+          sideBarToggleHandler={sideBarToggleHandler}
+          reactIconsSize={reactIconsSize}
+        />
         <Title />
         <div className='mainpageIcons'>
           {isTogle.darkMode ? (
@@ -102,16 +105,15 @@ const Header = () => {
           ) : (
             <FaMoon size={reactIconsSize} onClick={darkModeToggleHandler} />
           )}
-
           <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
-          {isTogle.logined === true ? (
-            <p>
-              {nickname} /<Link onClick={logoutSubmit}>로그아웃</Link>
-            </p>
-          ) : (
+          {isTogle.logined === false ? (
             <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>
               로그인
             </Button>
+          ) : (
+            <p>
+              {myInfo['nickname']}/<Link onClick={logoutSubmit}>로그아웃</Link>{' '}
+            </p>
           )}
         </div>
       </HeaderStyled>
