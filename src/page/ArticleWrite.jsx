@@ -27,37 +27,40 @@ const initTextBox = {
 };
 
 const ArticleWrite = () => {
-  const [textBoxes, setTextBoxes] = useState(initTextBox);
-  const [focusIdx, setFocusIdx] = useState();
-  const [contentsValue, setContentsValue] = useState();
+  const [textBoxes, setTextBoxes] = useState(initTextBox); //
+  const [focusIdx, setFocusIdx] = useState(); //evt.data-idx+1 값 저장
   const $textref = useRef([]);
+  const $content = useRef();
 
   const addTextLine = (evt) => {
     evt.target.style.height = 'auto';
     evt.target.style.height = `${evt.target.scrollHeight}px`;
     if (evt.key === 'Enter') {
+      // $content.current.innerText = '';
       const idx = parseInt(evt.target.dataset.idx);
       console.log(idx);
       setTextBoxes((prev) => ({
         ...prev,
-        ...(prev.views[idx].text = contentsValue),
         views: [
           ...prev.views.slice(0, idx + 1),
-          { type: 'p', text: '성공' },
+          { type: 'p', text: '' },
           ...prev.views.slice(idx + 1, prev.views.length),
         ],
       })); //배열에 객체를 추가하는 이벤트로직
-
+      //
       console.log(textBoxes);
       setFocusIdx(idx + 1);
     }
   };
 
+  const articleWrite = (evt) => {
+    setTextBoxes((prev) => {});
+  }; //onChange 이벤트
   useEffect(() => {
     console.log(focusIdx);
+
     $textref.current[focusIdx]?.focus();
-    console.log(contentsValue);
-  }, [contentsValue, focusIdx]);
+  }, [focusIdx]);
 
   // const articlePost = async (evt) => {
   //   evt.preventDefault();
@@ -75,17 +78,9 @@ const ArticleWrite = () => {
   return (
     <>
       <form>
-        <ContentsBox onKeyUp={addTextLine} id='content'>
+        <ContentsBox ref={$content} onKeyUp={addTextLine} id='content'>
           {textBoxes.views.map((textbox, idx) => {
-            return (
-              <TextBox
-                key={idx}
-                $idx={idx}
-                $textref={$textref}
-                setContentsValue={setContentsValue}
-                $textbox={textbox}
-              />
-            );
+            return <TextBox key={idx} articleWrite={articleWrite} $idx={idx} $textref={$textref} $textbox={textbox} />;
           })}
           {/* TextBox를map으로 동적생성 하기위해 initialData에 데이터 추가가 필요함 */}
         </ContentsBox>
