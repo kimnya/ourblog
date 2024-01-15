@@ -29,21 +29,14 @@ const SideBarBox = styled.div`
   }
 `;
 
-const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize }) => {
-  useEffect(() => {
-    if (localStorage.getItem('myInfo')) {
-      localStorage.getItem('myInfo');
-    } else {
-      localStorage.setItem('myInfo', null);
-    }
-  }, [localStorage.getItem('myInfo')]);
+const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize, myInfo }) => {
   return (
     <>
       <SideBarStyle $isTogle={isTogle}>
         <RxHamburgerMenu size={reactIconsSize} onClick={sideBarToggleHandler} />
         <SideBarBox $isTogle={isTogle}>
           <HiXMark size={reactIconsSize} onClick={sideBarToggleHandler} />
-          <CategryList />
+          <CategryList myInfo={myInfo} isTogle={isTogle} />
         </SideBarBox>
       </SideBarStyle>
     </>
