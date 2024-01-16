@@ -74,7 +74,7 @@ const Header = () => {
       })
       .then((response) => {
         setMyInfo(response.data);
-        setTogle((prev) => ({ ...prev, logined: !prev.logined }));
+        setTogle((prev) => ({ ...prev, logined: true }));
       })
       .catch((error) => {
         error.message;

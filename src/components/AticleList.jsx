@@ -9,6 +9,7 @@ import f from './../asset/6.png';
 import g from './../asset/7.png';
 import h from './../asset/8.png';
 import { palette } from '../styles/palette';
+import axios from 'axios';
 
 const AticleListStyle = styled.div`
   display: flex;
@@ -159,6 +160,22 @@ const AticleList = () => {
   // useEffect(() => {
   //   articleData();
   // }, []);
+
+  const [articleList, setArticle] = useState();
+  const articleListLoad = async () => {
+    await axios
+      .get('http://localhost:8081/posting/list')
+      .then((response) => {
+        console.log(response.data);
+        setArticle(response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  useEffect(() => {
+    articleListLoad();
+  }, []);
 
   return (
     <>
