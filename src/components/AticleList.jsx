@@ -9,7 +9,9 @@ import f from './../asset/6.png';
 import g from './../asset/7.png';
 import h from './../asset/8.png';
 import { palette } from '../styles/palette';
+import { FaRegHeart } from 'react-icons/fa';
 import axios from 'axios';
+import useTimeStamp from './customHook/articleDate';
 
 const AticleListStyle = styled.div`
   display: flex;
@@ -37,6 +39,14 @@ const AticleListBoxStyle = styled.div`
       display: inline-block;
       width: 100%;
       height: 100%;
+    }
+    > p {
+      display: flex;
+
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      color: #aaa;
     }
   }
   > .articleTxtBox {
@@ -119,22 +129,26 @@ const aticleList = [
 ]; //목업데이터
 
 const AticleListBox = ({ article }) => {
-  const { articleTitle, articlePhoto, articleTxt, articleWriter, articleDate } = article;
+  const { title, writer, createDate, content, likeCnt, imageUrl } = article;
+  const [timeAgo] = useTimeStamp(createDate);
+
   return (
     <>
       <AticleListBoxStyle>
-        <div className='articlePhotoBox'>
-          <img src={articlePhoto} alt={`${articleTitle}의 썸네일`} />
-        </div>
+        <div className='articlePhotoBox'>{imageUrl ? <img src='#' alt={`의 썸네일`} /> : <p>{content}</p>}</div>
         <div>
-          <h1>{articleTitle}</h1>
+          <h1>{title}</h1>
         </div>
         <div className='articleTxtBox'>
-          <p>{articleTxt}</p>
+          <p>{content}</p>
         </div>
         <div className='articleEctBox'>
-          <p>{articleDate}</p>
-          <p>{articleWriter}</p>
+          <p>{timeAgo}</p>
+          <p>{writer}</p>
+          <p>
+            <FaRegHeart />
+            {likeCnt}
+          </p>
         </div>
       </AticleListBoxStyle>
     </>
@@ -142,37 +156,18 @@ const AticleListBox = ({ article }) => {
 };
 
 const AticleList = () => {
-  // const [aticleList, setAticleList] = useState();
-  // const [isLogined, setLogin] = useState(false);
-  // const articleData = async () => {
-  //   try {
-  //     await axios.get('http://localhost:8081/blog/list').then((response) => {
-  //       if (response.status === 200) {
-  //         console.log(response.data);
-  //         setAticleList(response.data);
-  //         setLogin(true);
-  //       }
-  //     });
-  //   } catch (e) {
-  //     console.log('게시물을 받아오지 못했습니다.');
-  //   }
-  // };
-  // useEffect(() => {
-  //   articleData();
-  // }, []);
-
-  const [articleList, setArticle] = useState();
+  const [articleList, setArticle] = useState([]);
   const articleListLoad = async () => {
     await axios
       .get('http://localhost:8081/posting/list')
       .then((response) => {
-        console.log(response.data);
         setArticle(response.data);
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
+
   useEffect(() => {
     articleListLoad();
   }, []);
@@ -180,9 +175,11 @@ const AticleList = () => {
   return (
     <>
       <AticleListStyle>
-        {aticleList.map((article) => {
-          return <AticleListBox key={article.id} article={article} />;
-        })}
+        {articleList.id !== null &&
+          articleList.map((article) => {
+            return <AticleListBox key={article.id} article={article} />;
+          })}
+        ;
       </AticleListStyle>
     </>
   );

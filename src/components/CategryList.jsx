@@ -24,13 +24,6 @@ const CategoryBox = styled.div`
 `;
 
 const CategryList = ({ myInfo, isTogle }) => {
-  useEffect(() => {
-    console.log('mydata', myInfo);
-    // const { categories } = myInfo;
-    console.log('mytype', typeof myInfo.categories);
-    console.log('log', isTogle.logined);
-  }, [myInfo]);
-
   return (
     <>
       <CategoryBox>
@@ -41,15 +34,16 @@ const CategryList = ({ myInfo, isTogle }) => {
           ) : (
             <>
               <p>{myInfo.nickname}의 카테고리</p>
-              {/* <p> {myInfo.categories} </p> */}
-
               {myInfo.categories.map((category) => {
                 const { id, name } = category;
+
                 return (
                   <>
-                    <ul>
-                      <li key={id}>{name}</li>
-                    </ul>
+                    <div>
+                      <ul>
+                        <li key={id}>{name}</li>
+                      </ul>
+                    </div>
                   </>
                 );
               })}
