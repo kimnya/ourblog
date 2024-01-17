@@ -53,9 +53,9 @@ const ArticleWrite = () => {
     }
   };
 
-  const articleWrite = (evt) => {
-    setTextBoxes((prev) => {});
-  }; //onChange 이벤트
+  // const articleWrite = (evt) => {
+  //   setTextBoxes((prev) => {});
+  // }; //onChange 이벤트
   useEffect(() => {
     console.log(focusIdx);
 
