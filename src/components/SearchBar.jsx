@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Input from './Input';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import SearchArticleBox from './SearchArticleBox';
 
 const Form = styled.form`
   > label {
@@ -10,11 +12,29 @@ const Form = styled.form`
 `;
 
 const SearchBar = () => {
-  const { register, getValues } = useForm();
+  const { register, getValues, handleSubmit } = useForm();
+  const [searchList, setSearchList] = useState([]);
+  const searchArticle = async (data) => {
+    await axios
+      .get('http://localhost:8081/posting/list', {
+        params: { searchText: data.search },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setSearchList(response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <>
-      <Form>
+      <Form
+        onSubmit={handleSubmit((data) => {
+          searchArticle(data);
+        })}
+      >
         <label htmlFor='search'>검색창</label>
         <Input
           {...register('search', {
@@ -28,6 +48,19 @@ const SearchBar = () => {
           autoFocus
         />
       </Form>
+      {searchList.id !== '' &&
+        searchList.map((item) => {
+          console.log(item);
+          return (
+            <>
+              <div>
+                <SearchArticleBox id={item.id} searchItem={item} />;
+              </div>
+            </>
+          );
+        })}
+
+      {/* 검색기능 searchText 빈문자열이라면 메시지 띄우기 */}
     </>
   );
 };

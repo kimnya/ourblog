@@ -1,11 +1,10 @@
 import React from 'react';
-import AticleList from '../components/AticleList';
-import { Link } from 'react-router-dom';
+import ArticleList from '../components/ArticleList';
 
 const MainPage = () => {
   return (
     <>
-      <AticleList />
+      <ArticleList />
     </>
   );
 };

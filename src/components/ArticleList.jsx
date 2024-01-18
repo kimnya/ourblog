@@ -8,57 +8,16 @@ import e from './../asset/5.png';
 import f from './../asset/6.png';
 import g from './../asset/7.png';
 import h from './../asset/8.png';
-import { palette } from '../styles/palette';
-import { FaRegHeart } from 'react-icons/fa';
 import axios from 'axios';
-import useTimeStamp from './customHook/articleDate';
+import ArticleListBox from './ArticleListBox';
 
-const AticleListStyle = styled.div`
+const ArticleListStyle = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   align-content: space-between;
   width: 1237px;
   height: 710px;
-`;
-
-const AticleListBoxStyle = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-between;
-  width: 282px;
-  height: 339px;
-  background-color: #fff;
-  /* border: 1px solid ${palette.mainGreen}; */
-
-  > .articlePhotoBox {
-    width: 282px;
-    height: 154px;
-
-    > img {
-      display: inline-block;
-      width: 100%;
-      height: 100%;
-    }
-    > p {
-      display: flex;
-
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      color: #aaa;
-    }
-  }
-  > .articleTxtBox {
-    > p {
-      height: 77px;
-      color: #aaa;
-    }
-  }
-  > .articleEctBox {
-    display: flex;
-    justify-content: space-between;
-  }
 `;
 
 const aticleList = [
@@ -128,38 +87,15 @@ const aticleList = [
   },
 ]; //목업데이터
 
-const AticleListBox = ({ article }) => {
-  const { title, writer, createDate, content, likeCnt, imageUrl } = article;
-  const [timeAgo] = useTimeStamp(createDate);
-
-  return (
-    <>
-      <AticleListBoxStyle>
-        <div className='articlePhotoBox'>{imageUrl ? <img src='#' alt={`의 썸네일`} /> : <p>{content}</p>}</div>
-        <div>
-          <h1>{title}</h1>
-        </div>
-        <div className='articleTxtBox'>
-          <p>{content}</p>
-        </div>
-        <div className='articleEctBox'>
-          <p>{timeAgo}</p>
-          <p>{writer}</p>
-          <p>
-            <FaRegHeart />
-            {likeCnt}
-          </p>
-        </div>
-      </AticleListBoxStyle>
-    </>
-  );
-};
-
-const AticleList = () => {
+const ArticleList = () => {
   const [articleList, setArticle] = useState([]);
   const articleListLoad = async () => {
     await axios
-      .get('http://localhost:8081/posting/list')
+      .get('http://localhost:8081/posting/list', {
+        params: {
+          searchText: '',
+        },
+      })
       .then((response) => {
         setArticle(response.data);
       })
@@ -174,15 +110,16 @@ const AticleList = () => {
 
   return (
     <>
-      <AticleListStyle>
+      {/* 리스트갯수에 따라 margin값 조절 */}
+      <ArticleListStyle>
         {articleList.id !== null &&
           articleList.map((article) => {
-            return <AticleListBox key={article.id} article={article} />;
+            return <ArticleListBox key={article.id} article={article} />;
           })}
         ;
-      </AticleListStyle>
+      </ArticleListStyle>
     </>
   );
 };
 
-export default AticleList;
+export default ArticleList;

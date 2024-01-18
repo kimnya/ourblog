@@ -44,7 +44,7 @@ const ArticleWrite = () => {
         views: [
           ...prev.views.slice(0, idx + 1),
           { type: 'p', text: '' },
-          ...prev.views.slice(idx + 1, prev.views.length),
+          ...prev.views.slice(idx + 1, prev.views.length + 1),
         ],
       })); //배열에 객체를 추가하는 이벤트로직
       //
@@ -53,9 +53,6 @@ const ArticleWrite = () => {
     }
   };
 
-  // const articleWrite = (evt) => {
-  //   setTextBoxes((prev) => {});
-  // }; //onChange 이벤트
   useEffect(() => {
     console.log(focusIdx);
 
@@ -80,7 +77,7 @@ const ArticleWrite = () => {
       <form>
         <ContentsBox ref={$content} onKeyUp={addTextLine} id='content'>
           {textBoxes.views.map((textbox, idx) => {
-            return <TextBox key={idx} articleWrite={articleWrite} $idx={idx} $textref={$textref} $textbox={textbox} />;
+            return <TextBox key={idx} $idx={idx} $textref={$textref} $textbox={textbox} />;
           })}
           {/* TextBox를map으로 동적생성 하기위해 initialData에 데이터 추가가 필요함 */}
         </ContentsBox>
