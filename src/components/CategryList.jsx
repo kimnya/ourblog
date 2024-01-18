@@ -35,15 +35,13 @@ const CategryList = ({ myInfo, isTogle }) => {
             <>
               <p>{myInfo.nickname}의 카테고리</p>
               {myInfo.categories.map((category) => {
-                const { id, name } = category;
+                const { id, categoryName } = category; //백엔드코드 업데이트 되면 categoryName으로 바꿔야함
 
                 return (
                   <>
-                    <div>
-                      <ul>
-                        <li key={id}>{name}</li>
-                      </ul>
-                    </div>
+                    <ul key={id}>
+                      <li key={id}>{categoryName}</li>
+                    </ul>
                   </>
                 );
               })}

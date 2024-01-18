@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import styled from 'styled-components';
 
 const TextBoxStyle = styled.p`
@@ -28,28 +28,23 @@ const TextInput = styled.textarea`
   }
 `;
 
-const Text = forwardRef(({ $idx, $textbox, articleWrite }, ref) => {
+const Text = forwardRef(({ $idx, $textbox, changeTextValue }, ref) => {
+  const [textValue, setTextValue] = useState();
+
+  const articleWrite = (evt) => {
+    setTextValue(evt.target.value);
+    console.log(evt.target.value);
+  }; //onChange 이벤트
   return (
-    <TextInput
-      onChange={articleWrite}
-      value={$textbox.text}
-      data-idx={$idx}
-      ref={ref}
-      placeholder='메모작성'
-    ></TextInput>
+    <TextInput onChange={articleWrite} value={textValue} data-idx={$idx} ref={ref} placeholder='메모작성'></TextInput>
   );
 });
 
-const TextBox = ({ $textbox, $textref, $idx, articleWrite }) => {
+const TextBox = ({ $textbox, $textref, $idx }) => {
   return (
     <>
       <TextBoxStyle data-idx={$idx} $textbox={$textbox}>
-        <Text
-          $textbox={$textbox}
-          articleWrite={articleWrite}
-          $idx={$idx}
-          ref={(element) => ($textref.current[$idx] = element)}
-        />
+        <Text $textbox={$textbox} $idx={$idx} ref={(element) => ($textref.current[$idx] = element)} />
       </TextBoxStyle>
     </>
   );
