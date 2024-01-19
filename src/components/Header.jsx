@@ -40,6 +40,7 @@ const Header = () => {
     darkMode: false,
     searchBar: false,
     logined: false,
+    edit: false,
   });
 
   const navigate = useNavigate();
@@ -56,6 +57,10 @@ const Header = () => {
   const serchBarToggleHandler = () => {
     setTogle((prev) => ({ ...prev, searchBar: !prev.searchBar }));
     navigate('/search');
+  };
+
+  const editToggleHandler = () => {
+    setTogle((prev) => ({ ...prev, edit: !prev.edit }));
   };
 
   const moveLogin = () => navigate('/login');
@@ -98,6 +103,7 @@ const Header = () => {
           isTogle={isTogle}
           sideBarToggleHandler={sideBarToggleHandler}
           reactIconsSize={reactIconsSize}
+          editToggleHandler={editToggleHandler}
         />
         <Title />
         <div className='mainpageIcons'>
