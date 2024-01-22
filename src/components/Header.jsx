@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { IoSunny } from 'react-icons/io5';
 import Title from './Title';
 import { FaMoon } from 'react-icons/fa';
@@ -32,6 +32,9 @@ const HeaderStyled = styled.div`
   }
 `;
 
+export const CtxMyInfo = createContext(null);
+export const CtxSetMyInfo = createContext(null);
+
 const Header = () => {
   const [myInfo, setMyInfo] = useState([]);
 
@@ -40,7 +43,25 @@ const Header = () => {
     darkMode: false,
     searchBar: false,
     logined: false,
+    edit: false,
+    update: false,
   });
+
+  const getInfo = async () => {
+    await axios
+      .get('http://localhost:8081/member/info', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      })
+      .then((response) => {
+        setMyInfo(response.data);
+        setTogle((prev) => ({ ...prev, logined: true }));
+        console.log(response.data);
+        console.log(response.data['categories']);
+      })
+      .catch((error) => {
+        error.message;
+      });
+  };
 
   const navigate = useNavigate();
 
@@ -58,66 +79,56 @@ const Header = () => {
     navigate('/search');
   };
 
+  const editToggleHandler = () => {
+    setTogle((prev) => ({ ...prev, edit: !prev.edit }));
+  };
+
   const moveLogin = () => navigate('/login');
 
   const logoutSubmit = (evt) => {
     evt.preventDefault();
     localStorage.removeItem('accessToken');
     setMyInfo('');
-    setTogle((prev) => ({ ...prev, logined: !prev.logined }));
-  };
-
-  const getInfo = async () => {
-    await axios
-      .get('http://localhost:8081/member/info', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-      })
-      .then((response) => {
-        setMyInfo(response.data);
-        setTogle((prev) => ({ ...prev, logined: true }));
-        console.log(response.data);
-      })
-      .catch((error) => {
-        error.message;
-      });
   };
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      getInfo();
-    }
+    getInfo();
   }, [localStorage.getItem('accessToken')]);
 
   return (
     <>
       {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}
 
-      <HeaderStyled>
-        <SideBar
-          myInfo={myInfo}
-          isTogle={isTogle}
-          sideBarToggleHandler={sideBarToggleHandler}
-          reactIconsSize={reactIconsSize}
-        />
-        <Title />
-        <div className='mainpageIcons'>
-          {isTogle.darkMode ? (
-            <IoSunny size={reactIconsSize} onClick={darkModeToggleHandler} />
-          ) : (
-            <FaMoon size={reactIconsSize} onClick={darkModeToggleHandler} />
-          )}
-          <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
-          {isTogle.logined === false ? (
-            <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>
-              로그인
-            </Button>
-          ) : (
-            <p>
-              {myInfo['nickname']}/<Link onClick={logoutSubmit}>로그아웃</Link>{' '}
-            </p>
-          )}
-        </div>
-      </HeaderStyled>
+      <CtxSetMyInfo.Provider value={setMyInfo}>
+        <CtxMyInfo.Provider value={myInfo}>
+          <HeaderStyled>
+            <SideBar
+              isTogle={isTogle}
+              sideBarToggleHandler={sideBarToggleHandler}
+              reactIconsSize={reactIconsSize}
+              editToggleHandler={editToggleHandler}
+            />
+            <Title />
+            <div className='mainpageIcons'>
+              {isTogle.darkMode ? (
+                <IoSunny size={reactIconsSize} onClick={darkModeToggleHandler} />
+              ) : (
+                <FaMoon size={reactIconsSize} onClick={darkModeToggleHandler} />
+              )}
+              <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
+              {isTogle.logined === false ? (
+                <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>
+                  로그인
+                </Button>
+              ) : (
+                <p>
+                  {myInfo.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>{' '}
+                </p>
+              )}
+            </div>
+          </HeaderStyled>
+        </CtxMyInfo.Provider>
+      </CtxSetMyInfo.Provider>
     </>
   );
 };

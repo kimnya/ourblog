@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CategryList from './CategryList';
 import { HiXMark } from 'react-icons/hi2';
 import { RxHamburgerMenu } from 'react-icons/rx';
+
 const SideBarStyle = styled.div`
   left: 20px;
 `;
@@ -14,7 +15,7 @@ const SideBarBox = styled.div`
   position: absolute;
   left: ${(props) => {
     if (props.$isTogle.sideBar) {
-      return '-25px';
+      return '-20px';
     } else {
       return '-999px';
     }
@@ -29,14 +30,14 @@ const SideBarBox = styled.div`
   }
 `;
 
-const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize, myInfo }) => {
+const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize, editToggleHandler }) => {
   return (
     <>
       <SideBarStyle $isTogle={isTogle}>
         <RxHamburgerMenu size={reactIconsSize} onClick={sideBarToggleHandler} />
         <SideBarBox $isTogle={isTogle}>
           <HiXMark size={reactIconsSize} onClick={sideBarToggleHandler} />
-          <CategryList myInfo={myInfo} isTogle={isTogle} />
+          <CategryList isTogle={isTogle} editToggleHandler={editToggleHandler} />
         </SideBarBox>
       </SideBarStyle>
     </>
