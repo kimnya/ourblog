@@ -116,7 +116,6 @@ const ArticleList = () => {
           articleList.map((article) => {
             return <ArticleListBox key={article.id} article={article} />;
           })}
-        ;
       </ArticleListStyle>
     </>
   );

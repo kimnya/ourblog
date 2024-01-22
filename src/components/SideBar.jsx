@@ -15,7 +15,7 @@ const SideBarBox = styled.div`
   position: absolute;
   left: ${(props) => {
     if (props.$isTogle.sideBar) {
-      return '-25px';
+      return '-20px';
     } else {
       return '-999px';
     }
@@ -30,14 +30,14 @@ const SideBarBox = styled.div`
   }
 `;
 
-const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize, myInfo, editToggleHandler }) => {
+const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize, editToggleHandler }) => {
   return (
     <>
       <SideBarStyle $isTogle={isTogle}>
         <RxHamburgerMenu size={reactIconsSize} onClick={sideBarToggleHandler} />
         <SideBarBox $isTogle={isTogle}>
           <HiXMark size={reactIconsSize} onClick={sideBarToggleHandler} />
-          <CategryList myInfo={myInfo} isTogle={isTogle} editToggleHandler={editToggleHandler} />
+          <CategryList isTogle={isTogle} editToggleHandler={editToggleHandler} />
         </SideBarBox>
       </SideBarStyle>
     </>
