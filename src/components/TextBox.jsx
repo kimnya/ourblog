@@ -28,27 +28,28 @@ const TextInput = styled.textarea`
   }
 `;
 
-const Text = forwardRef(({ $idx, $textbox, articleWrite }, ref) => {
+const Text = forwardRef(({ idx, textbox, articleWrite }, ref) => {
   return (
     <TextInput
-      onChange={articleWrite}
-      value={$textbox.text}
-      data-idx={$idx}
+      onChange={(evt) => {
+        articleWrite(evt, idx);
+      }}
+      data-idx={idx}
       ref={ref}
       placeholder='메모작성'
     ></TextInput>
   );
 });
 
-const TextBox = ({ $textbox, $textref, $idx, articleWrite }) => {
+const TextBox = ({ textbox, $textref, idx, articleWrite }) => {
   return (
     <>
-      <TextBoxStyle data-idx={$idx} $textbox={$textbox}>
+      <TextBoxStyle data-idx={idx} $textbox={textbox}>
         <Text
-          $textbox={$textbox}
+          textbox={textbox}
           articleWrite={articleWrite}
-          $idx={$idx}
-          ref={(element) => ($textref.current[$idx] = element)}
+          idx={idx}
+          ref={(element) => ($textref.current[idx] = element)}
         />
       </TextBoxStyle>
     </>
