@@ -37,6 +37,7 @@ const ArticleWrite = () => {
     evt.target.style.height = `${evt.target.scrollHeight}px`;
     if (evt.key === 'Enter') {
       // $content.current.innerText = '';
+      evt.preventDefault();
       const idx = parseInt(evt.target.dataset.idx);
       console.log(idx);
       setTextBoxes((prev) => ({
@@ -56,11 +57,14 @@ const ArticleWrite = () => {
   const articleWrite = (evt, idx) => {
     const newViews = [...textBoxes.views];
     newViews[idx].text = evt.target.value;
+    console.log('text', newViews[idx].text);
+    console.log('vlaue', evt.target.value);
   }; //onChange 이벤트
 
   useEffect(() => {
     console.log(focusIdx);
     $textref.current[focusIdx]?.focus();
+    console.log($textref.current);
   }, [focusIdx]);
 
   const articlePost = async (evt) => {
