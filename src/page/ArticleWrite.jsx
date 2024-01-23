@@ -37,6 +37,7 @@ const ArticleWrite = () => {
     evt.target.style.height = `${evt.target.scrollHeight}px`;
     if (evt.key === 'Enter') {
       // $content.current.innerText = '';
+      evt.preventDefault();
       const idx = parseInt(evt.target.dataset.idx);
       console.log(idx);
       setTextBoxes((prev) => ({
@@ -53,35 +54,60 @@ const ArticleWrite = () => {
     }
   };
 
+  const articleWrite = (evt, idx) => {
+    const newViews = [...textBoxes.views];
+    newViews[idx].text = evt.target.value;
+    console.log('text', newViews[idx].text);
+    console.log('vlaue', evt.target.value);
+  }; //onChange 이벤트
+
   useEffect(() => {
     console.log(focusIdx);
-
     $textref.current[focusIdx]?.focus();
+    console.log($textref.current);
   }, [focusIdx]);
 
-  // const articlePost = async (evt) => {
-  //   evt.preventDefault();
+  const articlePost = async (evt) => {
+    evt.preventDefault();
+    let idx = 0;
+    for (let i = 0; i < textBoxes.views.length; i++) {
+      idx = i;
+      console.log(textBoxes.views[idx].text);
+
+      // console.log('idx2', idx);
+    }
+  }; // 게시물 포스트 호출 보류
+
   //   await axios
-  //     .post('http://localhost:8081/posting/create', {
-  //       content: contentsValue,
-  //     })
+  //     .post(
+  //       'http://localhost:8081/posting/create',
+  //       {
+  //         content: textBoxes.views[idx].text,
+  //       },
+  //       { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
+  //     )
   //     .then((response) => {
   //       alert('게시물작성 성공 ');
   //     })
   //     .catch((error) => {
   //       console.log(error.message);
   //     });
-  // };// 게시물 포스트 호출 보류
+  // }
+
   return (
     <>
-      <form>
+      <form onSubmit={articlePost}>
         <ContentsBox ref={$content} onKeyUp={addTextLine} id='content'>
           {textBoxes.views.map((textbox, idx) => {
-            return <TextBox key={idx} $idx={idx} $textref={$textref} $textbox={textbox} />;
+            return (
+              <>
+                <TextBox key={idx} idx={idx} articleWrite={articleWrite} $textref={$textref} textbox={textbox} />;
+              </>
+            );
           })}
           {/* TextBox를map으로 동적생성 하기위해 initialData에 데이터 추가가 필요함 */}
         </ContentsBox>
-        <Button width='200px' height='50px'>
+        <Button onClick={articlePost} width='200px' height='50px'>
           제출
         </Button>
       </form>
