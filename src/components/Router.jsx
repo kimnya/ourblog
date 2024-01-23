@@ -5,7 +5,7 @@ import Register from '../page/Register';
 import SearchPage from '../page/SearchPage';
 import Layout from './Layout';
 import MainPage from '../page/MainPage';
-import ArticleWrite from '../page/ArticleWrite';
+import EditPage from '../page/EditPage';
 
 const Router = () => {
   return (
@@ -17,7 +17,7 @@ const Router = () => {
           <Route path='/register' element={<Register />} />
           <Route path='/search' element={<SearchPage />} />
         </Route>
-        <Route path='/write' element={<ArticleWrite />} />
+        <Route path='/write' element={<EditPage />} />
       </Routes>
     </>
   );

@@ -28,6 +28,7 @@ const TextInput = styled.textarea`
   }
 `;
 
+
 const Text = forwardRef(({ $idx, $textbox, changeTextValue }, ref) => {
   const [textValue, setTextValue] = useState();
 
@@ -45,6 +46,7 @@ const TextBox = ({ $textbox, $textref, $idx }) => {
     <>
       <TextBoxStyle data-idx={$idx} $textbox={$textbox}>
         <Text $textbox={$textbox} $idx={$idx} ref={(element) => ($textref.current[$idx] = element)} />
+
       </TextBoxStyle>
     </>
   );
