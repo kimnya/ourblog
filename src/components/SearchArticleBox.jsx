@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import useTimeStamp from '../components/customHook/articleDate';
 import { FaRegHeart } from 'react-icons/fa';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const ArticleListBoxStyle = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -43,13 +45,30 @@ const ArticleListBoxStyle = styled.div`
 `;
 
 const SearchArticleBox = ({ searchItem }) => {
-  const { title, writer, createDate, content, likeCnt, imageUrl } = searchItem;
+  const { title, writer, createdDate, content, likeCnt, imageUrl } = searchItem;
+  const navigate = useNavigate();
 
-  const [timeAgo] = useTimeStamp(createDate);
+  const [timeAgo] = useTimeStamp(createdDate);
+
+  const getArticle = async (postId) => {
+    await axios
+      .get(`http://localhost:8081/posting/${postId}`)
+      .then((response) => {
+        console.log(response.data);
+        navigate('/readPage');
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <>
-      <ArticleListBoxStyle>
+      <ArticleListBoxStyle
+        onClick={() => {
+          getArticle(searchItem.id);
+        }}
+      >
         <div className='articlePhotoBox'>{imageUrl ? <img src='#' alt={`의 썸네일`} /> : <p>{content}</p>}</div>
         <div>
           <h1>{title}</h1>

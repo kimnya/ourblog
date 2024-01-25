@@ -6,6 +6,7 @@ import SearchPage from '../page/SearchPage';
 import Layout from './Layout';
 import MainPage from '../page/MainPage';
 import EditPage from '../page/EditPage';
+import Articleread from '../page/ArticleRead';
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/search' element={<SearchPage />} />
+          <Route path='/readPage' element={<Articleread />} />
         </Route>
         <Route path='/write' element={<EditPage />} />
       </Routes>

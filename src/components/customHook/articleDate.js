@@ -21,7 +21,9 @@ const useTimeStamp = (timestamp) => {
       setTimeAgo(`${days}일 전`);
     } else {
       // 일주일 이상 지난 아이템에 대해서는 YYYY-MM-DD로 표기
-      const date = new Date(timestamp);
+      const date = new Date(timestamp).toISOString().slice(0, 10);
+      // .toISOString().slice(0, 10);//객체타입을 스트링으로 변화후 YYYY-MM-DD로 표기 해주는 코드
+      //객체를 그대로 렌더링할 경우 오류가 뜬다.
       setTimeAgo(date);
     }
   };

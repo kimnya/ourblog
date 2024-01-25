@@ -56,6 +56,7 @@ const Header = () => {
         setMyInfo(response.data);
         setTogle((prev) => ({ ...prev, logined: true }));
         console.log(response.data);
+        localStorage.setItem('nickname', response.data['nickname']);
         console.log(response.data['categories']);
       })
       .catch((error) => {
@@ -88,11 +89,14 @@ const Header = () => {
   const logoutSubmit = (evt) => {
     evt.preventDefault();
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('nickname');
     setMyInfo('');
   };
 
   useEffect(() => {
-    getInfo();
+    if (localStorage.getItem('accessToken')) {
+      getInfo();
+    }
   }, [localStorage.getItem('accessToken')]);
 
   return (

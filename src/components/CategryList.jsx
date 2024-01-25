@@ -92,7 +92,7 @@ const CategryList = ({ isTogle, editToggleHandler }) => {
 
                 <span id='all'>전체보기</span>
                 {isTogle.edit === true && <EditCtegory />}
-                {myInfo.nickname !== '' &&
+                {myInfo &&
                   myInfo.categories.map((category) => {
                     const { id, categoryName } = category;
 
