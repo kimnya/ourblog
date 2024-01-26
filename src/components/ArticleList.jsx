@@ -14,6 +14,7 @@ const ArticleListStyle = styled.div`
 
 const ArticleList = () => {
   const [articleList, setArticle] = useState([]);
+  const [getUrl, setUrl] = useState();
 
   const articleListLoad = async () => {
     await axios
@@ -25,8 +26,10 @@ const ArticleList = () => {
       .then((response) => {
         console.log(response.data);
         console.log(typeof response.data);
-
         setArticle(response.data);
+        // let urlRegex = /("https?:\/\/[^ ]*")/;
+        // let url = response.data.content.match(urlRegex)[1].replace(/<[^>]*>[*][*]?/g, '');
+        // setUrl(url);
       })
       .catch((error) => {
         console.log(error.message);
@@ -43,7 +46,7 @@ const ArticleList = () => {
       <ArticleListStyle>
         {articleList.id !== null &&
           articleList.map((article) => {
-            return <ArticleListBox key={article.id} article={article} />;
+            return <ArticleListBox key={article.id} getUrl={getUrl} article={article} />;
           })}
       </ArticleListStyle>
     </>

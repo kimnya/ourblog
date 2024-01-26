@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import useTimeStamp from '../components/customHook/articleDate';
@@ -45,11 +45,16 @@ const ArticleListBoxStyle = styled.div`
 `;
 
 const ArticleListBox = ({ article }) => {
-  const { title, writer, createdDate, content, likeCnt, imageUrl } = article;
+  const { title, writer, createdDate, content, likeCnt, getUrl } = article;
   const navigate = useNavigate();
   const [timeAgo] = useTimeStamp(createdDate);
+
   const trimTagContent = content.replace(/<[^>]*>?/g, '');
-  // const setImageUrl = content;
+
+  let urlRegex = /("https?:\/\/[^ ]*")/;
+  let url = content.match(urlRegex)[1].replace(/<[^>]*>[*][*]?/g, '');
+
+  // console.log(url);
 
   const getArticle = async (postId) => {
     await axios
@@ -70,7 +75,9 @@ const ArticleListBox = ({ article }) => {
           getArticle(article.id);
         }}
       >
-        <div className='articlePhotoBox'>{imageUrl ? <img src='#' alt={`의 썸네일`} /> : <p>{trimTagContent}</p>}</div>
+        <div className='articlePhotoBox'>
+          <img src={getUrl} alt={`${writer}의 썸네일`} />
+        </div>
 
         <div>
           <h1>{title}</h1>

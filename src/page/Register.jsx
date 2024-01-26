@@ -55,7 +55,7 @@ const Register = () => {
       })
       .catch((err) => {
         const resp = err.response;
-        if (resp.status === 400) {
+        if (err.status === 400) {
           alert(resp.data);
         }
       });

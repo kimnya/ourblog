@@ -64,7 +64,7 @@ const Login = () => {
 
   return (
     <>
-      <h1>로그인</h1>
+      <h2>로그인</h2>
       <Form
         onSubmit={handleSubmit((data) => {
           loginSubmit(data);

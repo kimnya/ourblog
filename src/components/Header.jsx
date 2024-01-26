@@ -88,9 +88,10 @@ const Header = () => {
 
   const logoutSubmit = (evt) => {
     evt.preventDefault();
+    setTogle((prev) => ({ ...prev, logined: !prev.logined }));
+    setMyInfo([]);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('nickname');
-    setMyInfo('');
   };
 
   useEffect(() => {
