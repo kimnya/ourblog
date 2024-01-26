@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import useTimeStamp from '../components/customHook/articleDate';
 import { FaRegHeart } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const ArticleListBoxStyle = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -12,7 +12,7 @@ const ArticleListBoxStyle = styled.div`
   width: 282px;
   height: 339px;
   background-color: #fff;
-  border: 1px solid ${palette.mainGreen};
+  /* border: 1px solid ${palette.mainGreen}; */
 
   > .articlePhotoBox {
     width: 282px;
@@ -37,76 +37,57 @@ const ArticleListBoxStyle = styled.div`
       height: 77px;
       color: #aaa;
     }
-    border: 1px solid #000;
   }
   > .articleEctBox {
     display: flex;
     justify-content: space-between;
-    .writer {
-      margin-right: 10px;
-    }
   }
 `;
 
-const ArticleListBox = ({ article }) => {
-  const { title, writer, createdDate, content, id } = article;
-  const [heartCnt, setheart] = useState();
+const SearchArticleBox = ({ searchItem }) => {
+  const { title, writer, createdDate, content, likeCnt } = searchItem;
   const navigate = useNavigate();
+
   const [timeAgo] = useTimeStamp(createdDate);
+
   const trim = /<[^>]*>?/g;
   const urlRegex = /(https?:\/\/[^ ]*)/;
   const trimTagContent = content.replace(trim, '');
   const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
 
-  const likeCntRead = async (postId) => {
+  const getArticle = async (postId) => {
     await axios
-      .get(`http://localhost:8081/heart/get/${postId}`)
+      .get(`http://localhost:8081/posting/${postId}`)
       .then((response) => {
         console.log(response.data);
-        setheart(response.data.heartCount);
+        navigate('/readPage');
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
 
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      likeCntRead(id);
-    }
-  }, []);
   return (
     <>
       <ArticleListBoxStyle
-        id={id}
-        onClick={(evt) => {
-          const postId = evt.target.id;
-          console.log(postId);
-          navigate(`/readPage/${postId}`);
+        onClick={() => {
+          getArticle(searchItem.id);
         }}
       >
-        <div id={id} className='articlePhotoBox'>
-          <img id={id} src={imageUrl} alt={`${writer}의 썸네일`} />
-          {/* {console.log(url)} */}
+        <img src={imageUrl} alt={`${writer}의 썸네일`} />
+        <div>
+          <h1>{title}</h1>
         </div>
-
-        <div id={id}>
-          <h1 id={id}>{title}</h1>
+        <div className='articleTxtBox'>
+          <p>{trimTagContent}</p>
         </div>
+        <div className='articleEctBox'>
+          <p>{timeAgo}</p>
 
-        <div id={id} className='articleTxtBox'>
-          <p id={id}>{trimTagContent}</p>
-        </div>
-
-        <div id={id} className='articleEctBox'>
-          <p id={id}>{timeAgo}</p>
-
-          <p id={id}>
-            <span id={id} className='writer'>
-              {writer}
-            </span>
-            <FaRegHeart id={id} />
-            {heartCnt}
+          <p>
+            {writer}
+            <FaRegHeart />
+            {likeCnt}
           </p>
         </div>
       </ArticleListBoxStyle>
@@ -114,4 +95,4 @@ const ArticleListBox = ({ article }) => {
   );
 };
 
-export default ArticleListBox;
+export default SearchArticleBox;

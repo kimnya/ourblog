@@ -90,7 +90,9 @@ const CategryList = ({ isTogle, editToggleHandler }) => {
                   )}
                 </p>
 
-                <span id='all'>전체보기</span>
+                <Link to={'/articleAll'} id='all'>
+                  전체보기
+                </Link>
                 {isTogle.edit === true && <EditCtegory />}
                 {myInfo &&
                   myInfo.categories.map((category) => {
@@ -99,7 +101,9 @@ const CategryList = ({ isTogle, editToggleHandler }) => {
                     return (
                       <>
                         <ul key={id}>
-                          <li key={id}>{categoryName}</li>
+                          <li key={id}>
+                            <Link to={`/category${categoryName}`}>{categoryName}</Link>
+                          </li>
                         </ul>
                       </>
                     );

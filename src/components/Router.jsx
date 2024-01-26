@@ -18,8 +18,10 @@ const Router = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/search' element={<SearchPage />} />
-          <Route path='/readPage' element={<Articleread />} />
+          <Route path='/readPage/:postId' element={<Articleread />} />
+          <Route path='/category/:categoryName' element={<Articleread />} />
           <Route path='/myInfo' element={<MyInfoPage />} />
+          <Route path='/articleAll' element={<MyInfoPage />} />
         </Route>
         <Route path='/write' element={<EditPage />} />
       </Routes>

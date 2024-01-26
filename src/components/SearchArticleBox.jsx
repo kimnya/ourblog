@@ -45,10 +45,14 @@ const ArticleListBoxStyle = styled.div`
 `;
 
 const SearchArticleBox = ({ searchItem }) => {
-  const { title, writer, createdDate, content, likeCnt, imageUrl } = searchItem;
+  const { title, writer, createdDate, content, likeCnt } = searchItem;
   const navigate = useNavigate();
-
   const [timeAgo] = useTimeStamp(createdDate);
+
+  const trim = /<[^>]*>?/g;
+  const urlRegex = /(https?:\/\/[^ ]*)/;
+  const trimTagContent = content.replace(trim, '');
+  const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
 
   const getArticle = async (postId) => {
     await axios
@@ -69,19 +73,18 @@ const SearchArticleBox = ({ searchItem }) => {
           getArticle(searchItem.id);
         }}
       >
-        <div className='articlePhotoBox'>{imageUrl ? <img src='#' alt={`의 썸네일`} /> : <p>{content}</p>}</div>
+        <img src={imageUrl} alt={`${writer}의 썸네일`} />
         <div>
           <h1>{title}</h1>
         </div>
         <div className='articleTxtBox'>
-          <p>{content}</p>
+          <p>{trimTagContent}</p>
         </div>
         <div className='articleEctBox'>
           <p>{timeAgo}</p>
 
-          <p>{writer}</p>
-
           <p>
+            {writer}
             <FaRegHeart />
             {likeCnt}
           </p>
