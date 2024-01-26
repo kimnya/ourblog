@@ -55,15 +55,12 @@ const UserArticleAll = () => {
 
   const articleListLoad = async () => {
     await axios
-      .get('http://localhost:8081/posting/list', {
-        params: {
-          searchText: '',
-        },
+      .get('http://localhost:8081/category/list', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
       })
       .then((response) => {
         console.log(response.data);
         console.log(typeof response.data);
-        setArticle(response.data);
       })
       .catch((error) => {
         console.log(error.message);
@@ -77,26 +74,33 @@ const UserArticleAll = () => {
   return (
     <>
       <ArticleListBoxStyle
-        onClick={() => {
-          getArticle(searchItem.id);
-        }}
+      // onClick={() => {
+      //   getArticle(searchItem.id);
+      // }}
       >
-        <img src={imageUrl} alt={`${writer}의 썸네일`} />
+        {/* // <img src={imageUrl} alt={`${writer}의 썸네일`} />
+        //{' '}
         <div>
-          <h1>{title}</h1>
+          // <h1>{title}</h1>
+          //{' '}
         </div>
+        //{' '}
         <div className='articleTxtBox'>
-          <p>{trimTagContent}</p>
+          // <p>{trimTagContent}</p>
+          //{' '}
         </div>
+        //{' '}
         <div className='articleEctBox'>
-          <p>{timeAgo}</p>
-
+          // <p>{timeAgo}</p>
+          //{' '}
           <p>
-            {writer}
-            <FaRegHeart />
-            {likeCnt}
+            // {writer}
+            // <FaRegHeart />
+            // {likeCnt}
+            //{' '}
           </p>
-        </div>
+          //{' '}
+        </div> */}
       </ArticleListBoxStyle>
     </>
   );
