@@ -22,11 +22,20 @@ const Title = styled.span`
   margin: 0 auto;
 `;
 
+// {
+//   check: false,
+//   heartCount: 0,
+// }
 const Articleread = () => {
   const [articleDetail, setDetail] = useState();
-  const [heartCnt, setheart] = useState();
-  const [isHeartPush, setpush] = useState(false);
   const [content, setContent] = useState();
+  const [heartCnt, setHeart] = useState({
+    check: false,
+    heartCount: 0,
+  });
+  {
+    console.log(heartCnt);
+  }
   const { postId } = useParams();
 
   const articleDetailread = async (postId) => {
@@ -35,9 +44,7 @@ const Articleread = () => {
       .then((response) => {
         setDetail(response.data);
         console.log('response', response.data);
-
         setContent(response.data[parseInt(postId) - 1].content);
-
         console.log(postId);
       })
       .catch((error) => {
@@ -45,16 +52,20 @@ const Articleread = () => {
       });
   };
 
-  const pushHeart = () => {
-    setpush(!isHeartPush);
-  };
-
   const likeCntRead = async (postId) => {
     await axios
       .get(`http://localhost:8081/heart/get/${postId}`)
       .then((response) => {
         console.log('res', response.data);
-        setheart(response.data.heartCount);
+        return response.data;
+      })
+      .then((data) => {
+        console.log(data);
+        setHeart((prev) => ({
+          ...prev,
+          check: data.check,
+          heartCount: data.heartCount,
+        }));
       })
       .catch((error) => {
         console.log(error.message);
@@ -63,11 +74,19 @@ const Articleread = () => {
 
   const plusLikeCnt = async (postId) => {
     await axios
-      .post(`http://localhost:8081/heart/post/${postId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-      })
+      .post(
+        `http://localhost:8081/heart/post/${postId}`,
+        {}, //get이외의 api호출에서는 body부분 명시해야함 안하면 500에러
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+        },
+      )
       .then((response) => {
-        // console.log(response.status);
+        console.log(response.status);
+        setHeart((prev) => ({
+          ...prev,
+          check: !prev.check,
+        }));
       })
       .catch((error) => {
         console.log(error.message);
@@ -75,30 +94,38 @@ const Articleread = () => {
   };
   const minusLikeCnt = async (postId) => {
     await axios
-      .delete(`http://localhost:8081/heart/delete/${postId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-      })
+      .delete(
+        `http://localhost:8081/heart/delete/${postId}`,
+
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+        },
+      )
       .then((response) => {
-        // console.log(response.status);
+        console.log(response.status);
+        setHeart((prev) => ({
+          ...prev,
+          check: !prev.check,
+          heartCount: prev.heartCount - 1,
+        }));
       })
       .catch((error) => {
-        console.log(error.status);
+        console.log(error.message);
       });
   };
 
   useEffect(() => {
     articleDetailread(postId);
-    likeCntRead(postId);
   }, []);
-  // useEffect(() => {
-  //   likeCntRead(postId);
-  // }, [heartCnt]);
+  useEffect(() => {
+    likeCntRead(postId);
+  }, [heartCnt.check]);
 
   return (
     <>
       <ReadPageStyle>
-        <p onClick={pushHeart}>
-          {!isHeartPush ? (
+        <p>
+          {heartCnt.check !== true ? (
             <FaRegHeart
               onClick={() => {
                 plusLikeCnt(postId);
@@ -113,7 +140,7 @@ const Articleread = () => {
               size='24px'
             />
           )}
-          {heartCnt}
+          {heartCnt.heartCount}
         </p>
 
         <Title></Title>

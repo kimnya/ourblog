@@ -8,6 +8,7 @@ import MainPage from '../page/MainPage';
 import EditPage from '../page/EditPage';
 import Articleread from '../page/ArticleRead';
 import MyInfoPage from '../page/myInfoPage';
+import UserArticleAll from './UserArticleAll';
 
 const Router = () => {
   return (
@@ -21,7 +22,7 @@ const Router = () => {
           <Route path='/readPage/:postId' element={<Articleread />} />
           <Route path='/category/:categoryName' element={<Articleread />} />
           <Route path='/myInfo' element={<MyInfoPage />} />
-          <Route path='/articleAll' element={<MyInfoPage />} />
+          <Route path='/articleAll' element={<UserArticleAll />} />
         </Route>
         <Route path='/write' element={<EditPage />} />
       </Routes>

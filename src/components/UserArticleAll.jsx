@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
-import useTimeStamp from '../components/customHook/articleDate';
+import useTimeStamp from './customHook/articleDate';
 import { FaRegHeart } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -44,28 +44,35 @@ const ArticleListBoxStyle = styled.div`
   }
 `;
 
-const SearchArticleBox = ({ searchItem }) => {
-  const { title, writer, createdDate, content, likeCnt } = searchItem;
+const UserArticleAll = () => {
   const navigate = useNavigate();
+  // const [timeAgo] = useTimeStamp(createdDate);
 
-  const [timeAgo] = useTimeStamp(createdDate);
+  // const trim = /<[^>]*>?/g;
+  // const urlRegex = /(https?:\/\/[^ ]*)/;
+  // const trimTagContent = content.replace(trim, '');
+  // const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
 
-  const trim = /<[^>]*>?/g;
-  const urlRegex = /(https?:\/\/[^ ]*)/;
-  const trimTagContent = content.replace(trim, '');
-  const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
-
-  const getArticle = async (postId) => {
+  const articleListLoad = async () => {
     await axios
-      .get(`http://localhost:8081/posting/${postId}`)
+      .get('http://localhost:8081/posting/list', {
+        params: {
+          searchText: '',
+        },
+      })
       .then((response) => {
         console.log(response.data);
-        navigate('/readPage');
+        console.log(typeof response.data);
+        setArticle(response.data);
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
+
+  useEffect(() => {
+    articleListLoad();
+  }, []);
 
   return (
     <>
@@ -95,4 +102,4 @@ const SearchArticleBox = ({ searchItem }) => {
   );
 };
 
-export default SearchArticleBox;
+export default UserArticleAll;

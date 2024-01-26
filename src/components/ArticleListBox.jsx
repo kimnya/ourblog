@@ -62,7 +62,7 @@ const ArticleListBox = ({ article }) => {
     await axios
       .get(`http://localhost:8081/heart/get/${postId}`)
       .then((response) => {
-        console.log(response.data);
+        console.log('res', response.data);
         setheart(response.data.heartCount);
       })
       .catch((error) => {
