@@ -53,24 +53,58 @@ const Articleread = () => {
   };
 
   const likeCntRead = async (postId) => {
-    await axios
-      .get(`http://localhost:8081/heart/get/${postId}`)
-      .then((response) => {
-        console.log('res', response.data);
-        return response.data;
-      })
-      .then((data) => {
-        console.log(data);
-        setHeart((prev) => ({
-          ...prev,
-          check: data.check,
-          heartCount: data.heartCount,
-        }));
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    if (localStorage.getItem('accessToken')) {
+      axios
+        .get(`http://localhost:8081/heart/user/${postId}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+        })
+        .then((response) => {
+          console.log('res', response.data);
+          setHeart((prev) => ({
+            ...prev,
+            check: response.data.check,
+            heartCount: response.data.heartCount,
+          }));
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    } else {
+      axios
+        .get(`http://localhost:8081/heart/anonymous/${postId}`)
+        .then((response) => {
+          console.log('res', response.data);
+          setHeart((prev) => ({
+            ...prev,
+            check: response.data.check,
+            heartCount: response.data.heartCount,
+          }));
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
   };
+
+  // const likeCntRead = async (postId) => {
+  //    axios
+  //     .get(`http://localhost:8081/heart/get/${postId}`)
+  //     .then((response) => {
+  //       console.log('res', response.data);
+  //       return response.data;
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //       setHeart((prev) => ({
+  //         ...prev,
+  //         check: data.check,
+  //         heartCount: data.heartCount,
+  //       }));
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.message);
+  //     });
+  // };
 
   const plusLikeCnt = async (postId) => {
     await axios
