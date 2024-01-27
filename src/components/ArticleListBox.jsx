@@ -61,6 +61,7 @@ const ArticleListBox = ({ article }) => {
   const trimTagContent = content.replace(trim, '');
   const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
 
+
   const likeCntRead = async (postId) => {
     await axios
       .get(`http://localhost:8081/heart/get/${postId}`, {
@@ -79,8 +80,10 @@ const ArticleListBox = ({ article }) => {
       });
   };
 
+
   const anonymousLikeCntRead = async (postId) => {
-    await axios
+    axios
+
       .get(`http://localhost:8081/heart/anonymous/${postId}`)
       .then((response) => {
         console.log('res', response.data);
@@ -89,11 +92,14 @@ const ArticleListBox = ({ article }) => {
           check: response.data.check,
           heartCount: response.data.heartCount,
         }));
+
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
+
+
 
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
@@ -101,7 +107,7 @@ const ArticleListBox = ({ article }) => {
     } else {
       anonymousLikeCntRead(id);
     }
-  }, []);
+  }, [heartCnt.heartCount]);
   return (
     <>
       <ArticleListBoxStyle
