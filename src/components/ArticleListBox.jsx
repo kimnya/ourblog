@@ -61,37 +61,33 @@ const ArticleListBox = ({ article }) => {
   if (content.match('<img')) {
     imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
   }
-
   const trimTagContent = content.replace(trim, '');
 
-  if (localStorage.getItem('accessToken')) {
-    const likeCntRead = useQuery({
-      queryKey: ['likeCntRead', id],
-      queryFn: likeCntReadApi,
-    });
-  } else {
-    const anonymousLikeCnt = useQuery({
-      queryKey: ['anonymousLikeCnt', id],
-      queryFn: anonymousLikeCntReadApi,
-    });
-  }
+  const likeCntRead = useQuery({
+    queryKey: ['likeCnt'],
+    queryFn: likeCntReadApi,
+  });
+
+  const anonymousLikeCntRead = useQuery({
+    queryKey: ['anonymousLikeCnt'],
+    queryFn: anonymousLikeCntReadApi,
+  });
 
   return (
     <>
       <ArticleListBoxStyle
-      // id={id}
-      // onClick={(evt) => {
-      //   const postId = evt.target.id;
-      //   console.log(postId);
-      //   navigate(`/readPage/${postId}`);
-      // }}
+        id={id}
+        onClick={(evt) => {
+          const postId = evt.target.id;
+          console.log(postId);
+          navigate(`/readPage/${postId}`);
+        }}
       >
-        {/* <div id={id} className='articlePhotoBox'>
+        <div id={id} className='articlePhotoBox'>
           <img id={id} src={imageUrl} alt={`${writer}의 썸네일`} />
-          {/* {console.log(url)} 
-        </div> */}
+        </div>
 
-        {/* <div id={id}>
+        <div id={id}>
           <h1 id={id}>{title}</h1>
         </div>
 
@@ -107,9 +103,11 @@ const ArticleListBox = ({ article }) => {
               {writer}
             </span>
             <FaRegHeart id={id} />
-            {heartCnt.heartCount}
+            {localStorage.getItem('accessToken')
+              ? likeCntRead.data.data.heartCount
+              : anonymousLikeCntRead.data.data.heartCount}
           </p>
-        </div> */}
+        </div>
       </ArticleListBoxStyle>
     </>
   );

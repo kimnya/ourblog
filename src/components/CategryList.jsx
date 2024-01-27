@@ -4,7 +4,7 @@ import { palette } from '../styles/palette';
 import { Link } from 'react-router-dom';
 import EditCtegory from './category/EditCtegory';
 import { FaGear } from 'react-icons/fa6';
-import { CtxMyInfo } from './Header';
+
 import { FaCheck } from 'react-icons/fa6';
 
 const CategoryBox = styled.div`

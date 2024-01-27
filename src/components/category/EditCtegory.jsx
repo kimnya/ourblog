@@ -5,7 +5,6 @@ import { FaPlus } from 'react-icons/fa6';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { FaRegCircleXmark } from 'react-icons/fa6';
 import axios from 'axios';
-import { CtxMyInfo, CtxSetMyInfo } from '../Header';
 
 const EditCtegoryStyile = styled.div`
   position: absolute;
