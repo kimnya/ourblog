@@ -8,15 +8,15 @@ export const articleListLoad = async () => {
 };
 
 //익명유저를 위한 좋아요 호출
-export const anonymousLikeCntReadApi = async (postId) => {
-  const response = axios.get(`http://localhost:8081/heart/anonymous/${postId}`);
+export const anonymousLikeCntReadApi = async ({ queryKey }) => {
+  const response = axios.get(`http://localhost:8081/heart/anonymous/${queryKey[1]}`);
 
   return response;
 };
 
 //로그인한 유저를 위한 좋아요 호출
-export const likeCntReadApi = async (postId) => {
-  const response = axios.get(`http://localhost:8081/heart/get/${postId}`, {
+export const likeCntReadApi = async ({ queryKey }) => {
+  const response = axios.get(`http://localhost:8081/heart/get/${queryKey[1]}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
   });
 

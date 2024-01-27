@@ -64,13 +64,15 @@ const ArticleListBox = ({ article }) => {
   const trimTagContent = content.replace(trim, '');
 
   const likeCntRead = useQuery({
-    queryKey: ['likeCnt'],
+    queryKey: ['likeCnt', id],
     queryFn: likeCntReadApi,
+    enabled: localStorage.getItem('accessToken') !== null,
   });
 
   const anonymousLikeCntRead = useQuery({
-    queryKey: ['anonymousLikeCnt'],
+    queryKey: ['anonymousLikeCnt', id],
     queryFn: anonymousLikeCntReadApi,
+    enabled: localStorage.getItem('accessToken') == null,
   });
 
   return (
