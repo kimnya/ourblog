@@ -61,25 +61,10 @@ const ArticleListBox = ({ article }) => {
   const trimTagContent = content.replace(trim, '');
   const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
 
-  const anonymousLikeCntRead = async (postId) => {
-    axios
-      .get(`http://localhost:8081/heart/anonymous/${postId}`)
-      .then((response) => {
-        console.log('res', response.data);
-        setHeart((prev) => ({
-          ...prev,
-          check: response.data.check,
-          heartCount: response.data.heartCount,
-        }));
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
 
-  const likeCntRead = (postId) => {
-    axios
-      .get(`http://localhost:8081/heart/user/${postId}`, {
+  const likeCntRead = async (postId) => {
+    await axios
+      .get(`http://localhost:8081/heart/get/${postId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
       })
       .then((response) => {
@@ -94,6 +79,27 @@ const ArticleListBox = ({ article }) => {
         console.log(error.message);
       });
   };
+
+
+  const anonymousLikeCntRead = async (postId) => {
+    axios
+
+      .get(`http://localhost:8081/heart/anonymous/${postId}`)
+      .then((response) => {
+        console.log('res', response.data);
+        setHeart((prev) => ({
+          ...prev,
+          check: response.data.check,
+          heartCount: response.data.heartCount,
+        }));
+
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+
 
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
