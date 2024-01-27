@@ -56,10 +56,15 @@ const ArticleListBox = ({ article }) => {
   });
   const navigate = useNavigate();
   const [timeAgo] = useTimeStamp(createdDate);
+  let imageUrl = '';
   const trim = /<[^>]*>?/g;
   const urlRegex = /(https?:\/\/[^ ]*)/;
+
+  if (content.match('<img')) {
+    imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
+  }
+
   const trimTagContent = content.replace(trim, '');
-  const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
 
   const likeCntRead = async (postId) => {
     await axios
