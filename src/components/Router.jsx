@@ -10,6 +10,7 @@ import Articleread from '../page/ArticleRead';
 import MyInfoPage from '../page/myInfoPage';
 import UserArticleAll from './UserArticleAll';
 import AllArticlePage from '../page/AllArticlePage';
+import PrivateRoute from '../utill/PrivateRoute';
 
 const Router = () => {
   return (
@@ -22,10 +23,12 @@ const Router = () => {
           <Route path='/search' element={<SearchPage />} />
           <Route path='/readPage/:postId' element={<Articleread />} />
           <Route path='/category/:categoryName' element={<AllArticlePage />} />
-          <Route path='/myInfo' element={<MyInfoPage />} />
           <Route path='/articleAll' element={<AllArticlePage />} />
         </Route>
-        <Route path='/write' element={<EditPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path='/myInfo' element={<MyInfoPage />} />
+          <Route path='/write' element={<EditPage />} />
+        </Route>
       </Routes>
     </>
   );

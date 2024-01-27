@@ -8,11 +8,13 @@ import Shadow from './Shadow';
 const Layout = () => {
   return (
     <>
+      {/* <Shadow> */}
       <Header />
       <Main>
         <Outlet />
       </Main>
       <Footer />
+      {/* </Shadow> */}
     </>
   );
 };
