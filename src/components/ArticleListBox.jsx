@@ -50,7 +50,10 @@ const ArticleListBoxStyle = styled.div`
 
 const ArticleListBox = ({ article }) => {
   const { title, writer, createdDate, content, id } = article;
-  const [heartCnt, setheart] = useState();
+  const [heartCnt, setHeart] = useState({
+    check: false,
+    heartCount: 0,
+  });
   const navigate = useNavigate();
   const [timeAgo] = useTimeStamp(createdDate);
   const trim = /<[^>]*>?/g;
@@ -58,12 +61,34 @@ const ArticleListBox = ({ article }) => {
   const trimTagContent = content.replace(trim, '');
   const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
 
-  const likeCntRead = async (postId) => {
-    await axios
-      .get(`http://localhost:8081/heart/get/${postId}`)
+  const anonymousLikeCntRead = async (postId) => {
+    axios
+      .get(`http://localhost:8081/heart/anonymous/${postId}`)
       .then((response) => {
         console.log('res', response.data);
-        setheart(response.data.heartCount);
+        setHeart((prev) => ({
+          ...prev,
+          check: response.data.check,
+          heartCount: response.data.heartCount,
+        }));
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  const likeCntRead = (postId) => {
+    axios
+      .get(`http://localhost:8081/heart/user/${postId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      })
+      .then((response) => {
+        console.log('res', response.data);
+        setHeart((prev) => ({
+          ...prev,
+          check: response.data.check,
+          heartCount: response.data.heartCount,
+        }));
       })
       .catch((error) => {
         console.log(error.message);
@@ -73,8 +98,10 @@ const ArticleListBox = ({ article }) => {
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
       likeCntRead(id);
+    } else {
+      anonymousLikeCntRead(id);
     }
-  }, []);
+  }, [heartCnt.heartCount]);
   return (
     <>
       <ArticleListBoxStyle
@@ -106,7 +133,7 @@ const ArticleListBox = ({ article }) => {
               {writer}
             </span>
             <FaRegHeart id={id} />
-            {heartCnt}
+            {heartCnt.heartCount}
           </p>
         </div>
       </ArticleListBoxStyle>

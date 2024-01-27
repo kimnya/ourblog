@@ -9,6 +9,7 @@ import EditPage from '../page/EditPage';
 import Articleread from '../page/ArticleRead';
 import MyInfoPage from '../page/myInfoPage';
 import UserArticleAll from './UserArticleAll';
+import AllArticlePage from '../page/AllArticlePage';
 
 const Router = () => {
   return (
@@ -20,9 +21,9 @@ const Router = () => {
           <Route path='/register' element={<Register />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/readPage/:postId' element={<Articleread />} />
-          <Route path='/category/:categoryName' element={<Articleread />} />
+          <Route path='/category/:categoryName' element={<AllArticlePage />} />
           <Route path='/myInfo' element={<MyInfoPage />} />
-          <Route path='/articleAll' element={<UserArticleAll />} />
+          <Route path='/articleAll' element={<AllArticlePage />} />
         </Route>
         <Route path='/write' element={<EditPage />} />
       </Routes>
