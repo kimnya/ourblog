@@ -48,7 +48,7 @@ const SearchBar = () => {
           autoFocus
         />
       </Form>
-      {searchList.id !== '' &&
+      {searchList &&
         searchList.map((item) => {
           console.log(item);
           return (

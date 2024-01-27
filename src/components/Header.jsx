@@ -55,9 +55,9 @@ const Header = () => {
       .then((response) => {
         setMyInfo(response.data);
         setTogle((prev) => ({ ...prev, logined: true }));
-        console.log(response.data);
+        // console.log(response.data);
         localStorage.setItem('nickname', response.data['nickname']);
-        console.log(response.data['categories']);
+        // console.log(response.data['categories']);
       })
       .catch((error) => {
         error.message;
