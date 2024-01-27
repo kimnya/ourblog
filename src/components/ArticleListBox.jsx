@@ -79,7 +79,7 @@ const ArticleListBox = ({ article }) => {
 
   const likeCntRead = (postId) => {
     axios
-      .get(`http://localhost:8081/heart/user/${postId}`, {
+      .get(`http://localhost:8081/heart/get/${postId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
       })
       .then((response) => {
