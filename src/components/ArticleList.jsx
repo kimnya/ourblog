@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import ArticleListBox from './ArticleListBox';
+import { useQuery } from '@tanstack/react-query';
 
 const ArticleListStyle = styled.div`
   display: flex;
@@ -13,35 +14,33 @@ const ArticleListStyle = styled.div`
 `;
 
 const ArticleList = () => {
-  const [articleList, setArticle] = useState([]);
+  // const [articleList, setArticle] = useState([]);
 
   const articleListLoad = async () => {
-    await axios
-      .get('http://localhost:8081/posting/list', {
-        params: {
-          searchText: '',
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        console.log(typeof response.data);
-        setArticle(response.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    const articleList = await axios.get('http://localhost:8081/posting/list', {
+      params: {
+        searchText: '',
+      },
+    });
+    console.log(articleList.data);
+    return articleList;
   };
 
-  useEffect(() => {
-    articleListLoad();
-  }, []);
+  const { data } = useQuery({
+    queryKey: ['ArticleList'],
+    queryFn: articleListLoad,
+  });
+
+  // useEffect(() => {
+  //   articleListLoad();
+  // }, []);
 
   return (
     <>
       {/* 리스트갯수에 따라 margin값 조절 */}
       <ArticleListStyle>
-        {articleList.id !== null &&
-          articleList.map((article) => {
+        {data.id !== null &&
+          data.map((article) => {
             return <ArticleListBox key={article.id} article={article} />;
           })}
       </ArticleListStyle>
