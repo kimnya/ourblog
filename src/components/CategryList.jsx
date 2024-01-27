@@ -57,7 +57,7 @@ const CategoryBox = styled.div`
   }
 `;
 
-const CategryList = ({ isTogle, editToggleHandler }) => {
+const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
   const myInfo = useContext(CtxMyInfo);
 
   return (
@@ -65,7 +65,9 @@ const CategryList = ({ isTogle, editToggleHandler }) => {
       <CategoryBox>
         <div>
           <div>
-            <Link to={'/'}>Home</Link>
+            <Link onClick={sideBarToggleHandler} to='/'>
+              Home
+            </Link>
             {isTogle.logined === false ? (
               <p>로그인을 하시면 개인 카테고리가 나옵니다.</p>
             ) : (
@@ -90,7 +92,7 @@ const CategryList = ({ isTogle, editToggleHandler }) => {
                   )}
                 </p>
 
-                <Link to={'/articleAll'} id='all'>
+                <Link onClick={sideBarToggleHandler} to={'/articleAll'} id='all'>
                   전체보기
                 </Link>
                 {isTogle.edit === true && <EditCtegory />}
@@ -101,7 +103,7 @@ const CategryList = ({ isTogle, editToggleHandler }) => {
                     return (
                       <>
                         <ul key={id}>
-                          <li key={id}>
+                          <li key={id} onClick={sideBarToggleHandler}>
                             <Link to={`/category${categoryName}`}>{categoryName}</Link>
                           </li>
                         </ul>
