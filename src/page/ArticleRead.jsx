@@ -86,31 +86,11 @@ const Articleread = () => {
     }
   };
 
-  // const likeCntRead = async (postId) => {
-  //    axios
-  //     .get(`http://localhost:8081/heart/get/${postId}`)
-  //     .then((response) => {
-  //       console.log('res', response.data);
-  //       return response.data;
-  //     })
-  //     .then((data) => {
-  //       console.log(data);
-  //       setHeart((prev) => ({
-  //         ...prev,
-  //         check: data.check,
-  //         heartCount: data.heartCount,
-  //       }));
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.message);
-  //     });
-  // };
-
   const plusLikeCnt = async (postId) => {
     await axios
       .post(
         `http://localhost:8081/heart/post/${postId}`,
-        {}, //get이외의 api호출에서는 body부분 명시해야함 안하면 500에러
+        {}, //post api호출에서 body부분 명시해야함 안하면 500에러
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
         },
