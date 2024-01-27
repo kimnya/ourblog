@@ -61,9 +61,11 @@ const ArticleListBox = ({ article }) => {
   const trimTagContent = content.replace(trim, '');
   const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
 
-  const anonymousLikeCntRead = async (postId) => {
-    axios
-      .get(`http://localhost:8081/heart/anonymous/${postId}`)
+  const likeCntRead = async (postId) => {
+    await axios
+      .get(`http://localhost:8081/heart/get/${postId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      })
       .then((response) => {
         console.log('res', response.data);
         setHeart((prev) => ({
@@ -77,11 +79,10 @@ const ArticleListBox = ({ article }) => {
       });
   };
 
-  const likeCntRead = (postId) => {
-    axios
-      .get(`http://localhost:8081/heart/get/${postId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-      })
+  const anonymousLikeCntRead = async (postId) => {
+    await axios
+      .get(`http://localhost:8081/heart/anonymous/${postId}`)
+
       .then((response) => {
         console.log('res', response.data);
         setHeart((prev) => ({
