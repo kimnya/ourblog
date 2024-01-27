@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 
@@ -15,8 +15,8 @@ const ShadowBox = styled.div`
   opacity: 60%;
 `;
 
-const Shadow = () => {
-  return <ShadowBox></ShadowBox>;
+const Shadow = ({ children }) => {
+  return <ShadowBox>{children}</ShadowBox>;
 };
 
 export default Shadow;
