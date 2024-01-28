@@ -63,7 +63,7 @@ const EditCtegory = () => {
       { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
     );
 
-    // return response;
+    return response;
   };
 
   // const updateVideoData = (data, clickedTitleIndex) => {
@@ -88,7 +88,7 @@ const EditCtegory = () => {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
-    // return response;
+    return response;
   };
   const deleteCategory = useMutation({
     queryKey: ['myInfo'],
