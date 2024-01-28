@@ -62,8 +62,6 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
     queryFn: getInfo,
     enabled: localStorage.getItem('accessToken') !== null,
   });
-  console.log(myInfo);
-
   return (
     <>
       <CategoryBox>

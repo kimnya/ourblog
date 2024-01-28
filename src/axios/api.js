@@ -53,15 +53,19 @@ export const deleteCategory = async (categoryId) => {
   return response;
 };
 
-//카테고리 수정 호출
-// export const submitName = async (categoryId, editName) => {
-//   const response = await axios.patch(
-//     `http://localhost:8081/category/${categoryId}`,
-//     { categoryName: editName },
-//     { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
-//   );
-//   return response;
-// };
+//검색용 아티클 리스트 호촐
+export const searchArticle = async ({ queryKey }) => {
+  const response = await axios.get('http://localhost:8081/posting/list', {
+    params: { searchText: `${queryKey[1]}` },
+  });
+  return response;
+};
+
+// 아티클 상세보기 호촐
+export const getArticle = async (postId) => {
+  const response = await axios.get(`http://localhost:8081/posting/${postId}`);
+  return response;
+};
 
 // = useQuery({
 //     queryKey:,

@@ -5,6 +5,7 @@ import useTimeStamp from '../components/customHook/articleDate';
 import { FaRegHeart } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { getArticle } from '../axios/api';
 const ArticleListBoxStyle = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -49,28 +50,21 @@ const SearchArticleBox = ({ searchItem }) => {
   const navigate = useNavigate();
   const [timeAgo] = useTimeStamp(createdDate);
 
+  const getSearchedArticle = useQuery({
+    queryKey: ['searchedArticle'],
+    queryFn: getArticle,
+  });
+
   const trim = /<[^>]*>?/g;
   const urlRegex = /(https?:\/\/[^ ]*)/;
   const trimTagContent = content.replace(trim, '');
   const imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
 
-  const getArticle = async (postId) => {
-    await axios
-      .get(`http://localhost:8081/posting/${postId}`)
-      .then((response) => {
-        console.log(response.data);
-        navigate('/readPage');
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
   return (
     <>
       <ArticleListBoxStyle
         onClick={() => {
-          getArticle(searchItem.id);
+          getSearchedArticle.mutate(searchItem.id);
         }}
       >
         <img src={imageUrl} alt={`${writer}의 썸네일`} />
