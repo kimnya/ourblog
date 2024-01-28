@@ -8,7 +8,7 @@ import MainPage from '../page/MainPage';
 import EditPage from '../page/EditPage';
 import Articleread from '../page/ArticleRead';
 import MyInfoPage from '../page/myInfoPage';
-import UserArticleAll from './UserArticleAll';
+import UserArticleAll from '../page/UserArticleAll';
 import AllArticlePage from '../page/AllArticlePage';
 import PrivateRoute from '../utill/PrivateRoute';
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // 게시물리스트 호출
-export const articleListLoad = async () => {
+export const articleListRead = async () => {
   const response = axios.get('http://localhost:8081/posting/list', { params: { searchText: '' } });
   return response;
 };
@@ -54,16 +54,22 @@ export const deleteCategory = async (categoryId) => {
 };
 
 //검색용 아티클 리스트 호촐
-export const searchArticle = async ({ queryKey }) => {
+export const searchArticleRead = async ({ queryKey }) => {
   const response = await axios.get('http://localhost:8081/posting/list', {
     params: { searchText: `${queryKey[1]}` },
   });
   return response;
 };
-
 // 아티클 상세보기 호촐
 export const getArticle = async (postId) => {
   const response = await axios.get(`http://localhost:8081/posting/${postId}`);
+  return response;
+};
+
+export const userArticleRead = async () => {
+  const response = await axios.get('http://localhost:8081/category/all', {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+  });
   return response;
 };
 

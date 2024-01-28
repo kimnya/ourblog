@@ -1,5 +1,5 @@
 import React from 'react';
-import UserArticleAll from '../components/UserArticleAll';
+import UserArticleAll from './UserArticleAll';
 import ArticleList from '../components/ArticleList';
 import { Link, useNavigate } from 'react-router-dom';
 

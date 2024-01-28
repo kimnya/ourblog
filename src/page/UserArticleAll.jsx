@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
-import useTimeStamp from './customHook/articleDate';
+import useTimeStamp from '../components/customHook/articleDate';
 import { FaRegHeart } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
