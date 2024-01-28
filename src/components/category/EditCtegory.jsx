@@ -44,7 +44,7 @@ const EditCtegoryStyile = styled.div`
   }
 `;
 
-const EditCtegory = () => {
+const EditCtegory = ({ setFocus }) => {
   const queryClient = useQueryClient();
   const categoryArray = queryClient.getQueryData(['myInfo']).data.categories;
   const [editName, setName] = useState();
@@ -110,6 +110,7 @@ const EditCtegory = () => {
                   <li>
                     <label htmlFor='category'>category</label>
                     <Input
+                      ref={setFocus}
                       id={id}
                       name='category'
                       defaultValue={categoryArray.categoryName !== '' ? categoryName : ''}
@@ -122,7 +123,10 @@ const EditCtegory = () => {
                     <span>
                       <FaRegCircleCheck
                         onClick={() => {
-                          useSubmitName.mutate(id);
+                          if (category.categoryName === null) {
+                          } else {
+                            useSubmitName.mutate(id);
+                          }
                         }}
                       />
                     </span>

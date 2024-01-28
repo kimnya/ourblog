@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import { Link } from 'react-router-dom';
@@ -62,6 +62,8 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
     queryFn: getInfo,
     enabled: localStorage.getItem('accessToken') !== null,
   });
+
+  const setFocus = useRef();
   return (
     <>
       <CategoryBox>
@@ -76,7 +78,27 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
               <p>
                 {myInfo.data.data.nickname}의 카테고리
                 <span>
-                  <FaGear size={'24px'} onClick={editToggleHandler} />
+                  <FaGear
+                    size={'24px'}
+                    onClick={() => {
+                      const preventNull = myInfo.data.data.categories.map((category) => {
+                        if (category.categoryName === null) {
+                          return false;
+                        }
+                        return true;
+                      });
+
+                      if (isTogle.edit === false || preventNull === true) {
+                        editToggleHandler();
+                      }
+                      if (isTogle.edit === true) {
+                        if (preventNull) {
+                          alert('카테고리 제목을 적어주세요.');
+                          setFocus.current.focus();
+                        }
+                      }
+                    }}
+                  />
                 </span>
                 {isTogle.edit === true && (
                   <span>
@@ -84,8 +106,21 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
                       color={palette.mainGreen}
                       size={'24px'}
                       onClick={() => {
-                        if (isTogle.edit) {
+                        const preventNull = myInfo.data.data.categories.map((category) => {
+                          if (category.categoryName === null) {
+                            return false;
+                          }
+                          return true;
+                        });
+
+                        if (isTogle.edit === false || preventNull === true) {
                           editToggleHandler();
+                        }
+                        if (isTogle.edit === true) {
+                          if (preventNull) {
+                            alert('카테고리 제목을 적어주세요.');
+                            setFocus.current.focus();
+                          }
                         }
                       }}
                     />
@@ -96,7 +131,7 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
               <Link onClick={sideBarToggleHandler} to={'/articleAll'} id='all'>
                 전체보기
               </Link>
-              {isTogle.edit === true && <EditCtegory />}
+              {isTogle.edit === true && <EditCtegory setFocus={setFocus} />}
               <ul>
                 {myInfo.data.data.categories.map((category) => {
                   const { id, categoryName } = category;
