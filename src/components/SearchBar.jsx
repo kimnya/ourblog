@@ -2,8 +2,18 @@ import React, { useState } from 'react';
 import Input from './Input';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import SearchArticleBox from './SearchArticleBox';
+import { searchArticleRead } from '../axios/api';
+import { useQuery } from '@tanstack/react-query';
+import ArticleListBox from './ArticleListBox';
+
+const ArticleListStyle = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 1237px;
+  height: 710px; */
+`;
 
 const Form = styled.form`
   > label {
@@ -12,53 +22,48 @@ const Form = styled.form`
 `;
 
 const SearchBar = () => {
+  const [searchData, setData] = useState();
   const { register, getValues, handleSubmit } = useForm();
-  const [searchList, setSearchList] = useState([]);
-  const searchArticle = async (data) => {
-    await axios
-      .get('http://localhost:8081/posting/list', {
-        params: { searchText: data.search },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setSearchList(response.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+
+  const searchArticle = useQuery({
+    queryKey: ['searchArticles', searchData],
+    queryFn: searchArticleRead,
+    enabled: searchData !== null,
+  });
+  const { data } = searchArticle;
+  console.log(searchArticle);
 
   return (
     <>
-      <Form
-        onSubmit={handleSubmit((data) => {
-          searchArticle(data);
-        })}
-      >
-        <label htmlFor='search'>검색창</label>
-        <Input
-          {...register('search', {
-            onChange: () => {
-              console.log(getValues('search'));
-            },
+      <ArticleListStyle>
+        <Form
+          onSubmit={handleSubmit((data) => {
+            setData(data.search);
+            searchArticle.refetch();
           })}
-          width='450px'
-          height='50px'
-          $placeholder='검색할 단어를 입력해주세요.'
-          autoFocus
-        />
-      </Form>
-      {searchList &&
-        searchList.map((item) => {
-          console.log(item);
-          return (
-            <>
-              <div>
-                <SearchArticleBox id={item.id} searchItem={item} />;
-              </div>
-            </>
-          );
-        })}
+        >
+          <label htmlFor='search'>검색창</label>
+          <Input
+            {...register('search', {
+              // onChange: (evt) => {
+              //   setData(getValues('search'));
+              // },
+            })}
+            width='450px'
+            height='50px'
+            $placeholder='검색할 단어를 입력해주세요.'
+            autoFocus
+          />
+        </Form>
+
+        {/* 리스트갯수에 따라 margin값 조절 */}
+
+        {data &&
+          data.data.map((article) => {
+            // articleList는 객체 그 안에 데이터 객체가 있고 그안에 데이터 배열이 있다. 내가 원하는 건 배열
+            return <ArticleListBox key={article.id} article={article} />;
+          })}
+      </ArticleListStyle>
 
       {/* 검색기능 searchText 빈문자열이라면 메시지 띄우기 */}
     </>

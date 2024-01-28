@@ -5,6 +5,8 @@ import useTimeStamp from '../components/customHook/articleDate';
 import { FaRegHeart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { anonymousLikeCntReadApi, likeCntReadApi } from '../axios/api';
 const ArticleListBoxStyle = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -50,64 +52,28 @@ const ArticleListBoxStyle = styled.div`
 
 const ArticleListBox = ({ article }) => {
   const { title, writer, createdDate, content, id } = article;
-  const [heartCnt, setHeart] = useState({
-    check: false,
-    heartCount: 0,
-  });
-  const navigate = useNavigate();
   const [timeAgo] = useTimeStamp(createdDate);
   let imageUrl = '';
   const trim = /<[^>]*>?/g;
   const urlRegex = /(https?:\/\/[^ ]*)/;
-
   if (content.match('<img')) {
     imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
   }
-
   const trimTagContent = content.replace(trim, '');
+  const navigate = useNavigate();
 
-  const likeCntRead = async (postId) => {
-    await axios
-      .get(`http://localhost:8081/heart/get/${postId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-      })
-      .then((response) => {
-        console.log('res', response.data);
-        setHeart((prev) => ({
-          ...prev,
-          check: response.data.check,
-          heartCount: response.data.heartCount,
-        }));
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+  const likeCntRead = useQuery({
+    queryKey: ['likeCnt', id],
+    queryFn: likeCntReadApi,
+    enabled: localStorage.getItem('accessToken') !== null,
+  });
 
-  const anonymousLikeCntRead = async (postId) => {
-    await axios
-      .get(`http://localhost:8081/heart/anonymous/${postId}`)
+  const anonymousLikeCntRead = useQuery({
+    queryKey: ['anonymousLikeCnt', id],
+    queryFn: anonymousLikeCntReadApi,
+    enabled: localStorage.getItem('accessToken') == null,
+  });
 
-      .then((response) => {
-        console.log('res', response.data);
-        setHeart((prev) => ({
-          ...prev,
-          check: response.data.check,
-          heartCount: response.data.heartCount,
-        }));
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      likeCntRead(id);
-    } else {
-      anonymousLikeCntRead(id);
-    }
-  }, [heartCnt.heartCount]);
   return (
     <>
       <ArticleListBoxStyle
@@ -120,7 +86,6 @@ const ArticleListBox = ({ article }) => {
       >
         <div id={id} className='articlePhotoBox'>
           <img id={id} src={imageUrl} alt={`${writer}의 썸네일`} />
-          {/* {console.log(url)} */}
         </div>
 
         <div id={id}>
@@ -139,7 +104,9 @@ const ArticleListBox = ({ article }) => {
               {writer}
             </span>
             <FaRegHeart id={id} />
-            {heartCnt.heartCount}
+            {localStorage.getItem('accessToken')
+              ? likeCntRead.data.data.heartCount
+              : anonymousLikeCntRead.data.data.heartCount}
           </p>
         </div>
       </ArticleListBoxStyle>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
@@ -9,11 +9,13 @@ const Layout = () => {
   return (
     <>
       {/* <Shadow> */}
+
       <Header />
       <Main>
         <Outlet />
       </Main>
       <Footer />
+
       {/* </Shadow> */}
     </>
   );

@@ -4,8 +4,9 @@ import { palette } from '../styles/palette';
 import { Link } from 'react-router-dom';
 import EditCtegory from './category/EditCtegory';
 import { FaGear } from 'react-icons/fa6';
-import { CtxMyInfo } from './Header';
 import { FaCheck } from 'react-icons/fa6';
+import { useQuery } from '@tanstack/react-query';
+import { getInfo } from '../axios/api';
 
 const CategoryBox = styled.div`
   position: relative;
@@ -25,94 +26,91 @@ const CategoryBox = styled.div`
     padding-top: 20px;
     font-size: 18px;
 
-    > div {
-      margin-left: 15px;
-      > a,
-      p {
-        margin: 15px;
-        font-size: 24px;
-      }
+    > a,
+    p {
+      margin: 15px;
+      font-size: 24px;
+    }
+    > span {
+      margin: 15px 0px;
+    }
+    > p {
+      display: flex;
+      align-items: center;
       > span {
-        margin: 15px 0px;
+        margin-left: 5px;
+        transition: all 0.8s;
       }
-      > p {
-        display: flex;
-        align-items: center;
-        > span {
-          margin-left: 5px;
-          transition: all 0.8s;
-        }
-        > span:hover {
-          transform: scale(1.2);
-        }
-      }
-
-      ul > li {
-        margin: 15px 15px 15px 25px;
+      > span:hover {
+        transform: scale(1.2);
       }
     }
+
+    ul > li {
+      margin: 15px 15px 15px 25px;
+    }
   }
+
   #all {
     margin-left: 15px;
   }
 `;
 
 const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
-  const myInfo = useContext(CtxMyInfo);
-
+  const myInfo = useQuery({
+    queryKey: ['myInfo'],
+    queryFn: getInfo,
+    enabled: localStorage.getItem('accessToken') !== null,
+  });
   return (
     <>
       <CategoryBox>
         <div>
-          <div>
-            <Link onClick={sideBarToggleHandler} to='/'>
-              Home
-            </Link>
-            {isTogle.logined === false ? (
-              <p>로그인을 하시면 개인 카테고리가 나옵니다.</p>
-            ) : (
-              <>
-                <p>
-                  {myInfo.nickname}의 카테고리
+          <Link onClick={sideBarToggleHandler} to='/'>
+            Home
+          </Link>
+          {!localStorage.getItem('accessToken') ? (
+            <p>로그인을 하시면 개인 카테고리가 나옵니다.</p>
+          ) : (
+            <>
+              <p>
+                {myInfo.data.data.nickname}의 카테고리
+                <span>
+                  <FaGear size={'24px'} onClick={editToggleHandler} />
+                </span>
+                {isTogle.edit === true && (
                   <span>
-                    <FaGear size={'24px'} onClick={editToggleHandler} />
+                    <FaCheck
+                      color={palette.mainGreen}
+                      size={'24px'}
+                      onClick={() => {
+                        if (isTogle.edit) {
+                          editToggleHandler();
+                        }
+                      }}
+                    />
                   </span>
-                  {isTogle.edit === true && (
-                    <span>
-                      <FaCheck
-                        color={palette.mainGreen}
-                        size={'24px'}
-                        onClick={() => {
-                          if (isTogle.edit) {
-                            editToggleHandler();
-                          }
-                        }}
-                      />
-                    </span>
-                  )}
-                </p>
+                )}
+              </p>
 
-                <Link onClick={sideBarToggleHandler} to={'/articleAll'} id='all'>
-                  전체보기
-                </Link>
-                {isTogle.edit === true && <EditCtegory />}
-                {myInfo &&
-                  myInfo.categories.map((category) => {
-                    const { id, categoryName } = category;
-
-                    return (
-                      <>
-                        <ul key={id}>
-                          <li key={id} onClick={sideBarToggleHandler}>
-                            <Link to={`/category${categoryName}`}>{categoryName}</Link>
-                          </li>
-                        </ul>
-                      </>
-                    );
-                  })}
-              </>
-            )}
-          </div>
+              <Link onClick={sideBarToggleHandler} to={'/articleAll'} id='all'>
+                전체보기
+              </Link>
+              {isTogle.edit === true && <EditCtegory />}
+              <ul>
+                {myInfo.data.data.categories.map((category) => {
+                  const { id, categoryName } = category;
+                  return (
+                    <li key={id} onClick={sideBarToggleHandler}>
+                      <Link key={id} to={`/category${categoryName}`}>
+                        {categoryName}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          )}
         </div>
       </CategoryBox>
     </>
