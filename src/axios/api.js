@@ -54,13 +54,14 @@ export const deleteCategory = async (categoryId) => {
 };
 
 //카테고리 수정 호출
-export const submitName = async (categoryId, editName) => {
-  axios.patch(
-    `http://localhost:8081/category/${categoryId}`,
-    { categoryName: editName },
-    { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
-  );
-};
+// export const submitName = async (categoryId, editName) => {
+//   const response = await axios.patch(
+//     `http://localhost:8081/category/${categoryId}`,
+//     { categoryName: editName },
+//     { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
+//   );
+//   return response;
+// };
 
 // = useQuery({
 //     queryKey:,

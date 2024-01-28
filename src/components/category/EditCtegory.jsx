@@ -5,13 +5,13 @@ import { FaPlus } from 'react-icons/fa6';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { FaRegCircleXmark } from 'react-icons/fa6';
 import axios from 'axios';
-import { createCategory, deleteCategory, submitName } from '../../axios/api';
+import { createCategory, deleteCategory } from '../../axios/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const EditCtegoryStyile = styled.div`
   position: absolute;
   left: 0;
-  top: 158px;
+  top: 184px;
   width: 100%;
   background-color: #fff;
   /* opacity: 50%; */
@@ -52,8 +52,7 @@ const EditCtegory = () => {
   const editValue = (evt, idx) => {
     const newCategryName = [...categoryArray];
     newCategryName[idx].categoryName = evt.target.value;
-    setName(newCategryName[idx].categoryName);
-    console.log(newCategryName[idx]);
+    setName(evt.target.value);
   };
 
   const useCreateCategory = useMutation({
@@ -72,9 +71,21 @@ const EditCtegory = () => {
     },
   });
 
+  const submitName = async (categoryId) => {
+    const response = await axios.patch(
+      `http://localhost:8081/category/${categoryId}`,
+      { categoryName: editName },
+      { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
+    );
+    return response;
+  };
+
   const useSubmitName = useMutation({
     mutationFn: submitName,
     enabled: false,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['myInfo'] });
+    },
   });
 
   return (
@@ -111,7 +122,7 @@ const EditCtegory = () => {
                     <span>
                       <FaRegCircleCheck
                         onClick={() => {
-                          useSubmitName.mutate(id, editName);
+                          useSubmitName.mutate(id);
                         }}
                       />
                     </span>
