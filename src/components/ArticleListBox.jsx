@@ -52,16 +52,15 @@ const ArticleListBoxStyle = styled.div`
 
 const ArticleListBox = ({ article }) => {
   const { title, writer, createdDate, content, id } = article;
-  const navigate = useNavigate();
   const [timeAgo] = useTimeStamp(createdDate);
   let imageUrl = '';
   const trim = /<[^>]*>?/g;
   const urlRegex = /(https?:\/\/[^ ]*)/;
-
   if (content.match('<img')) {
     imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
   }
   const trimTagContent = content.replace(trim, '');
+  const navigate = useNavigate();
 
   const likeCntRead = useQuery({
     queryKey: ['likeCnt', id],

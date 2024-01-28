@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Input from './Input';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import SearchArticleBox from './SearchArticleBox';
 import { searchArticleRead } from '../axios/api';
 import { useQuery } from '@tanstack/react-query';
 import ArticleListBox from './ArticleListBox';

@@ -4,167 +4,144 @@ import { palette } from '../styles/palette';
 import { useParams } from 'react-router-dom';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
-import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { darken, lighten } from '../styles/ColorMixin';
+import { AnonymousLikeCntRead, articleDetailRead, minusLikeCnt, plusLikeCnt, userLikeCntRead } from '../axios/api';
 
 const ReadPageStyle = styled.div`
-  width: 98vw;
+  width: 70vw;
+  height: 100vh;
   margin: 0 auto;
+  padding: 0 80px;
   border: 3px solid ${palette.mainGreen};
   border-radius: 25px;
   > p {
     display: inline;
   }
-`;
+  .contentsBox {
+    display: flex;
+    justify-content: space-between;
+    .postInfoBox {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 22%;
+      #writer {
+        font-size: 16px;
+        font-weight: bold;
+      }
+      #date {
+        font-size: 12px;
+      }
+      .heartBox {
+        font-size: 18px;
+        font-weight: bold;
+        color: ${palette.mainGreen};
 
-const Title = styled.span`
-  border: 1px solid #000;
-  display: inline-block;
-  margin: 0 auto;
-`;
+        svg {
+          font-size: 32px;
+        }
+      }
+    }
 
-// {
-//   check: false,
-//   heartCount: 0,
-// }
-const Articleread = () => {
-  const [articleDetail, setDetail] = useState();
-  const [content, setContent] = useState();
-  const [heartCnt, setHeart] = useState({
-    check: false,
-    heartCount: 0,
-  });
-  {
-    console.log(heartCnt);
+    .editBox {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      color: ${palette.mainGreen};
+      ${darken(0.1)}
+      font-size: 16px;
+      > p {
+        margin-right: 15px;
+      }
+    }
   }
+`;
+const Title = styled.h2`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px auto;
+  font-size: 32px;
+`;
+
+const Articleread = () => {
   const { postId } = useParams();
 
-  const articleDetailread = async (postId) => {
-    await axios
-      .get(`http://localhost:8081/posting/${postId}`)
-      .then((response) => {
-        setDetail(response.data);
-        console.log('response', response.data);
-        setContent(response.data[parseInt(postId) - 1].content);
-        console.log(postId);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+  const articleDetail = useQuery({
+    queryKey: ['articleDetail', postId],
+    queryFn: articleDetailRead,
+  });
+  console.log('a', articleDetail);
 
-  const likeCntRead = async (postId) => {
-    if (localStorage.getItem('accessToken')) {
-      axios
-        .get(`http://localhost:8081/heart/user/${postId}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-        })
-        .then((response) => {
-          console.log('res', response.data);
-          setHeart((prev) => ({
-            ...prev,
-            check: response.data.check,
-            heartCount: response.data.heartCount,
-          }));
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    } else {
-      axios
-        .get(`http://localhost:8081/heart/anonymous/${postId}`)
-        .then((response) => {
-          console.log('res', response.data);
-          setHeart((prev) => ({
-            ...prev,
-            check: response.data.check,
-            heartCount: response.data.heartCount,
-          }));
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+  const likeCntUser = useQuery({
+    queryKey: ['userLikeCnt', postId],
+    queryFn: userLikeCntRead,
+    enabled: localStorage.getItem('accessToken') !== null,
+  });
+
+  const likeCntAnonimous = useQuery({
+    queryKey: ['AnonimousLikeCnt', postId],
+    queryFn: AnonymousLikeCntRead,
+    enabled: localStorage.getItem('accessToken') == null,
+  });
+
+  const plusLikeCntApi = useQuery({
+    queryKey: ['plusLikeCnt', postId],
+    queryFn: plusLikeCnt,
+    enabled: false,
+  });
+
+  const minusLikeCntApi = useQuery({
+    queryKey: ['minusLikeCnt', postId],
+    queryFn: minusLikeCnt,
+    enabled: false,
+  });
+
+  const { content } = articleDetail.data.data[postId - 1];
+
+  const posting = articleDetail.data.data.find((post) => {
+    if (post.postId == postId) {
+      return true;
     }
-  };
-
-  const plusLikeCnt = async (postId) => {
-    await axios
-      .post(
-        `http://localhost:8081/heart/post/${postId}`,
-        {}, //post api호출에서 body부분 명시해야함 안하면 500에러
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-        },
-      )
-      .then((response) => {
-        console.log(response.status);
-        setHeart((prev) => ({
-          ...prev,
-          check: !prev.check,
-        }));
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-  const minusLikeCnt = async (postId) => {
-    await axios
-      .delete(
-        `http://localhost:8081/heart/delete/${postId}`,
-
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-        },
-      )
-      .then((response) => {
-        console.log(response.status);
-        setHeart((prev) => ({
-          ...prev,
-          check: !prev.check,
-          heartCount: prev.heartCount - 1,
-        }));
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  useEffect(() => {
-    articleDetailread(postId);
-  }, []);
-  useEffect(() => {
-    likeCntRead(postId);
-  }, [heartCnt.check]);
+  });
+  const postingDate = posting.createdDate.slice(0, 16);
 
   return (
     <>
       <ReadPageStyle>
-        <p>
-          {heartCnt.check !== true ? (
-            <FaRegHeart
-              onClick={() => {
-                plusLikeCnt(postId);
-              }}
-              size='24px'
-            />
-          ) : (
-            <FaHeart
-              onClick={() => {
-                minusLikeCnt(postId);
-              }}
-              size='24px'
-            />
-          )}
-          {heartCnt.heartCount}
-        </p>
+        <Title>{posting.title}</Title>
 
-        <Title></Title>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: content,
-          }}
-        />
+        <div className='contentsBox'>
+          <div className='postInfoBox'>
+            <p id='writer'>{posting.writer}</p>
+            <p id='date'>{postingDate}</p>
+            {localStorage.getItem('accessToken') == null ? (
+              <p className='heartBox'>
+                <FaRegHeart onClick={() => plusLikeCntApi.refetch()} /> {likeCntAnonimous.data.data.heartCount}
+              </p>
+            ) : (
+              (likeCntUser.data.data.check !== true && (
+                <p className='heartBox'>
+                  <FaRegHeart onClick={() => plusLikeCntApi.refetch()} /> {likeCntUser.data.data.heartCount}
+                </p>
+              )) ||
+              (likeCntUser.data.data.check == true && (
+                <p className='heartBox'>
+                  <FaHeart onClick={() => minusLikeCntApi.refetch()} /> {likeCntUser.data.data.heartCount}
+                </p>
+              ))
+            )}
+          </div>
+          <div className='editBox'>
+            <p>수정</p>
+            <p>삭제</p>
+          </div>
+        </div>
+        {posting && <div id='contents' dangerouslySetInnerHTML={{ __html: content }} />}
       </ReadPageStyle>
     </>
   );
 };
+
 export default Articleread;

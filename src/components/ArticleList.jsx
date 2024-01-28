@@ -16,16 +16,10 @@ const ArticleListStyle = styled.div`
 
 const ArticleList = () => {
   const articleAll = useQuery({
-    querykey: ['articleRead '],
+    queryKeKy: ['articleRead '],
     queryFn: articleListRead,
     enabled: true,
   });
-
-  // const userArticle = useQuery({
-  //   querykey: ['userArticleRead'],
-  //   queryFn: userArticleRead,
-  //   enabled: false,
-  // });
 
   const { data } = articleAll;
   return (
