@@ -26,6 +26,7 @@ const ArticleList = () => {
       <ArticleListStyle>
         {articleList.data &&
           articleList.data.data.map((article) => {
+            // articleList는 객체 그 안에 데이터 객체가 있고 그안에 데이터 배열이 있다. 내가 원하는 건 배열
             return <ArticleListBox key={article.id} article={article} />;
           })}
       </ArticleListStyle>

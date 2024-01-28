@@ -3,7 +3,6 @@ import axios from 'axios';
 // 게시물리스트 호출
 export const articleListLoad = async () => {
   const response = axios.get('http://localhost:8081/posting/list', { params: { searchText: '' } });
-  console.log(response.data);
   return response;
 };
 

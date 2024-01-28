@@ -50,7 +50,8 @@ const Header = () => {
     queryFn: getInfo,
     enabled: localStorage.getItem('accessToken') !== null,
   });
-  localStorage.setItem('nickname', myInfo.data.data['nickname']);
+
+  // localStorage.setItem('nickname', myInfo.data.data['nickname']);
 
   const navigate = useNavigate();
 
@@ -106,7 +107,7 @@ const Header = () => {
             </Button>
           ) : (
             <p>
-              {myInfo.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>{' '}
+              {myInfo.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>{' '}
             </p>
           )}
         </div>
