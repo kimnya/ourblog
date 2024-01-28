@@ -31,6 +31,37 @@ export const getInfo = async () => {
   return response;
 };
 
+//카테고리 생성 호출
+
+export const createCategory = async () => {
+  const response = await axios.post(
+    'http://localhost:8081/category/create',
+    { categoryName: '' },
+    { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
+  );
+
+  return response; //return 값 넣어주자
+};
+
+//카테고리 삭제 호출
+export const deleteCategory = async (categoryId) => {
+  const response = await axios.delete(`http://localhost:8081/category/${categoryId}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  });
+  return response;
+};
+
+//카테고리 수정 호출
+export const submitName = async (categoryId, editName) => {
+  axios.patch(
+    `http://localhost:8081/category/${categoryId}`,
+    { categoryName: editName },
+    { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
+  );
+};
+
 // = useQuery({
 //     queryKey:,
 //     queryFn:

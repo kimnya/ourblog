@@ -107,7 +107,7 @@ const Header = () => {
             </Button>
           ) : (
             <p>
-              {myInfo.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>{' '}
+              {myInfo.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>{' '}
             </p>
           )}
         </div>

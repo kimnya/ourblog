@@ -76,7 +76,7 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
           ) : (
             <>
               <p>
-                {myInfo.data.nickname}의 카테고리
+                {myInfo.data.data.nickname}의 카테고리
                 <span>
                   <FaGear size={'24px'} onClick={editToggleHandler} />
                 </span>
@@ -101,11 +101,6 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
               {isTogle.edit === true && <EditCtegory />}
               <ul>
                 {myInfo.data.data.categories.map((category) => {
-                  {
-                    if (myInfo.status === 'loading') {
-                      return <span>loading...</span>;
-                    }
-                  }
                   const { id, categoryName } = category;
                   return (
                     <li key={id} onClick={sideBarToggleHandler}>

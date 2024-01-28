@@ -5,7 +5,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { FaRegCircleXmark } from 'react-icons/fa6';
 import axios from 'axios';
-import { getInfo } from '../../axios/api';
+import { createCategory, deleteCategory, submitName } from '../../axios/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const EditCtegoryStyile = styled.div`
@@ -47,82 +47,33 @@ const EditCtegoryStyile = styled.div`
 const EditCtegory = () => {
   const queryClient = useQueryClient();
   const categoryArray = queryClient.getQueryData(['myInfo']).data.categories;
-  console.log('editcategory mount', categoryArray);
   const [editName, setName] = useState();
-  // const [categories, setCategory] = useState([...categoryArray]);
-  // console.log('categories mount', categories);
 
-  // useEffect(() => {
-  //   setCategory([...categoryArray]);
-  // }, [categoryArray.length]);
-
-  const creatingCategory = async () => {
-    const response = await axios.post(
-      'http://localhost:8081/category/create',
-      { categoryName: '' },
-      { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
-    );
-
-    return response;
+  const editValue = (evt, idx) => {
+    const newCategryName = [...categoryArray];
+    newCategryName[idx].categoryName = evt.target.value;
+    setName(newCategryName[idx].categoryName);
+    console.log(newCategryName[idx]);
   };
 
-  // const updateVideoData = (data, clickedTitleIndex) => {
-  //   queryClient.setQueryData(['myInfo', data.categories, clickedTitleIndex], (oldData) => {
-  //     return { ...oldData, ...data };
-  //   });
-  // };
-
-  const createCategory = useMutation({
-    mutationFn: creatingCategory,
+  const useCreateCategory = useMutation({
+    mutationFn: createCategory,
     enabled: false,
     onSuccess: async () => {
       await queryClient.invalidateQueries(['myInfo']);
     },
   }); //mutation은 mutate()함수로 호출한다.
 
-  // 수정 api 주소 변경 다른 api도 확인 해봐야함
-
-  const deletingCategory = async (categoryId) => {
-    const response = await axios.delete(`http://localhost:8081/category/${categoryId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
-    return response;
-  };
-  const deleteCategory = useMutation({
-    queryKey: ['myInfo'],
-    mutationFn: deletingCategory,
+  const useDeleteCategory = useMutation({
+    mutationFn: deleteCategory,
     enabled: false,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['myInfo'] });
     },
   });
 
-  const editValue = (evt, idx) => {
-    const newCategryName = [...categoryArray];
-    const { value } = evt.target;
-    newCategryName[idx].categoryName = value;
-    setName(value);
-  };
-
-  const submitingName = async (categoryId) => {
-    axios.patch(
-      `http://localhost:8081/category/${categoryId}`,
-      {
-        categoryName: editName,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          'Access-Control-Allow-Origin': 'http://localhost:8081/', // 서버 domain
-        },
-      },
-    );
-  };
-
-  const submitName = useMutation({
-    mutationFn: submitingName,
+  const useSubmitName = useMutation({
+    mutationFn: submitName,
     enabled: false,
   });
 
@@ -133,9 +84,7 @@ const EditCtegory = () => {
         <span>카테고리</span>
         <FaPlus
           onClick={() => {
-            const idx = categoryArray.at(-1).id;
-            createCategory.mutate(idx);
-            // setCategory((prev) => [...prev, { id: idx + 1, categoryName: '', postings: [] }]);
+            useCreateCategory.mutate();
           }}
         />
       </div>
@@ -162,7 +111,7 @@ const EditCtegory = () => {
                     <span>
                       <FaRegCircleCheck
                         onClick={() => {
-                          submitName.mutate(id);
+                          useSubmitName.mutate(id, editName);
                         }}
                       />
                     </span>
@@ -171,13 +120,7 @@ const EditCtegory = () => {
                         id={id}
                         onClick={() => {
                           if (confirm('정말로 삭제하시겠습니까?')) {
-                            deleteCategory.mutate(id);
-
-                            // setCategory((prev) => [
-                            //   ...prev.filter((category) => {
-                            //     return id !== category.id;
-                            //   }),
-                            // ]);
+                            useDeleteCategory.mutate(id);
                           }
                         }}
                       />
