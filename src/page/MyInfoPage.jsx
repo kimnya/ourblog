@@ -80,7 +80,15 @@ const Mybox2 = styled(MyBox1)`
     margin-bottom: 25px;
   }
 
-  .nicknameBox {
+  .profileBox {
+    > div {
+      width: 100%;
+
+      > p {
+        width: 100%;
+        margin-left: 10px;
+      }
+    }
   }
 `;
 
@@ -119,7 +127,7 @@ const MyInfoPage = () => {
   const imagetoggleButton = () => {
     setToggle((prev) => ({
       ...prev,
-      nickame: !prev.nickname,
+      image: !prev.image,
     }));
 
     console.log(toggle);
@@ -137,6 +145,7 @@ const MyInfoPage = () => {
   };
 
   const getProfileApi = useQuery({ queryKey: ['getProfile'], queryFn: getProfile });
+  console.log(getProfileApi);
 
   const { data } = getProfileApi.data;
 
@@ -152,10 +161,11 @@ const MyInfoPage = () => {
                   <img src={data.imageUrl} alt='' />
                   <p>{data.nickname}</p>
                 </div>
-                <Button width='155px' heith='34px'>
+                <Button onClick={imagetoggleButton} width='155px' heith='34px'>
                   사진수정
                 </Button>
               </div>
+              {toggle.image && <EditProfile imagetoggleButton={imagetoggleButton} type='image' />}
               <div className='nicknameBox'>
                 {data.nickname}
                 <Button
@@ -166,17 +176,17 @@ const MyInfoPage = () => {
                 >
                   수정
                 </Button>
-                {toggle.nickname && <EditProfile type='nickname' />}
+                {toggle.nickname && <EditProfile nicknametoggleButton={nicknametoggleButton} type='nickname' />}
               </div>
               <div className='emailBox'>
                 {data.email}
                 <Button onClick={emailtoggleButton}>수정</Button>
-                {toggle.email && <EditProfile type='email' />}
+                {toggle.email && <EditProfile emailtoggleButton={emailtoggleButton} type='email' />}
               </div>
               <div className='passwordBox'>
                 <span>***********</span>
                 <Button onClick={passwordtoggleButton}>수정</Button>
-                {toggle.password && <EditProfile type='password' />}
+                {toggle.password && <EditProfile passwordtoggleButton={passwordtoggleButton} type='password' />}
               </div>
 
               <div className='deleteBox'>

@@ -191,6 +191,21 @@ export const editPasswordProfile = async (data) => {
 
   return response;
 };
+
+//프로필사진 수정 호출
+export const editimageProfile = async (data) => {
+  console.log('호출');
+  const response = await axios.patch(
+    'http://localhost:8081/profile/imageUpdate',
+    { imageUrl: data },
+    {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
+    },
+  );
+
+  return response;
+};
+
 // = useQuery({
 //     queryKey:,
 //     queryFn:

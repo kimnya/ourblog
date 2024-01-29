@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { useCallback, useRef, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
-import { storage } from './../Firebase';
+import { storage } from '../Firebase';
 import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
 import 'react-quill/dist/quill.snow.css';
 
 //모듈을 useMemo로 감싸지 않으면 렌더링이 발생할 때마다 모듈 객체가 새로 생성되면서 focus가 에디터에서 벗어난다. 위 코드처럼 module 객체를 useMemo로 감싸주도록 하자.
 
-const QuillEditor = ({ values, setValues }) => {
+const EditQuill = ({ values, setValues }) => {
   const quillRef = useRef(null);
 
   const imageHandler = () => {
@@ -107,4 +107,4 @@ const QuillEditor = ({ values, setValues }) => {
   );
 };
 
-export default QuillEditor;
+export default EditQuill;

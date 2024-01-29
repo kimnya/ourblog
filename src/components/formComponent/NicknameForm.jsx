@@ -12,20 +12,22 @@ const InputStyle = styled.div`
   > form {
     display: flex;
     position: relative;
+
+    > input {
+      width: 200px;
+    }
+    > button {
+      position: absolute;
+      top: 0;
+      right: -200px;
+    }
   }
   > label {
     display: none;
   }
-  > input {
-    width: 200px;
-  }
-  > div {
-    color: red;
-    font-size: 100px;
-  }
 `;
 
-const NicknameForm = () => {
+const NicknameForm = ({ nicknametoggleButton }) => {
   const queryClient = useQueryClient();
   const preventSubmit = (evt) => {
     evt.preventDefault();
@@ -54,10 +56,12 @@ const NicknameForm = () => {
           onSubmit={handleSubmit((data) => {
             console.log(data);
             editNickname.mutate(data.nickname);
+            nicknametoggleButton();
           })}
         >
           <label htmlFor='nickname'>nickname</label>
           <Input
+            autoFocus
             {...register('nickname', {
               required: 'nickname을 입력해주세요.',
               pattern: {
@@ -73,6 +77,7 @@ const NicknameForm = () => {
           <Button
             onSubmit={handleSubmit((data) => {
               console.log(data);
+              nicknametoggleButton();
             })}
           >
             저장

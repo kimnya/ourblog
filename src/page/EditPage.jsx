@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import QuillEditor from '../components/editQuill';
+import EditQuill from '../components/EditQuill';
 import styled from 'styled-components';
 import Input from '../components/Input';
 import { palette } from '../styles/palette';
@@ -62,8 +62,7 @@ const EditPage = () => {
   });
 
   const getCategories = useQuery({ queryKey: ['myInfo'], queryFn: getInfo });
-  console.log('d', getCategories);
-
+  console.log(getCategories);
   const selectCategory = (evt) => {
     setSelected(evt.target.value);
   };
@@ -142,7 +141,7 @@ const EditPage = () => {
         >
           작성완료
         </Button>
-        <QuillEditor values={values} setValues={setValues} />
+        <EditQuill values={values} setValues={setValues} />
       </form>
     </EditBoxStyle>
   );
