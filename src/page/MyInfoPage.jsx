@@ -3,6 +3,17 @@ import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import axios from 'axios';
 import Button from '../components/Button';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { deleteProfile, getProfile } from '../axios/api';
+import EditProfile from '../components/editProfile';
+
+const Pp = styled.div`
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+`;
 
 const MyInfoStyle = styled.div`
   display: flex;
@@ -57,76 +68,127 @@ const Mybox2 = styled(MyBox1)`
     }
   }
   > .profileBox,
-  .naicknameBox,
+  .nicknameBox,
   .emailBox,
   .passwordBox,
   .deleteBox {
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    width: 100%;
     margin-bottom: 25px;
+  }
+
+  .nicknameBox {
   }
 `;
 
 const MyInfoPage = () => {
-  const [myInfo, setMyInfo] = useState([]);
-  const getInfo = async () => {
-    await axios
-      .get('http://localhost:8081/member/myPage', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-      })
-      .then((response) => {
-        setMyInfo(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        error.message;
-      });
+  const [toggle, setToggle] = useState({
+    nickname: false,
+    email: false,
+    password: false,
+    image: false,
+  });
+
+  const nicknametoggleButton = () => {
+    setToggle((prev) => ({
+      ...prev,
+      nickname: !prev.nickname,
+    }));
+
+    console.log(toggle);
   };
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      getInfo();
+  const emailtoggleButton = () => {
+    setToggle((prev) => ({
+      ...prev,
+      email: !prev.email,
+    }));
+
+    console.log(toggle);
+  };
+  const passwordtoggleButton = () => {
+    setToggle((prev) => ({
+      ...prev,
+      password: !prev.password,
+    }));
+
+    console.log(toggle);
+  };
+  const imagetoggleButton = () => {
+    setToggle((prev) => ({
+      ...prev,
+      nickame: !prev.nickname,
+    }));
+
+    console.log(toggle);
+  };
+
+  const deleteMyInfo = useMutation({
+    mutationFn: deleteProfile,
+    enabled: false,
+  });
+
+  const deleteconFirmButton = () => {
+    if (confirm('정말로 삭제하시겠습니까?')) {
+      deleteMyInfo.mutate();
     }
-  }, [localStorage.getItem('accessToken')]);
+  };
+
+  const getProfileApi = useQuery({ queryKey: ['getProfile'], queryFn: getProfile });
+
+  const { data } = getProfileApi.data;
+
   return (
     <>
-      <MyInfoStyle>
-        <Title>MY PAGE</Title>
-
-        <MyBox1>
-          <Mybox2>
-            <div className='profileBox'>
-              <div>
-                <img src={myInfo.imageUrl} alt='' />
-                <p>{myInfo.nickname}</p>
+      <Pp>
+        <MyInfoStyle>
+          <Title>MY PAGE</Title>
+          <MyBox1>
+            <Mybox2>
+              <div className='profileBox'>
+                <div>
+                  <img src={data.imageUrl} alt='' />
+                  <p>{data.nickname}</p>
+                </div>
+                <Button width='155px' heith='34px'>
+                  사진수정
+                </Button>
               </div>
-              <Button width='155px' heith='34px'>
-                사진수정
-              </Button>
-            </div>
-            <div className='naicknameBox'>
-              {myInfo.nickname}
-              <Button>수정</Button>
-            </div>
-            <div className='emailBox'>
-              {myInfo.email}
-              <Button>수정</Button>
-            </div>
-            <div className='passwordBox'>
-              <span>***********</span>
-              <Button>수정</Button>
-            </div>
+              <div className='nicknameBox'>
+                {data.nickname}
+                <Button
+                  id='nickname'
+                  onClick={() => {
+                    nicknametoggleButton();
+                  }}
+                >
+                  수정
+                </Button>
+                {toggle.nickname && <EditProfile type='nickname' />}
+              </div>
+              <div className='emailBox'>
+                {data.email}
+                <Button onClick={emailtoggleButton}>수정</Button>
+                {toggle.email && <EditProfile type='email' />}
+              </div>
+              <div className='passwordBox'>
+                <span>***********</span>
+                <Button onClick={passwordtoggleButton}>수정</Button>
+                {toggle.password && <EditProfile type='password' />}
+              </div>
 
-            <div className='deleteBox'>
-              <p>계정 삭제를 원하신다면 눌러주세요.</p>
-              <Button $buttonColor='mainOrange' width='70px' heith='25px'>
-                회원탈퇴
-              </Button>
-            </div>
-          </Mybox2>
-        </MyBox1>
-      </MyInfoStyle>
+              <div className='deleteBox'>
+                <p>계정 삭제를 원하신다면 눌러주세요.</p>
+                <Button onClick={deleteconFirmButton} $buttonColor='mainOrange' width='70px' heith='25px'>
+                  회원탈퇴
+                </Button>
+              </div>
+            </Mybox2>
+          </MyBox1>
+        </MyInfoStyle>
+      </Pp>
     </>
   );
 };

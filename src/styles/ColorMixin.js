@@ -6,3 +6,6 @@ export const lighten = (value) => css`
 export const darken = (value) => css`
   filter: brightness(${1 - value});
 `;
+export const opacity = (value) => css`
+  filter: opacity(${1 - value});
+`;

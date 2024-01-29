@@ -10,4 +10,6 @@ export const palette = {
   white: '#fff',
 
   none: 'none',
+
+  editColor: '#ccc',
 };

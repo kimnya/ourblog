@@ -123,10 +123,7 @@ const EditCtegory = ({ setFocus }) => {
                     <span>
                       <FaRegCircleCheck
                         onClick={() => {
-                          if (category.categoryName === null) {
-                          } else {
-                            useSubmitName.mutate(id);
-                          }
+                          useSubmitName.mutate(id);
                         }}
                       />
                     </span>

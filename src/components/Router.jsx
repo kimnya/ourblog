@@ -26,7 +26,7 @@ const Router = () => {
             <Route path='/articleAll' element={<AllArticlePage />} />
           </Route>
           <Route element={<PrivateRoute />}>
-            <Route path='/myInfo' element={<MyInfoPage />} />
+            <Route path='/myPage' element={<MyInfoPage />} />
             <Route path='/write' element={<EditPage />} />
           </Route>
         </Routes>

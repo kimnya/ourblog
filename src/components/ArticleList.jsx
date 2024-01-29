@@ -16,7 +16,7 @@ const ArticleListStyle = styled.div`
 
 const ArticleList = () => {
   const articleAll = useQuery({
-    queryKeKy: ['articleRead '],
+    queryKey: ['articleRead'],
     queryFn: articleListRead,
     enabled: true,
   });

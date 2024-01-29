@@ -70,22 +70,20 @@ const Register = () => {
           reset();
         })}
       >
-        <>
-          <label htmlFor='userName'>userName</label>
-          <Input
-            {...register('userName', {
-              required: '이름을 입력해주세요.',
-              pattern: {
-                value: /^[a-zA-z가-힣]{2,12}$/,
-                message: '특수기호나 숫자는 사용할 수 없습니다.',
-              },
-            })}
-            autoFocus
-            id='userName'
-            $placeholder='userName'
-          />
-          {errors.userName && <small>{errors.userName.message}</small>}
-        </>
+        <label htmlFor='userName'>userName</label>
+        <Input
+          {...register('userName', {
+            required: '이름을 입력해주세요.',
+            pattern: {
+              value: /^[a-zA-z가-힣]{2,12}$/,
+              message: '특수기호나 숫자는 사용할 수 없습니다.',
+            },
+          })}
+          autoFocus
+          id='userName'
+          $placeholder='userName'
+        />
+        {errors.userName && <small>{errors.userName.message}</small>}
 
         <label htmlFor='email'>email</label>
         <Input
@@ -127,6 +125,7 @@ const Register = () => {
         />
 
         {errors.email && <small>{errors.email.message}</small>}
+
         <label htmlFor='password'>password</label>
         <Input
           {...register('password', {

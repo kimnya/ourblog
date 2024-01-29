@@ -112,6 +112,85 @@ export const minusLikeCnt = async ({ queryKey }) => {
   return response;
 };
 
+//게시물포스팅 호출
+export const postContent = async ({ title: title, content: content, nickName: nickname, categoryId: categoryId }) => {
+  const reponse = axios.post(
+    'http://localhost:8081/posting/create',
+    {
+      title: title,
+      content: content,
+      nickName: nickname,
+      categoryId: categoryId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        'Access-Control-Allow-Origin': 'http://localhost:8081/',
+      },
+    },
+  );
+  return reponse;
+};
+
+//프로필 조회 호출
+export const getProfile = async () => {
+  const response = await axios.get('http://localhost:8081/member/myPage', {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+  });
+
+  return response;
+};
+
+export const deleteProfile = async () => {
+  console.log('호출');
+  const response = await axios.delete('http://localhost:8081/profile/member', {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+  });
+
+  return response;
+};
+
+//닉네임 수정 호출
+export const editNicknameProfile = async (data) => {
+  console.log('호출');
+  const response = await axios.patch(
+    'http://localhost:8081/profile/nicknameUpdate',
+    { nickname: data },
+    {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
+    },
+  );
+
+  return response;
+};
+
+//이메일 수정 호출
+export const editEmailProfile = async (data) => {
+  console.log('호출');
+  const response = await axios.patch(
+    'http://localhost:8081/profile/emailUpdate',
+    { email: data },
+    {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
+    },
+  );
+
+  return response;
+};
+
+//비밀번호 수정 호출
+export const editPasswordProfile = async (data) => {
+  console.log('호출');
+  const response = await axios.patch(
+    'http://localhost:8081/profile/passwordUpdate',
+    { newPassword: data },
+    {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
+    },
+  );
+
+  return response;
+};
 // = useQuery({
 //     queryKey:,
 //     queryFn:
