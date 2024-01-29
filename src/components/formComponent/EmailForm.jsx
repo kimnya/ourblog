@@ -99,7 +99,7 @@ const EmailForm = ({ emailtoggleButton }) => {
             $placeholder='email'
           />
           <Button
-            calssName='submitBtn'
+            className='submitBtn'
             onSubmit={handleSubmit((data) => {
               console.log(data);
               emailtoggleButton();

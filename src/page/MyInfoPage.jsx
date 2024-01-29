@@ -7,12 +7,10 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { deleteProfile, getProfile } from '../axios/api';
 import EditProfile from '../components/editProfile';
 
-const Pp = styled.div`
-  width: 80vw;
+const PageStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #000;
 `;
 
 const MyInfoStyle = styled.div`
@@ -151,7 +149,7 @@ const MyInfoPage = () => {
 
   return (
     <>
-      <Pp>
+      <PageStyle>
         <MyInfoStyle>
           <Title>MY PAGE</Title>
           <MyBox1>
@@ -164,8 +162,8 @@ const MyInfoPage = () => {
                 <Button onClick={imagetoggleButton} width='155px' heith='34px'>
                   사진수정
                 </Button>
+                {toggle.image && <EditProfile imagetoggleButton={imagetoggleButton} type='image' />}
               </div>
-              {toggle.image && <EditProfile imagetoggleButton={imagetoggleButton} type='image' />}
               <div className='nicknameBox'>
                 {data.nickname}
                 <Button
@@ -198,7 +196,7 @@ const MyInfoPage = () => {
             </Mybox2>
           </MyBox1>
         </MyInfoStyle>
-      </Pp>
+      </PageStyle>
     </>
   );
 };

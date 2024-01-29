@@ -1,21 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import Input from './Input';
-import { useForm } from 'react-hook-form';
 import NicknameForm from './formComponent/NicknameForm';
 import EmailForm from './formComponent/EmailForm';
 import PasswordForm from './formComponent/PasswordForm';
-import { storage } from '../Firebase';
-import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
 import ImageForm from './formComponent/ImageForm';
 
 const EditBoxStyle = styled.div`
   position: absolute;
-  left: 0;
-  top: 0;
+  left: ${(props) => {
+    if (props.type === 'image') {
+      return '180px';
+    }
+  }};
+  top: ${(props) => {
+    if (props.type === 'image') {
+      return '30px';
+    }
+  }};
+
   > input {
     width: 200px;
-    /* border-radius: 20%; */
     &:nth-child(2) {
       left: -450px;
     }
