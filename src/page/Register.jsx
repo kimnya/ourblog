@@ -126,39 +126,6 @@ const Register = () => {
 
         {errors.email && <small>{errors.email.message}</small>}
 
-        <label htmlFor='password'>password</label>
-        <Input
-          {...register('password', {
-            required: 'password를 입력해주세요.',
-            pattern: {
-              value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
-              message: '숫자+영문자+특수문자 조합으로 8자리 이상 25자리 이하로 입력해주세요.',
-            },
-          })}
-          type='password'
-          id='password'
-          $placeholder='password'
-        />
-        {errors.password && <small>{errors.password.message}</small>}
-
-        <label htmlFor='reEnterPassword'>reEnterPassword</label>
-        <Input
-          {...register('reEnterPassword', {
-            required: 'password를 한번 더 확인해주세요.',
-            validate: {
-              check: (val) => {
-                if (getValues('password') !== val) {
-                  return '비밀번호가 일치하지 않습니다.';
-                }
-              },
-            },
-          })}
-          type='password'
-          id='reEnterPassword'
-          $placeholder='re-enter password'
-        />
-        {errors.reEnterPassword && <small>{errors.reEnterPassword.message}</small>}
-
         <label htmlFor='nickname'>nickname</label>
         <Input
           {...register('nickname', {
@@ -197,6 +164,39 @@ const Register = () => {
           $placeholder='nickname'
         />
         {errors.nickname && <small>{errors.nickname.message}</small>}
+
+        <label htmlFor='password'>password</label>
+        <Input
+          {...register('password', {
+            required: 'password를 입력해주세요.',
+            pattern: {
+              value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
+              message: '숫자+영문자+특수문자 조합으로 8자리 이상 25자리 이하로 입력해주세요.',
+            },
+          })}
+          type='password'
+          id='password'
+          $placeholder='password'
+        />
+        {errors.password && <small>{errors.password.message}</small>}
+
+        <label htmlFor='reEnterPassword'>reEnterPassword</label>
+        <Input
+          {...register('reEnterPassword', {
+            required: 'password를 한번 더 확인해주세요.',
+            validate: {
+              check: (val) => {
+                if (getValues('password') !== val) {
+                  return '비밀번호가 일치하지 않습니다.';
+                }
+              },
+            },
+          })}
+          type='password'
+          id='reEnterPassword'
+          $placeholder='re-enter password'
+        />
+        {errors.reEnterPassword && <small>{errors.reEnterPassword.message}</small>}
 
         <Button disabled={isSubmitting} width='362px' height='29px' $borderRadius='none'>
           회원가입
