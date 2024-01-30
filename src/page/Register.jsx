@@ -123,7 +123,6 @@ const Register = () => {
           id='email'
           $placeholder='email'
         />
-
         {errors.email && <small>{errors.email.message}</small>}
 
         <label htmlFor='nickname'>nickname</label>

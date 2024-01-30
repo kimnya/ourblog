@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import EditQuill from '../components/EditQuill';
 import styled from 'styled-components';
 import Input from '../components/Input';
 import { palette } from '../styles/palette';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getInfo, postContent } from '../axios/api';
 import Button from '../components/Button';
+import { useNavigate } from 'react-router-dom';
+import EditQuill from '../components/editQuill';
 
 const EditBoxStyle = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ const EditBoxStyle = styled.div`
   margin-top: 30px;
   /* border: 1px solid #000; */
   > form {
+    position: relative;
     > label {
       display: none;
     }
@@ -39,6 +41,10 @@ const EditBoxStyle = styled.div`
       }
     }
     button {
+      position: absolute;
+      z-index: 10;
+      left: 0;
+      bottom: 0;
       width: 50vw;
       height: 4vh;
       background-color: ${palette.mainGreen};
@@ -51,18 +57,24 @@ const EditPage = () => {
   const [selected, setSelected] = useState();
   const [values, setValues] = useState();
   const [title, setTitle] = useState();
+  const navgate = useNavigate();
 
   const queryClient = useQueryClient();
 
   const postContentApi = useMutation({
     mutationFn: postContent,
     onSuccess: async () => {
+      await queryClient.invalidateQueries(['myInfo']);
       await queryClient.invalidateQueries(['articleRead']);
     },
   });
 
-  const getCategories = useQuery({ queryKey: ['myInfo'], queryFn: getInfo });
-  console.log(getCategories);
+  const getCategories = useQuery({
+    queryKey: ['myInfo'],
+    queryFn: getInfo,
+    enabled: localStorage.getItem('accessToken') !== null,
+  });
+
   const selectCategory = (evt) => {
     setSelected(evt.target.value);
   };
@@ -81,7 +93,7 @@ const EditPage = () => {
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
-
+          navgate('/');
           postContentApi.mutate({
             title: title,
             content: values,
@@ -121,16 +133,20 @@ const EditPage = () => {
             );
           })}
         </select>
+
+        <EditQuill values={values} setValues={setValues} />
         <Button
           onSubmit={(evt) => {
             evt.preventDefault();
-
-            postContentApi.mutate({
+            navgate('/');
+            const data = {
               title: title,
               content: values,
               nickName: data.data.nickname,
               categoryId: selected,
-            });
+            };
+
+            postContentApi.mutate(data);
             console.log('d', {
               title: title,
               content: values,
@@ -141,7 +157,6 @@ const EditPage = () => {
         >
           작성완료
         </Button>
-        <EditQuill values={values} setValues={setValues} />
       </form>
     </EditBoxStyle>
   );

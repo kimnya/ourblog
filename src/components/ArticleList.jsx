@@ -26,10 +26,11 @@ const ArticleList = () => {
     <>
       {/* 리스트갯수에 따라 margin값 조절 */}
       <ArticleListStyle>
-        {data.data.map((article) => {
-          // articleList는 객체 그 안에 데이터 객체가 있고 그안에 데이터 배열이 있다. 내가 원하는 건 배열
-          return <ArticleListBox key={article.id} article={article} />;
-        })}
+        {data &&
+          data.data.map((article) => {
+            // articleList는 객체 그 안에 데이터 객체가 있고 그안에 데이터 배열이 있다. 내가 원하는 건 배열
+            return <ArticleListBox key={article.id} article={article} />;
+          })}
       </ArticleListStyle>
     </>
   );

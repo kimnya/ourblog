@@ -2,7 +2,14 @@ import axios from 'axios';
 
 // 게시물리스트 호출
 export const articleListRead = async () => {
-  const response = axios.get('http://localhost:8081/posting/list', { params: { searchText: '' } });
+  const response = axios.get('http://localhost:8081/posting/list', {
+    headers: {
+      'Content-type': 'application/json',
+      'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
+    },
+    params: { searchText: '' },
+  });
+
   return response;
 };
 
@@ -24,9 +31,16 @@ export const likeCntReadApi = async ({ queryKey }) => {
 
 //회원정보 호출
 export const getInfo = async () => {
-  const response = axios.get('http://localhost:8081/member/info', {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-  });
+  const response = axios
+    .get('http://localhost:8081/member/info', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    })
+    .catch((error) => {
+      if (error.response.data.message == 'For input string: "anonymousUser"') {
+        localStorage.clear(); // 저장되어 있는 토큰 삭제
+        window.alert('로그인 시간이 만료되어 자동으로 로그아웃 되었습니다.');
+      }
+    });
 
   return response;
 };
@@ -56,8 +70,13 @@ export const deleteCategory = async (categoryId) => {
 //검색용 아티클 리스트 호촐
 export const searchArticleRead = async ({ queryKey }) => {
   const response = await axios.get('http://localhost:8081/posting/list', {
+    headers: {
+      'Content-type': 'application/json',
+      'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
+    },
     params: { searchText: `${queryKey[1]}` },
   });
+
   return response;
 };
 
@@ -113,14 +132,14 @@ export const minusLikeCnt = async ({ queryKey }) => {
 };
 
 //게시물포스팅 호출
-export const postContent = async ({ title: title, content: content, nickName: nickname, categoryId: categoryId }) => {
+export const postContent = async (data) => {
   const reponse = axios.post(
     'http://localhost:8081/posting/create',
     {
-      title: title,
-      content: content,
-      nickName: nickname,
-      categoryId: categoryId,
+      title: data.title,
+      content: data.content,
+      nickName: data.nickName,
+      categoryId: data.categoryId,
     },
     {
       headers: {
@@ -141,6 +160,7 @@ export const getProfile = async () => {
   return response;
 };
 
+//회원탈퇴 호출
 export const deleteProfile = async () => {
   console.log('호출');
   const response = await axios.delete('http://localhost:8081/profile/member', {

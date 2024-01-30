@@ -8,6 +8,8 @@ import Button from './Button';
 import styled from 'styled-components';
 import SideBar from './SideBar';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { getInfo } from '../axios/api';
 
 const HeaderStyled = styled.div`
   position: relative;
@@ -32,12 +34,7 @@ const HeaderStyled = styled.div`
   }
 `;
 
-export const CtxMyInfo = createContext(null);
-export const CtxSetMyInfo = createContext(null);
-
 const Header = () => {
-  const [myInfo, setMyInfo] = useState([]);
-
   const [isTogle, setTogle] = useState({
     sideBar: false,
     darkMode: false,
@@ -47,23 +44,12 @@ const Header = () => {
     update: false,
   });
 
-  const getInfo = async () => {
-    await axios
-      .get('http://localhost:8081/member/info', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-      })
-      .then((response) => {
-        setMyInfo(response.data);
-        setTogle((prev) => ({ ...prev, logined: true }));
-        // console.log(response.data);
-        localStorage.setItem('nickname', response.data['nickname']);
-        // console.log(response.data['categories']);
-      })
-      .catch((error) => {
-        error.message;
-      });
-  };
-
+  const myInfo = useQuery({
+    queryKey: ['myInfo'],
+    queryFn: getInfo,
+    enabled: false,
+  });
+  console.log(myInfo);
   const navigate = useNavigate();
 
   const reactIconsSize = '22px';
@@ -89,51 +75,39 @@ const Header = () => {
   const logoutSubmit = (evt) => {
     evt.preventDefault();
     setTogle((prev) => ({ ...prev, logined: !prev.logined }));
-    setMyInfo([]);
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('nickname');
   };
-
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      getInfo();
-    }
-  }, [localStorage.getItem('accessToken')]);
 
   return (
     <>
       {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}
 
-      <CtxSetMyInfo.Provider value={setMyInfo}>
-        <CtxMyInfo.Provider value={myInfo}>
-          <HeaderStyled>
-            <SideBar
-              isTogle={isTogle}
-              sideBarToggleHandler={sideBarToggleHandler}
-              reactIconsSize={reactIconsSize}
-              editToggleHandler={editToggleHandler}
-            />
-            <Title />
-            <div className='mainpageIcons'>
-              {isTogle.darkMode ? (
-                <IoSunny size={reactIconsSize} onClick={darkModeToggleHandler} />
-              ) : (
-                <FaMoon size={reactIconsSize} onClick={darkModeToggleHandler} />
-              )}
-              <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
-              {isTogle.logined === false ? (
-                <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>
-                  로그인
-                </Button>
-              ) : (
-                <p>
-                  {myInfo.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>{' '}
-                </p>
-              )}
-            </div>
-          </HeaderStyled>
-        </CtxMyInfo.Provider>
-      </CtxSetMyInfo.Provider>
+      <HeaderStyled>
+        <SideBar
+          isTogle={isTogle}
+          sideBarToggleHandler={sideBarToggleHandler}
+          reactIconsSize={reactIconsSize}
+          editToggleHandler={editToggleHandler}
+        />
+        <Title />
+        <div className='mainpageIcons'>
+          {isTogle.darkMode ? (
+            <IoSunny size={reactIconsSize} onClick={darkModeToggleHandler} />
+          ) : (
+            <FaMoon size={reactIconsSize} onClick={darkModeToggleHandler} />
+          )}
+          <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
+          {localStorage.getItem('accessToken') == null ? (
+            <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>
+              로그인
+            </Button>
+          ) : (
+            <p>
+              {myInfo.data && myInfo.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
+            </p>
+          )}
+        </div>
+      </HeaderStyled>
     </>
   );
 };

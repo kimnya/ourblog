@@ -18,10 +18,8 @@ const MainPage = () => {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <ArticleList />
-        <Link onClick={moveWritePge}>글 작성하기</Link>
-      </Suspense>
+      <ArticleList />
+      <Link onClick={moveWritePge}>글 작성하기</Link>
     </>
   );
 };

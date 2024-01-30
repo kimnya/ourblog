@@ -45,19 +45,14 @@ const Login = () => {
         })
         .then((response) => {
           if (response.status === 200) {
-            alert('토큰요청 성공');
+            alert('로그인이 완료됐습니다. 좋은하루 보내세요');
             const accessToken = response.data.accessToken;
-
             localStorage.setItem('accessToken', accessToken);
-
             navigate('/');
-            console.log(response.data);
-            console.log(localStorage.getItem('accessToken'));
           }
         });
     } catch (e) {
-      console.log('토큰요청이 실패했습니다');
-
+      alert('로그인에 실패했습니다');
       setFocus('email');
     }
   };

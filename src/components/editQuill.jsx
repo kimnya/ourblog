@@ -3,7 +3,6 @@ import React, { useCallback, useRef, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import { storage } from '../Firebase';
 import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
-import 'react-quill/dist/quill.snow.css';
 
 //모듈을 useMemo로 감싸지 않으면 렌더링이 발생할 때마다 모듈 객체가 새로 생성되면서 focus가 에디터에서 벗어난다. 위 코드처럼 module 객체를 useMemo로 감싸주도록 하자.
 
@@ -102,7 +101,9 @@ const EditQuill = ({ values, setValues }) => {
         modules={modules}
         formats={formats}
         onChange={setValues}
-      />
+        value={values}
+        placeholder='내용을 입력해주세요'
+      ></ReactQuill>
     </>
   );
 };
