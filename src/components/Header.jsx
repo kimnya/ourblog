@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoSunny } from 'react-icons/io5';
 import Title from './Title';
 import { FaMoon } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import styled from 'styled-components';
 import SideBar from './SideBar';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getInfo } from '../axios/api';
 
 const HeaderStyled = styled.div`
@@ -43,17 +43,24 @@ const Header = () => {
     update: false,
   });
 
+  // const { pathname } = useLocation();
+
   const myInfo = useQuery({
     queryKey: ['myInfo'],
     queryFn: getInfo,
     enabled: localStorage.getItem('accessToken') !== null,
   });
 
-  console.log(myInfo);
+  // useEffect(() => {
+  //   myInfo.refetch();
+  //   console.log(myInfo);
+  // }, [pathname]);
+  const queryClient = useQueryClient();
+  // const myInfo = queryClient.getQueryData(['myInfo']);
   const navigate = useNavigate();
-
   const reactIconsSize = '22px';
 
+  console.log(myInfo);
   const sideBarToggleHandler = () => {
     setTogle((prev) => ({ ...prev, sideBar: !prev.sideBar }));
   };
@@ -103,7 +110,7 @@ const Header = () => {
             </Button>
           ) : (
             <p>
-              {myInfo.data.data.nickname && myInfo.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
+              {myInfo.data !== undefined && myInfo.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
             </p>
           )}
         </div>

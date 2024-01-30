@@ -24,10 +24,10 @@ const Router = () => {
             <Route path='/readPage/:postId' element={<Articleread />} />
             <Route path='/category/:categoryName' element={<AllArticlePage />} />
             <Route path='/articleAll' element={<AllArticlePage />} />
-            <Route element={<PrivateRoute />}>
-              <Route path='/myPage' element={<MyInfoPage />} />
-              <Route path='/write' element={<EditPage />} />
-            </Route>
+            {/* <Route element={<PrivateRoute />}> */}
+            <Route path='/myPage' element={<MyInfoPage />} />
+            <Route path='/write' element={<EditPage />} />
+            {/* </Route> */}
           </Route>
         </Routes>
       </Suspense>
