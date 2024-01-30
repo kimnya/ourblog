@@ -68,6 +68,31 @@ const NicknameForm = ({ nicknametoggleButton }) => {
                 value: /^[a-zA-z가-힣]{1,30}$/,
                 message: '특수기호나 숫자를 사용할 수 없습니다.',
               },
+              onBlur: async () => {
+                await axios
+                  .get(`http://localhost:8081/member/checkNickname`, {
+                    headers: {
+                      'Content-type': 'application/json',
+                      'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
+                    },
+                    params: { email: getValues('email') },
+                  })
+                  .then((response) => {
+                    if (response.status === 200) {
+                      if (getValues('email') !== '') {
+                        alert('작성한 닉네임이 이미 있습니다.');
+                      }
+                    }
+                  })
+                  .catch((err) => {
+                    const resp = err.response;
+                    if (resp.status === 400) {
+                      alert(resp.data);
+                      resetField('email');
+                      setFocus('email');
+                    }
+                  });
+              },
             })}
             id='nickname'
             $placeholder='nickname'

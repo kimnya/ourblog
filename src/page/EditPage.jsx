@@ -7,6 +7,7 @@ import { getInfo, postContent } from '../axios/api';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import EditQuill from '../components/editQuill';
+import { useForm } from 'react-hook-form';
 
 const EditBoxStyle = styled.div`
   display: flex;
@@ -54,6 +55,15 @@ const EditBoxStyle = styled.div`
 `;
 
 const EditPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+    getValues,
+    reset,
+    resetField,
+    setFocus,
+  } = useForm();
   const [selected, setSelected] = useState();
   const [values, setValues] = useState();
   const [title, setTitle] = useState();
@@ -64,7 +74,6 @@ const EditPage = () => {
   const postContentApi = useMutation({
     mutationFn: postContent,
     onSuccess: async () => {
-      await queryClient.invalidateQueries(['myInfo']);
       await queryClient.invalidateQueries(['articleRead']);
     },
   });
@@ -79,37 +88,34 @@ const EditPage = () => {
     setSelected(evt.target.value);
   };
 
-  const writeTitle = (evt) => {
-    setTitle(evt.target.value);
-  };
-
   const preventSubmit = (evt) => {
     evt.preventDefault();
   };
 
-  const { data } = getCategories;
   return (
     <EditBoxStyle>
       <form
-        onSubmit={(evt) => {
-          evt.preventDefault();
+        onSubmit={handleSubmit(() => {
           navgate('/');
           postContentApi.mutate({
-            title: title,
+            title: getValues('title'),
             content: values,
-            nickName: data.data.nickname,
+            nickName: getCategories.data.data.nickname,
             categoryId: selected,
           });
           console.log('d', {
-            title: title,
+            title: getValues('title'),
             content: values,
-            nickName: data.data.nickname,
+            nickName: getCategories.data.data.nickname,
             categoryId: selected,
           });
-        }}
+        })}
       >
         <label htmlFor='title'>title</label>
         <Input
+          {...register('title', {
+            required: '제목을 입력해주세요.',
+          })}
           onKeyDown={(evt) => {
             if (evt.key === 'Enter') {
               preventSubmit(evt);
@@ -117,15 +123,13 @@ const EditPage = () => {
           }}
           autoFocus
           name='title'
-          value={title}
-          onChange={writeTitle}
           $borderColor='editColor'
           width='50vw'
           height='8vh'
           $placeholder='제목을 입력해주세요 '
         />
         <select onChange={selectCategory} value={selected}>
-          {data.data.categories.map((category) => {
+          {getCategories.data.data.categories.map((category) => {
             return (
               <option key={category.id} value={category.id}>
                 {category.categoryName}
@@ -136,24 +140,21 @@ const EditPage = () => {
 
         <EditQuill values={values} setValues={setValues} />
         <Button
-          onSubmit={(evt) => {
-            evt.preventDefault();
+          onSubmit={handleSubmit(() => {
             navgate('/');
-            const data = {
-              title: title,
+            postContentApi.mutate({
+              title: getValues('title'),
               content: values,
-              nickName: data.data.nickname,
-              categoryId: selected,
-            };
-
-            postContentApi.mutate(data);
-            console.log('d', {
-              title: title,
-              content: values,
-              nickName: data.data.nickname,
+              nickName: getCategories.data.data.nickname,
               categoryId: selected,
             });
-          }}
+            console.log('d', {
+              title: getValues('title'),
+              content: values,
+              nickName: getCategories.data.data.nickname,
+              categoryId: selected,
+            });
+          })}
         >
           작성완료
         </Button>

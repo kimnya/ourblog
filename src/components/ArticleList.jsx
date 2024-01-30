@@ -18,7 +18,6 @@ const ArticleList = () => {
   const articleAll = useQuery({
     queryKey: ['articleRead'],
     queryFn: articleListRead,
-    enabled: true,
   });
 
   const { data } = articleAll;

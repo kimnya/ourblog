@@ -4,7 +4,7 @@ import { palette } from '../styles/palette';
 import { useParams } from 'react-router-dom';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { darken, lighten } from '../styles/ColorMixin';
 import { AnonymousLikeCntRead, articleDetailRead, minusLikeCnt, plusLikeCnt, userLikeCntRead } from '../axios/api';
 
@@ -86,14 +86,15 @@ const Articleread = () => {
     enabled: localStorage.getItem('accessToken') == null,
   });
 
-  const plusLikeCntApi = useQuery({
-    queryKey: ['plusLikeCnt', postId],
+  const plusLikeCntApi = useMutation({
     queryFn: plusLikeCnt,
     enabled: false,
+    onError: (error) => {
+      alert('로그인 후 이용할 수 있습니다.');
+    },
   });
 
-  const minusLikeCntApi = useQuery({
-    queryKey: ['minusLikeCnt', postId],
+  const minusLikeCntApi = useMutation({
     queryFn: minusLikeCnt,
     enabled: false,
   });
@@ -118,17 +119,17 @@ const Articleread = () => {
             <p id='date'>{postingDate}</p>
             {localStorage.getItem('accessToken') == null ? (
               <p className='heartBox'>
-                <FaRegHeart onClick={() => plusLikeCntApi.refetch()} /> {likeCntAnonimous.data.data.heartCount}
+                <FaRegHeart onClick={() => plusLikeCntApi.mutate(postId)} /> {likeCntAnonimous.data.data.heartCount}
               </p>
             ) : (
               (likeCntUser.data.data.check !== true && (
                 <p className='heartBox'>
-                  <FaRegHeart onClick={() => plusLikeCntApi.refetch()} /> {likeCntUser.data.data.heartCount}
+                  <FaRegHeart onClick={() => plusLikeCntApi.mutate(postId)} /> {likeCntUser.data.data.heartCount}
                 </p>
               )) ||
               (likeCntUser.data.data.check == true && (
                 <p className='heartBox'>
-                  <FaHeart onClick={() => minusLikeCntApi.refetch()} /> {likeCntUser.data.data.heartCount}
+                  <FaHeart onClick={() => minusLikeCntApi.mutate(postId)} /> {likeCntUser.data.data.heartCount}
                 </p>
               ))
             )}

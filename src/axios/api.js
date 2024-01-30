@@ -3,10 +3,6 @@ import axios from 'axios';
 // 게시물리스트 호출
 export const articleListRead = async () => {
   const response = axios.get('http://localhost:8081/posting/list', {
-    headers: {
-      'Content-type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
-    },
     params: { searchText: '' },
   });
 
@@ -22,7 +18,7 @@ export const anonymousLikeCntReadApi = async ({ queryKey }) => {
 
 //로그인한 유저를 위한 좋아요 호출
 export const likeCntReadApi = async ({ queryKey }) => {
-  const response = axios.get(`http://localhost:8081/heart/get/${queryKey[1]}`, {
+  const response = axios.get(`http://localhost:8081/heart/user/${queryKey[1]}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
   });
 
@@ -33,13 +29,23 @@ export const likeCntReadApi = async ({ queryKey }) => {
 export const getInfo = async () => {
   const response = axios
     .get('http://localhost:8081/member/info', {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
     })
     .catch((error) => {
-      if (error.response.data.message == 'For input string: "anonymousUser"') {
-        localStorage.clear(); // 저장되어 있는 토큰 삭제
-        window.alert('로그인 시간이 만료되어 자동으로 로그아웃 되었습니다.');
+      console.log(error);
+      if (error.code === 'ERR_NETWORK') {
+        console.log(error);
       }
+
+      // if (error.response.data.message === 'For input string: "anonymousUser"') {
+      //   localStorage.clear(); // 저장되어 있는 토큰 삭제
+      //   window.alert('로그인 시간이 만료되어 자동으로 로그아웃 되었습니다.');
+      // } else if (error.code === 'ERR_NETWORK') {
+      //   console.log(error);
+      // } else {
+      // }
     });
 
   return response;

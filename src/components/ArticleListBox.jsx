@@ -65,13 +65,13 @@ const ArticleListBox = ({ article }) => {
   const likeCntRead = useQuery({
     queryKey: ['likeCnt', id],
     queryFn: likeCntReadApi,
-    enabled: localStorage.getItem('accessToken') !== null && article !== null,
+    enabled: localStorage.getItem('accessToken') !== null && article.id !== null,
   });
 
   const anonymousLikeCntRead = useQuery({
     queryKey: ['anonymousLikeCnt', id],
     queryFn: anonymousLikeCntReadApi,
-    enabled: localStorage.getItem('accessToken') == null && article !== null,
+    enabled: localStorage.getItem('accessToken') == null && article.id !== null,
   });
 
   return (

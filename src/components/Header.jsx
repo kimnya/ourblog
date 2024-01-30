@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IoSunny } from 'react-icons/io5';
 import Title from './Title';
 import { FaMoon } from 'react-icons/fa';
@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import styled from 'styled-components';
 import SideBar from './SideBar';
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { getInfo } from '../axios/api';
 
@@ -47,8 +46,9 @@ const Header = () => {
   const myInfo = useQuery({
     queryKey: ['myInfo'],
     queryFn: getInfo,
-    enabled: false,
+    enabled: localStorage.getItem('accessToken') !== null,
   });
+
   console.log(myInfo);
   const navigate = useNavigate();
 
@@ -103,7 +103,7 @@ const Header = () => {
             </Button>
           ) : (
             <p>
-              {myInfo.data && myInfo.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
+              {myInfo.data.data.nickname && myInfo.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
             </p>
           )}
         </div>
