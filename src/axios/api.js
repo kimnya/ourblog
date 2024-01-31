@@ -5,6 +5,35 @@ export const articleListRead = async () => {
   const response = axios.get('http://localhost:8081/posting/list', {
     params: { searchText: '' },
   });
+  return response;
+};
+
+//프로필닉네임 호출
+export const getProfile = async () => {
+  const response = await axios
+    .get('http://localhost:8081/member/myPage', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    })
+    .catch((error) => {
+      console.log(error.response);
+      if (error.response.status === 500) {
+        axios
+          .post(
+            'http://localhost:8081/member/reissue',
+            { refreshToken: setCookie(refreshToken) },
+            {
+              headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+            },
+          )
+          .then((response) => {
+            const accessToken = response.data.accessToken;
+            localStorage.setItem('accessToken', accessToken);
+            axios.get('http://localhost:8081/member/myPage', {
+              headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+            });
+          });
+      }
+    });
 
   return response;
 };
@@ -12,7 +41,6 @@ export const articleListRead = async () => {
 //익명유저를 위한 좋아요 호출
 export const anonymousLikeCntReadApi = async ({ queryKey }) => {
   const response = axios.get(`http://localhost:8081/heart/anonymous/${queryKey[1]}`);
-
   return response;
 };
 
@@ -21,38 +49,20 @@ export const likeCntReadApi = async ({ queryKey }) => {
   const response = axios.get(`http://localhost:8081/heart/user/${queryKey[1]}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
   });
-
   return response;
 };
 
-//회원정보 호출
-export const getInfo = async () => {
-  const response = axios
-    .get('http://localhost:8081/member/info', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    })
-    .catch((error) => {
-      console.log(error);
-      if (error.code === 'ERR_NETWORK') {
-        console.log(error);
-      }
-
-      // if (error.response.data.message === 'For input string: "anonymousUser"') {
-      //   localStorage.clear(); // 저장되어 있는 토큰 삭제
-      //   window.alert('로그인 시간이 만료되어 자동으로 로그아웃 되었습니다.');
-      // } else if (error.code === 'ERR_NETWORK') {
-      //   console.log(error);
-      // } else {
-      // }
-    });
-
+//카테고리 리스트 호출
+export const getCategories = async () => {
+  const response = axios.get('http://localhost:8081/member/info', {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  });
   return response;
 };
 
 //카테고리 생성 호출
-
 export const createCategory = async () => {
   const response = await axios.post(
     'http://localhost:8081/category/create',
@@ -102,7 +112,7 @@ export const articleDetailRead = async ({ queryKey }) => {
 
 //회원용 상세보기 좋아요 호출
 export const userLikeCntRead = async ({ queryKey }) => {
-  const response = axios.get(`http://localhost:8081/heart/get/${queryKey[1]}`, {
+  const response = axios.get(`http://localhost:8081/heart/user/${queryKey[1]}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
   });
   return response;
@@ -151,19 +161,11 @@ export const postContent = async (data) => {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         'Access-Control-Allow-Origin': 'http://localhost:8081/',
+        'Content-Type': 'multipart/form-data',
       },
     },
   );
   return reponse;
-};
-
-//프로필 조회 호출
-export const getProfile = async () => {
-  const response = await axios.get('http://localhost:8081/member/myPage', {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-  });
-
-  return response;
 };
 
 //회원탈퇴 호출

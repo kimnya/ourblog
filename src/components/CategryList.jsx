@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import EditCtegory from './category/EditCtegory';
 import { FaGear } from 'react-icons/fa6';
 import { FaCheck } from 'react-icons/fa6';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getInfo } from '../axios/api';
+import { useQuery } from '@tanstack/react-query';
+import { getCategories } from '../axios/api';
 
 const CategoryBox = styled.div`
   position: relative;
@@ -59,7 +59,7 @@ const CategoryBox = styled.div`
 const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
   const categoryArray = useQuery({
     queryKey: ['myInfo'],
-    queryFn: getInfo,
+    queryFn: getCategories,
     enabled: localStorage.getItem('accessToken') !== null,
   });
   console.log(categoryArray);
@@ -77,7 +77,7 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
           ) : (
             <>
               <p>
-                {categoryArray.data.data.nickname}의 카테고리
+                {categoryArray && categoryArray.data.data.nickname}의 카테고리
                 <span>
                   <FaGear
                     size={'24px'}
@@ -134,16 +134,17 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
               </Link>
               {isTogle.edit === true && <EditCtegory setFocus={setFocus} />}
               <ul>
-                {categoryArray.data.data.categories.map((category) => {
-                  const { id, categoryName } = category;
-                  return (
-                    <li key={id} onClick={sideBarToggleHandler}>
-                      <Link key={id} to={`/category${categoryName}`}>
-                        {categoryName}
-                      </Link>
-                    </li>
-                  );
-                })}
+                {categoryArray &&
+                  categoryArray.data.data.categories.map((category) => {
+                    const { id, categoryName } = category;
+                    return (
+                      <li key={id} onClick={sideBarToggleHandler}>
+                        <Link key={id} to={`/category${categoryName}`}>
+                          {categoryName}
+                        </Link>
+                      </li>
+                    );
+                  })}
               </ul>
             </>
           )}

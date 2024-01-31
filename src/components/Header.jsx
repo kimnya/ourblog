@@ -8,20 +8,15 @@ import Button from './Button';
 import styled from 'styled-components';
 import SideBar from './SideBar';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getInfo } from '../axios/api';
+import { getProfile } from '../axios/api';
 
 const HeaderStyled = styled.div`
-  position: relative;
-  min-height: 100px;
-  > * {
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-  }
-  > a {
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 100px;
+  min-height: 80px;
+
   > div {
   }
   > .mainpageIcons {
@@ -43,24 +38,25 @@ const Header = () => {
     update: false,
   });
 
-  // const { pathname } = useLocation();
+  // const myInfo = useQuery({
+  //   queryKey: ['myInfo'],
+  //   queryFn: getInfo,
+  //   enabled: localStorage.getItem('accessToken') !== null,
+  // });
 
-  const myInfo = useQuery({
-    queryKey: ['myInfo'],
-    queryFn: getInfo,
+  const getProfileApi = useQuery({
+    queryKey: ['getProfile'],
+    queryFn: getProfile,
     enabled: localStorage.getItem('accessToken') !== null,
   });
 
-  // useEffect(() => {
-  //   myInfo.refetch();
-  //   console.log(myInfo);
-  // }, [pathname]);
-  const queryClient = useQueryClient();
-  // const myInfo = queryClient.getQueryData(['myInfo']);
+  useEffect(() => {
+    setTogle((prev) => ({ ...prev, logined: !prev.logined }));
+  }, [localStorage.getItem('accessToken')]);
+
   const navigate = useNavigate();
   const reactIconsSize = '22px';
 
-  console.log(myInfo);
   const sideBarToggleHandler = () => {
     setTogle((prev) => ({ ...prev, sideBar: !prev.sideBar }));
   };
@@ -90,12 +86,14 @@ const Header = () => {
       {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}
 
       <HeaderStyled>
-        <SideBar
-          isTogle={isTogle}
-          sideBarToggleHandler={sideBarToggleHandler}
-          reactIconsSize={reactIconsSize}
-          editToggleHandler={editToggleHandler}
-        />
+        {/* {isTogle.logined && (
+          <SideBar
+            isTogle={isTogle}
+            sideBarToggleHandler={sideBarToggleHandler}
+            reactIconsSize={reactIconsSize}
+            editToggleHandler={editToggleHandler}
+          />
+        )} */}
         <Title />
         <div className='mainpageIcons'>
           {isTogle.darkMode ? (
@@ -110,7 +108,8 @@ const Header = () => {
             </Button>
           ) : (
             <p>
-              {myInfo.data !== undefined && myInfo.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
+              {getProfileApi.data !== undefined && getProfileApi.data.data.nickname}/
+              <Link onClick={logoutSubmit}>로그아웃</Link>
             </p>
           )}
         </div>

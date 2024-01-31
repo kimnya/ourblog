@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
-import axios from 'axios';
 import Button from '../components/Button';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { deleteProfile, getProfile } from '../axios/api';
+import { deleteProfile } from '../axios/api';
 import EditProfile from '../components/editProfile';
 
 const PageStyle = styled.div`
@@ -142,7 +141,7 @@ const MyInfoPage = () => {
     }
   };
 
-  const getProfileApi = useQuery({ queryKey: ['getProfile'], queryFn: getProfile });
+  const getProfileApi = useQuery({ queryKey: ['getProfile'], queryFn: profileApi });
   console.log(getProfileApi);
 
   const { data } = getProfileApi.data;

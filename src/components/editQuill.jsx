@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useCallback, useRef, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import { storage } from '../Firebase';
@@ -104,7 +103,7 @@ const EditQuill = ({ values, setValues }) => {
         onChange={setValues}
         value={values}
         placeholder='내용을 입력해주세요'
-      ></ReactQuill>
+      />
     </>
   );
 };

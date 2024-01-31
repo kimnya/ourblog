@@ -6,8 +6,6 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { getInfo } from '../axios/api';
-import { useQuery } from '@tanstack/react-query';
 
 const Form = styled.form`
   display: flex;
@@ -38,12 +36,6 @@ const Login = () => {
     setFocus,
   } = useForm();
 
-  const myInfo = useQuery({
-    queryKey: ['myInfo'],
-    queryFn: getInfo,
-    enabled: false,
-  });
-
   const loginSubmit = async (data) => {
     try {
       await axios
@@ -55,9 +47,11 @@ const Login = () => {
           if (response.status === 200) {
             alert('로그인이 완료됐습니다. 좋은하루 보내세요');
             const accessToken = response.data.accessToken;
+            const refreshToken = response.data.refreshToken;
             localStorage.setItem('accessToken', accessToken);
-            myInfo.refetch();
+            setCookie('refreshToken', refreshToken);
             navigate('/');
+            console.log(response);
           }
         });
     } catch (e) {

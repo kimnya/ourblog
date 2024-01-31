@@ -19,7 +19,7 @@ const MainPage = () => {
   return (
     <>
       <ArticleList />
-      <Link onClick={moveWritePge}>글 작성하기</Link>
+      <Link to='/write'>글 작성하기</Link>
     </>
   );
 };

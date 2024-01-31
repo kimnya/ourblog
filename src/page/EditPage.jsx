@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import Input from '../components/Input';
 import { palette } from '../styles/palette';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getInfo, postContent } from '../axios/api';
+import { getCategories, postContent } from '../axios/api';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
-import EditQuill from '../components/editQuill';
+import EditQuill from '../components/EditQuill';
 import { useForm } from 'react-hook-form';
 
 const EditBoxStyle = styled.div`
@@ -78,9 +78,9 @@ const EditPage = () => {
     },
   });
 
-  const getCategories = useQuery({
+  const getCategory = useQuery({
     queryKey: ['myInfo'],
-    queryFn: getInfo,
+    queryFn: getCategories,
     enabled: localStorage.getItem('accessToken') !== null,
   });
 
@@ -128,7 +128,7 @@ const EditPage = () => {
           height='8vh'
           $placeholder='제목을 입력해주세요 '
         />
-        <select onChange={selectCategory} value={selected}>
+        {/* <select onChange={selectCategory} value={selected}>
           {getCategories.data.data.categories.map((category) => {
             return (
               <option key={category.id} value={category.id}>
@@ -136,7 +136,7 @@ const EditPage = () => {
               </option>
             );
           })}
-        </select>
+        </select> */}
 
         <EditQuill values={values} setValues={setValues} />
         <Button
