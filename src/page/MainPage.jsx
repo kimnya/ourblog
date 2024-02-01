@@ -1,4 +1,4 @@
-import React, { Suspense, useContext } from 'react';
+import React, { Suspense } from 'react';
 import ArticleList from '../components/ArticleList';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';

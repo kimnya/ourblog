@@ -6,7 +6,7 @@ import EditCtegory from './category/EditCtegory';
 import { FaGear } from 'react-icons/fa6';
 import { FaCheck } from 'react-icons/fa6';
 import { useQuery } from '@tanstack/react-query';
-import { getCategories } from '../axios/api';
+import { getCategories, getProfile } from '../axios/api';
 
 const CategoryBox = styled.div`
   position: relative;
@@ -58,8 +58,14 @@ const CategoryBox = styled.div`
 
 const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
   const categoryArray = useQuery({
-    queryKey: ['myInfo'],
+    queryKey: ['getCategory'],
     queryFn: getCategories,
+    enabled: localStorage.getItem('accessToken') !== null,
+  });
+
+  const getProfileApi = useQuery({
+    queryKey: ['getProfile'],
+    queryFn: getProfile,
     enabled: localStorage.getItem('accessToken') !== null,
   });
   console.log(categoryArray);
@@ -77,52 +83,22 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
           ) : (
             <>
               <p>
-                {categoryArray && categoryArray.data.data.nickname}의 카테고리
+                {!!getProfileApi && getProfileApi.data.data.nickname}의 카테고리
                 <span>
                   <FaGear
                     size={'24px'}
                     onClick={() => {
-                      const preventNull = categoryArray.data.data.categories.map((category) => {
-                        if (category.categoryName === null) {
-                          return false;
-                        }
-                        return true;
-                      });
-
-                      if (isTogle.edit === false || preventNull === true) {
-                        editToggleHandler();
-                      }
-                      if (isTogle.edit === true) {
-                        if (preventNull) {
-                          alert('카테고리 제목을 적어주세요.');
-                          setFocus.current.focus();
-                        }
-                      }
+                      editToggleHandler();
                     }}
                   />
                 </span>
-                {isTogle.edit === true && (
+                {!!isTogle.edit && (
                   <span>
                     <FaCheck
                       color={palette.mainGreen}
                       size={'24px'}
                       onClick={() => {
-                        const preventNull = categoryArray.data.data.categories.map((category) => {
-                          if (category.categoryName === null) {
-                            return false;
-                          }
-                          return true;
-                        });
-
-                        if (isTogle.edit === false || preventNull === true) {
-                          editToggleHandler();
-                        }
-                        if (isTogle.edit === true) {
-                          if (preventNull) {
-                            alert('카테고리 제목을 적어주세요.');
-                            setFocus.current.focus();
-                          }
-                        }
+                        editToggleHandler();
                       }}
                     />
                   </span>
@@ -132,10 +108,10 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
               <Link onClick={sideBarToggleHandler} to={'/articleAll'} id='all'>
                 전체보기
               </Link>
-              {isTogle.edit === true && <EditCtegory setFocus={setFocus} />}
+              {!!isTogle.edit && <EditCtegory setFocus={setFocus} />}
               <ul>
-                {categoryArray &&
-                  categoryArray.data.data.categories.map((category) => {
+                {!!categoryArray &&
+                  categoryArray.data.categories.map((category) => {
                     const { id, categoryName } = category;
                     return (
                       <li key={id} onClick={sideBarToggleHandler}>

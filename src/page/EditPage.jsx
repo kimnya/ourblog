@@ -3,11 +3,10 @@ import styled from 'styled-components';
 import Input from '../components/Input';
 import { palette } from '../styles/palette';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getCategories, postContent } from '../axios/api';
+import { getCategories, getProfile, postContent } from '../axios/api';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import EditQuill from '../components/EditQuill';
-import { useForm } from 'react-hook-form';
 
 const EditBoxStyle = styled.div`
   display: flex;
@@ -55,15 +54,6 @@ const EditBoxStyle = styled.div`
 `;
 
 const EditPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, errors },
-    getValues,
-    reset,
-    resetField,
-    setFocus,
-  } = useForm();
   const [selected, setSelected] = useState();
   const [values, setValues] = useState();
   const [title, setTitle] = useState();
@@ -79,10 +69,18 @@ const EditPage = () => {
   });
 
   const getCategory = useQuery({
-    queryKey: ['myInfo'],
+    queryKey: ['getCategory'],
     queryFn: getCategories,
     enabled: localStorage.getItem('accessToken') !== null,
   });
+  console.log('editpageGetCategory', getCategory); //getCategory.data.categories
+
+  const getProfileApi = useQuery({
+    queryKey: ['getProfile'],
+    queryFn: getProfile,
+    enabled: localStorage.getItem('accessToken') !== null,
+  });
+  console.log('editpageGetProfileApi', getProfileApi); //getCategory.data.categories
 
   const selectCategory = (evt) => {
     setSelected(evt.target.value);
@@ -95,66 +93,56 @@ const EditPage = () => {
   return (
     <EditBoxStyle>
       <form
-        onSubmit={handleSubmit(() => {
+        onSubmit={(evt) => {
+          preventSubmit(evt);
           navgate('/');
-          postContentApi.mutate({
-            title: getValues('title'),
+          const data = {
+            title: title,
             content: values,
-            nickName: getCategories.data.data.nickname,
+            nickName: getProfileApi.data.data.nickname,
             categoryId: selected,
-          });
-          console.log('d', {
-            title: getValues('title'),
-            content: values,
-            nickName: getCategories.data.data.nickname,
-            categoryId: selected,
-          });
-        })}
+          };
+          postContentApi.mutate(data);
+          console.log('d', data);
+        }}
       >
         <label htmlFor='title'>title</label>
         <Input
-          {...register('title', {
-            required: '제목을 입력해주세요.',
-          })}
-          onKeyDown={(evt) => {
-            if (evt.key === 'Enter') {
-              preventSubmit(evt);
-            }
-          }}
           autoFocus
           name='title'
           $borderColor='editColor'
           width='50vw'
           height='8vh'
           $placeholder='제목을 입력해주세요 '
+          onChange={(evt) => {
+            setTitle(evt.target.value);
+          }}
+          value={title || ''}
         />
-        {/* <select onChange={selectCategory} value={selected}>
-          {getCategories.data.data.categories.map((category) => {
+        <select onChange={selectCategory} value={selected}>
+          {getCategory.data.categories.map((category) => {
             return (
               <option key={category.id} value={category.id}>
                 {category.categoryName}
               </option>
             );
           })}
-        </select> */}
+        </select>
 
         <EditQuill values={values} setValues={setValues} />
         <Button
-          onSubmit={handleSubmit(() => {
+          onSubmit={(evt) => {
+            preventSubmit(evt);
             navgate('/');
-            postContentApi.mutate({
-              title: getValues('title'),
+            const data = {
+              title: title,
               content: values,
-              nickName: getCategories.data.data.nickname,
+              nickName: getProfileApi.data.data.nickname,
               categoryId: selected,
-            });
-            console.log('d', {
-              title: getValues('title'),
-              content: values,
-              nickName: getCategories.data.data.nickname,
-              categoryId: selected,
-            });
-          })}
+            };
+            postContentApi.mutate(data);
+            console.log('d', data);
+          }}
         >
           작성완료
         </Button>

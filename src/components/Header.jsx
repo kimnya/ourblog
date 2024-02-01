@@ -38,12 +38,6 @@ const Header = () => {
     update: false,
   });
 
-  // const myInfo = useQuery({
-  //   queryKey: ['myInfo'],
-  //   queryFn: getInfo,
-  //   enabled: localStorage.getItem('accessToken') !== null,
-  // });
-
   const getProfileApi = useQuery({
     queryKey: ['getProfile'],
     queryFn: getProfile,
@@ -86,14 +80,12 @@ const Header = () => {
       {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}
 
       <HeaderStyled>
-        {/* {isTogle.logined && (
-          <SideBar
-            isTogle={isTogle}
-            sideBarToggleHandler={sideBarToggleHandler}
-            reactIconsSize={reactIconsSize}
-            editToggleHandler={editToggleHandler}
-          />
-        )} */}
+        <SideBar
+          isTogle={isTogle}
+          sideBarToggleHandler={sideBarToggleHandler}
+          reactIconsSize={reactIconsSize}
+          editToggleHandler={editToggleHandler}
+        />
         <Title />
         <div className='mainpageIcons'>
           {isTogle.darkMode ? (
@@ -108,8 +100,7 @@ const Header = () => {
             </Button>
           ) : (
             <p>
-              {getProfileApi.data !== undefined && getProfileApi.data.data.nickname}/
-              <Link onClick={logoutSubmit}>로그아웃</Link>
+              {getProfileApi && getProfileApi.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
             </p>
           )}
         </div>

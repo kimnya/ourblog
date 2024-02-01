@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Input from '../Input';
 import { FaPlus } from 'react-icons/fa6';
@@ -46,11 +46,12 @@ const EditCtegoryStyile = styled.div`
 
 const EditCtegory = ({ setFocus }) => {
   const queryClient = useQueryClient();
-  const categoryArray = queryClient.getQueryData(['myInfo']).data.categories;
+  const categoryArray = queryClient.getQueryData(['getCategory']);
   const [editName, setName] = useState();
+  console.log('editCategory', categoryArray); //categoryArray.categories
 
   const editValue = (evt, idx) => {
-    const newCategryName = [...categoryArray];
+    const newCategryName = [...categoryArray.categories];
     newCategryName[idx].categoryName = evt.target.value;
     setName(evt.target.value);
   };
@@ -59,7 +60,7 @@ const EditCtegory = ({ setFocus }) => {
     mutationFn: createCategory,
     enabled: false,
     onSuccess: async () => {
-      await queryClient.invalidateQueries(['myInfo']);
+      await queryClient.invalidateQueries(['getCategory']);
     },
   }); //mutation은 mutate()함수로 호출한다.
 
@@ -67,7 +68,7 @@ const EditCtegory = ({ setFocus }) => {
     mutationFn: deleteCategory,
     enabled: false,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['myInfo'] });
+      await queryClient.invalidateQueries({ queryKey: ['getCategory'] });
     },
   });
 
@@ -84,7 +85,7 @@ const EditCtegory = ({ setFocus }) => {
     mutationFn: submitName,
     enabled: false,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['myInfo'] });
+      await queryClient.invalidateQueries({ queryKey: ['getCategory'] });
     },
   });
 
@@ -99,8 +100,8 @@ const EditCtegory = ({ setFocus }) => {
           }}
         />
       </div>
-      {categoryArray &&
-        categoryArray.map((category, idx) => {
+      {!!categoryArray &&
+        categoryArray.categories.map((category, idx) => {
           const { id, categoryName } = category;
 
           return (
@@ -113,7 +114,7 @@ const EditCtegory = ({ setFocus }) => {
                       ref={setFocus}
                       id={id}
                       name='category'
-                      defaultValue={categoryArray.categoryName !== '' ? categoryName : ''}
+                      defaultValue={!!categoryName ? categoryName : ''}
                       placeholder='제목을 입력하세요'
                       onChange={(evt) => {
                         editValue(evt, idx);

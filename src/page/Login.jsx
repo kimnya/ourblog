@@ -6,6 +6,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
+import { setCookie } from '../components/cookie';
 
 const Form = styled.form`
   display: flex;
@@ -51,7 +52,6 @@ const Login = () => {
             localStorage.setItem('accessToken', accessToken);
             setCookie('refreshToken', refreshToken);
             navigate('/');
-            console.log(response);
           }
         });
     } catch (e) {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCookie } from '../components/cookie';
 
 // 게시물리스트 호출
 export const articleListRead = async () => {
@@ -14,13 +15,16 @@ export const getProfile = async () => {
     .get('http://localhost:8081/member/myPage', {
       headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
     })
+    .then((response) => {
+      return response;
+    })
     .catch((error) => {
       console.log(error.response);
       if (error.response.status === 500) {
         axios
           .post(
             'http://localhost:8081/member/reissue',
-            { refreshToken: setCookie(refreshToken) },
+            { refreshToken: getCookie(refreshToken) },
             {
               headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
             },
@@ -54,11 +58,16 @@ export const likeCntReadApi = async ({ queryKey }) => {
 
 //카테고리 리스트 호출
 export const getCategories = async () => {
-  const response = axios.get('http://localhost:8081/member/info', {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    },
-  });
+  const response = axios
+    .get('http://localhost:8081/member/categories', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => {
+      return response.data;
+    });
   return response;
 };
 
@@ -161,7 +170,6 @@ export const postContent = async (data) => {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         'Access-Control-Allow-Origin': 'http://localhost:8081/',
-        'Content-Type': 'multipart/form-data',
       },
     },
   );
