@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Input from '../components/Input';
 import { palette } from '../styles/palette';
@@ -6,24 +6,29 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getCategories, getProfile, postContent } from '../axios/api';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
-import EditQuill from '../components/EditQuill';
+import EditToastUi from '../components/EditToastUi';
 
 const EditBoxStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   margin-top: 30px;
-  /* border: 1px solid #000; */
+  height: 130vh;
+  border: 1px solid #ccc;
   > form {
     position: relative;
+    width: 70vw;
+    height: 100%;
+
     > label {
       display: none;
     }
+
     > input {
       background-color: #ddd;
       font-size: 30px;
       padding: 5px;
+      width: 100%;
 
       &:focus {
         border: none;
@@ -32,7 +37,7 @@ const EditBoxStyle = styled.div`
     > select {
       display: flex;
       font-size: 24px;
-      width: 50vw;
+      width: 100%;
       height: 4vh;
       background-color: #eee;
 
@@ -40,15 +45,14 @@ const EditBoxStyle = styled.div`
         font-size: 24px;
       }
     }
-    button {
+    > .submitBtn {
       position: absolute;
-      z-index: 10;
       left: 0;
       bottom: 0;
-      width: 50vw;
+      width: 100%;
       height: 4vh;
       background-color: ${palette.mainGreen};
-      border: none;
+      z-index: 10;
     }
   }
 `;
@@ -59,6 +63,7 @@ const EditPage = () => {
   const [values, setValues] = useState();
   const [title, setTitle] = useState();
   const navgate = useNavigate();
+  const editorRef = useRef();
 
   const queryClient = useQueryClient();
 
@@ -131,8 +136,9 @@ const EditPage = () => {
           })}
         </select>
 
-        <EditQuill values={values} setValues={setValues} />
+        <EditToastUi editorRef={editorRef} />
         <Button
+          className='submitBtn'
           onSubmit={(evt) => {
             preventSubmit(evt);
             navgate('/');

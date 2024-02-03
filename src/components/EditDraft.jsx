@@ -31,9 +31,28 @@ const EditDraft = () => {
     const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
     setHtmlString(html);
   };
-  const uploadCallback = () => {
-    console.log('이미지 업로드');
+  const uploadCallback = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onloadend = async () => {
+        const formData = new FormData();
+        formData.append('img', file);
+        console.log('reader');
+        await uploadImage('03', formData)
+          .then(({ DATA, MESSAGE }) => {
+            resolve({ data: { link: `/image/03/${DATA.refKey}.${DATA.exts}` } });
+          })
+          .catch(({ MESSAGE, status }) => {
+            alert(MESSAGE);
+            // alert('지원하는 파일 확장자가 아닙니다.(.png, jpeg, jpg)')
+          });
+      };
+
+      reader.readAsDataURL(file);
+    });
   };
+
   return (
     <>
       <Editor
