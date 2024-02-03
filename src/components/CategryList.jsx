@@ -57,16 +57,17 @@ const CategoryBox = styled.div`
 `;
 
 const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
+  const key = localStorage.getItem('accessToken');
+
   const categoryArray = useQuery({
     queryKey: ['getCategory'],
     queryFn: getCategories,
-    enabled: localStorage.getItem('accessToken') !== null,
   });
 
   const getProfileApi = useQuery({
-    queryKey: ['getProfile'],
+    queryKey: ['getProfile', key],
     queryFn: getProfile,
-    enabled: localStorage.getItem('accessToken') !== null,
+    enabled: !!key,
   });
   console.log(categoryArray);
 
@@ -108,7 +109,7 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
               <Link onClick={sideBarToggleHandler} to={'/articleAll'} id='all'>
                 전체보기
               </Link>
-              {!!isTogle.edit && <EditCtegory setFocus={setFocus} />}
+              {!!isTogle.edit && <EditCtegory queryArgument={key} setFocus={setFocus} />}
               <ul>
                 {!!categoryArray &&
                   categoryArray.data.categories.map((category) => {

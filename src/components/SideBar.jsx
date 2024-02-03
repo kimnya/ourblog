@@ -15,7 +15,7 @@ const SideBarBox = styled.div`
   position: absolute;
   left: ${(props) => {
     if (props.$isTogle.sideBar) {
-      return '-20px';
+      return '-50px';
     } else {
       return '-999px';
     }
@@ -26,14 +26,14 @@ const SideBarBox = styled.div`
   background-color: #fff;
   transition: all 0.5s;
   > svg {
-    margin: 0 0 15px 25px;
+    margin: 0 0 15px 45px;
   }
 `;
 
 const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize, editToggleHandler }) => {
   return (
     <>
-      <SideBarStyle $isTogle={isTogle}>
+      <SideBarStyle id='sideBar' $isTogle={isTogle}>
         <RxHamburgerMenu size={reactIconsSize} onClick={sideBarToggleHandler} />
         <SideBarBox $isTogle={isTogle}>
           <HiXMark size={reactIconsSize} onClick={sideBarToggleHandler} />

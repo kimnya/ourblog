@@ -7,6 +7,13 @@ const MainStlyed = styled.div`
   min-height: 800px;
   justify-content: center;
   align-items: center;
+  position: relative;
+
+  #sideBar {
+    position: absolute;
+    left: 50px;
+    top: 80px;
+  }
 `;
 
 const Main = ({ children }) => {

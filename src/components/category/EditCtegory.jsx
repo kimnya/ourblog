@@ -5,7 +5,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { FaRegCircleXmark } from 'react-icons/fa6';
 import axios from 'axios';
-import { createCategory, deleteCategory } from '../../axios/api';
+import { createCategory, deleteCategory, getCategories } from '../../axios/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const EditCtegoryStyile = styled.div`
@@ -44,14 +44,18 @@ const EditCtegoryStyile = styled.div`
   }
 `;
 
-const EditCtegory = ({ setFocus }) => {
-  const queryClient = useQueryClient();
-  const categoryArray = queryClient.getQueryData(['getCategory']);
+const EditCtegory = ({ setFocus, queryArgument }) => {
   const [editName, setName] = useState();
-  console.log('editCategory', categoryArray); //categoryArray.categories
+  const queryClient = useQueryClient();
+  const categoryArray = useQuery({
+    queryKey: ['getCategory', queryArgument],
+    queryFn: getCategories,
+    enabled: !!queryArgument,
+  });
+  console.log('editCategory', categoryArray); //categoryArray.data.categories
 
   const editValue = (evt, idx) => {
-    const newCategryName = [...categoryArray.categories];
+    const newCategryName = [...categoryArray.data.categories];
     newCategryName[idx].categoryName = evt.target.value;
     setName(evt.target.value);
   };
@@ -100,51 +104,48 @@ const EditCtegory = ({ setFocus }) => {
           }}
         />
       </div>
-      {!!categoryArray &&
-        categoryArray.categories.map((category, idx) => {
-          const { id, categoryName } = category;
 
-          return (
-            <>
-              <form key={id}>
-                <ul>
-                  <li>
-                    <label htmlFor='category'>category</label>
-                    <Input
-                      ref={setFocus}
-                      id={id}
-                      name='category'
-                      defaultValue={!!categoryName ? categoryName : ''}
-                      placeholder='제목을 입력하세요'
-                      onChange={(evt) => {
-                        editValue(evt, idx);
-                      }}
-                      width='100%'
-                    />
-                    <span>
-                      <FaRegCircleCheck
-                        onClick={() => {
-                          useSubmitName.mutate(id);
-                        }}
-                      />
-                    </span>
-                    <span>
-                      <FaRegCircleXmark
-                        id={id}
-                        onClick={() => {
-                          if (confirm('정말로 삭제하시겠습니까?')) {
-                            useDeleteCategory.mutate(id);
-                          }
-                        }}
-                      />
-                    </span>
-                    {/* map으로 돌렸더니 밸류값이 똑같이 적용되서 수정삭제가 함께 일어남  */}
-                  </li>
-                </ul>
-              </form>
-            </>
-          );
-        })}
+      <ul>
+        {!!categoryArray &&
+          categoryArray.data.categories.map((category, idx) => {
+            const { id, categoryName } = category;
+            return (
+              <li key={id}>
+                <label htmlFor='category'>category</label>
+                <Input
+                  key={id}
+                  ref={setFocus}
+                  id={id}
+                  name='category'
+                  defaultValue={!!categoryName ? categoryName : ''}
+                  placeholder='제목을 입력하세요'
+                  onChange={(evt) => {
+                    editValue(evt, idx);
+                  }}
+                  width='100%'
+                />
+                <span>
+                  <FaRegCircleCheck
+                    onClick={() => {
+                      useSubmitName.mutate(id);
+                    }}
+                  />
+                </span>
+                <span>
+                  <FaRegCircleXmark
+                    id={id}
+                    onClick={() => {
+                      if (confirm('정말로 삭제하시겠습니까?')) {
+                        useDeleteCategory.mutate(id);
+                      }
+                    }}
+                  />
+                </span>
+                {/* map으로 돌렸더니 밸류값이 똑같이 적용되서 수정삭제가 함께 일어남  */}
+              </li>
+            );
+          })}
+      </ul>
     </EditCtegoryStyile>
   );
 };

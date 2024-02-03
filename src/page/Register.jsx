@@ -67,6 +67,8 @@ const Register = () => {
       <Form
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
+          localStorage.setItem('nickname', data.nickname);
+          console.log(localStorage.getItem('nickname'));
           reset();
         })}
       >

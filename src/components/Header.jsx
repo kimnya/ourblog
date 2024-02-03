@@ -14,7 +14,7 @@ const HeaderStyled = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 100px;
+  padding: 0 50px;
   min-height: 80px;
 
   > div {
@@ -25,67 +25,41 @@ const HeaderStyled = styled.div`
     > * {
       margin-left: 20px;
     }
+    > p {
+      > a {
+        margin-right: 30px;
+      }
+    }
   }
 `;
 
 const Header = () => {
   const [isTogle, setTogle] = useState({
-    sideBar: false,
     darkMode: false,
-    searchBar: false,
-    logined: false,
-    edit: false,
-    update: false,
   });
-
-  const getProfileApi = useQuery({
-    queryKey: ['getProfile'],
-    queryFn: getProfile,
-    enabled: localStorage.getItem('accessToken') !== null,
-  });
-
-  useEffect(() => {
-    setTogle((prev) => ({ ...prev, logined: !prev.logined }));
-  }, [localStorage.getItem('accessToken')]);
-
-  const navigate = useNavigate();
-  const reactIconsSize = '22px';
-
-  const sideBarToggleHandler = () => {
-    setTogle((prev) => ({ ...prev, sideBar: !prev.sideBar }));
-  };
 
   const darkModeToggleHandler = () => {
     setTogle((prev) => ({ ...prev, darkMode: !prev.darkMode }));
   };
-  const serchBarToggleHandler = () => {
-    setTogle((prev) => ({ ...prev, searchBar: !prev.searchBar }));
-    navigate('/search');
-  };
-
-  const editToggleHandler = () => {
-    setTogle((prev) => ({ ...prev, edit: !prev.edit }));
-  };
-
-  const moveLogin = () => navigate('/login');
+  const key = localStorage.getItem('accessToken');
+  const getProfileApi = useQuery({
+    queryKey: ['getProfile', key],
+    queryFn: getProfile,
+    enabled: !!key,
+  });
+  const navigate = useNavigate();
 
   const logoutSubmit = (evt) => {
     evt.preventDefault();
-    setTogle((prev) => ({ ...prev, logined: !prev.logined }));
     localStorage.removeItem('accessToken');
   };
+  const reactIconsSize = '22px';
 
   return (
     <>
       {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}
 
       <HeaderStyled>
-        <SideBar
-          isTogle={isTogle}
-          sideBarToggleHandler={sideBarToggleHandler}
-          reactIconsSize={reactIconsSize}
-          editToggleHandler={editToggleHandler}
-        />
         <Title />
         <div className='mainpageIcons'>
           {isTogle.darkMode ? (
@@ -93,15 +67,35 @@ const Header = () => {
           ) : (
             <FaMoon size={reactIconsSize} onClick={darkModeToggleHandler} />
           )}
-          <IoSearch size={reactIconsSize} onClick={serchBarToggleHandler} />
-          {localStorage.getItem('accessToken') == null ? (
-            <Button width='50px' height='25px' $fontColor='mainGray' onClick={moveLogin}>
-              로그인
-            </Button>
-          ) : (
+          <IoSearch
+            size={reactIconsSize}
+            onClick={() => {
+              navigate('/search');
+            }}
+          />
+          {!!key ? (
             <p>
               {getProfileApi && getProfileApi.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
+              <Button
+                width='80px'
+                onClick={() => {
+                  navigate('/articleAll');
+                }}
+              >
+                내블로그
+              </Button>
             </p>
+          ) : (
+            <Button
+              width='50px'
+              height='25px'
+              $fontColor='mainGray'
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              로그인
+            </Button>
           )}
         </div>
       </HeaderStyled>

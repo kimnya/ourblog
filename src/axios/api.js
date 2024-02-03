@@ -3,25 +3,25 @@ import { getCookie } from '../components/cookie';
 
 // 게시물리스트 호출
 export const articleListRead = async () => {
-  const response = axios.get('http://localhost:8081/posting/list', {
+  const response = await axios.get('http://localhost:8081/posting/list', {
     params: { searchText: '' },
   });
   return response;
 };
 
 //프로필닉네임 호출
-export const getProfile = async () => {
+export const getProfile = async ({ queryKey }) => {
   const response = await axios
     .get('http://localhost:8081/member/myPage', {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      headers: { Authorization: `Bearer ${queryKey[1]}` },
     })
     .then((response) => {
       return response;
     })
-    .catch((error) => {
+    .catch(async (error) => {
       console.log(error.response);
       if (error.response.status === 500) {
-        axios
+        await axios
           .post(
             'http://localhost:8081/member/reissue',
             { refreshToken: getCookie(refreshToken) },
@@ -29,10 +29,10 @@ export const getProfile = async () => {
               headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
             },
           )
-          .then((response) => {
+          .then(async (response) => {
             const accessToken = response.data.accessToken;
             localStorage.setItem('accessToken', accessToken);
-            axios.get('http://localhost:8081/member/myPage', {
+            await axios.get('http://localhost:8081/member/myPage', {
               headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
             });
           });
@@ -44,13 +44,13 @@ export const getProfile = async () => {
 
 //익명유저를 위한 좋아요 호출
 export const anonymousLikeCntReadApi = async ({ queryKey }) => {
-  const response = axios.get(`http://localhost:8081/heart/anonymous/${queryKey[1]}`);
+  const response = await axios.get(`http://localhost:8081/heart/anonymous/${queryKey[1]}`);
   return response;
 };
 
 //로그인한 유저를 위한 좋아요 호출
 export const likeCntReadApi = async ({ queryKey }) => {
-  const response = axios.get(`http://localhost:8081/heart/user/${queryKey[1]}`, {
+  const response = await axios.get(`http://localhost:8081/heart/user/${queryKey[1]}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
   });
   return response;
@@ -58,11 +58,10 @@ export const likeCntReadApi = async ({ queryKey }) => {
 
 //카테고리 리스트 호출
 export const getCategories = async () => {
-  const response = axios
+  const response = await axios
     .get('http://localhost:8081/member/categories', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        'Content-Type': 'application/json',
       },
     })
     .then((response) => {

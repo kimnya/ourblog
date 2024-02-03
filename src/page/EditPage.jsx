@@ -54,6 +54,7 @@ const EditBoxStyle = styled.div`
 `;
 
 const EditPage = () => {
+  const key = localStorage.getItem('accessToken');
   const [selected, setSelected] = useState();
   const [values, setValues] = useState();
   const [title, setTitle] = useState();
@@ -71,16 +72,15 @@ const EditPage = () => {
   const getCategory = useQuery({
     queryKey: ['getCategory'],
     queryFn: getCategories,
-    enabled: localStorage.getItem('accessToken') !== null,
   });
   console.log('editpageGetCategory', getCategory); //getCategory.data.categories
 
-  const getProfileApi = useQuery({
-    queryKey: ['getProfile'],
-    queryFn: getProfile,
-    enabled: localStorage.getItem('accessToken') !== null,
-  });
-  console.log('editpageGetProfileApi', getProfileApi); //getCategory.data.categories
+  // const getProfileApi = useQuery({
+  //   queryKey: ['getProfile', key],
+  //   queryFn: getProfile,
+  //   enabled: !!key,
+  // });
+  // console.log('editpageGetProfileApi', getProfileApi); //getCategory.data.categories
 
   const selectCategory = (evt) => {
     setSelected(evt.target.value);
@@ -99,7 +99,9 @@ const EditPage = () => {
           const data = {
             title: title,
             content: values,
-            nickName: getProfileApi.data.data.nickname,
+            // nickName: getProfileApi.data.data.nickname,
+            nickName: localStorage.getItem('nickname'),
+
             categoryId: selected,
           };
           postContentApi.mutate(data);
@@ -137,7 +139,8 @@ const EditPage = () => {
             const data = {
               title: title,
               content: values,
-              nickName: getProfileApi.data.data.nickname,
+              // nickName: getProfileApi.data.data.nickname,
+              nickName: localStorage.getItem('nickname'),
               categoryId: selected,
             };
             postContentApi.mutate(data);
