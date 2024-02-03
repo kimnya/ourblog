@@ -3,7 +3,7 @@ import Input from '../Input';
 import { useForm } from 'react-hook-form';
 import Button from '../Button';
 import Modal from '../Modal';
-import { storage } from './../../Firebase';
+import { storage } from '../../fireBase/Firebase';
 import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { editimageProfile } from '../../axios/api';

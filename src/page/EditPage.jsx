@@ -60,7 +60,7 @@ const EditBoxStyle = styled.div`
 const EditPage = () => {
   const key = localStorage.getItem('accessToken');
   const [selected, setSelected] = useState();
-  const [values, setValues] = useState();
+  const [nickname, setNickname] = useState(localStorage.getItem('accessToken'));
   const [title, setTitle] = useState();
   const navgate = useNavigate();
   const editorRef = useRef();
@@ -106,11 +106,16 @@ const EditPage = () => {
             title: title,
             content: content,
             // nickName: getProfileApi.data.data.nickname,
-            nickName: localStorage.getItem('nickname'),
+            nickName: nickname,
             categoryId: selected,
           };
           postContentApi.mutate(data);
+
           console.log('d', data);
+          console.log('title', typeof data.title);
+          console.log('content', typeof data.content);
+          console.log('nickname', typeof data.nickName);
+          console.log('categoryId', typeof data.categoryId);
         }}
       >
         <label htmlFor='title'>title</label>
@@ -147,11 +152,15 @@ const EditPage = () => {
               title: title,
               content: content,
               // nickName: getProfileApi.data.data.nickname,
-              nickName: localStorage.getItem('nickname'),
+              nickName: nickname,
               categoryId: selected,
             };
             postContentApi.mutate(data);
             console.log('d', data);
+            console.log('title', typeof data.title);
+            console.log('content', typeof data.content);
+            console.log('nickname', typeof data.nickName);
+            console.log('categoryId', typeof data.categoryId);
           }}
         >
           작성완료
