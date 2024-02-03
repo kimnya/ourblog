@@ -99,14 +99,14 @@ const EditPage = () => {
     <EditBoxStyle>
       <form
         onSubmit={(evt) => {
+          const content = editorRef.current.getInstance().getHTML();
           preventSubmit(evt);
           navgate('/');
           const data = {
             title: title,
-            content: values,
+            content: content,
             // nickName: getProfileApi.data.data.nickname,
             nickName: localStorage.getItem('nickname'),
-
             categoryId: selected,
           };
           postContentApi.mutate(data);
@@ -141,10 +141,11 @@ const EditPage = () => {
           className='submitBtn'
           onSubmit={(evt) => {
             preventSubmit(evt);
+            const content = editorRef.current.getInstance().getHTML();
             navgate('/');
             const data = {
               title: title,
-              content: values,
+              content: content,
               // nickName: getProfileApi.data.data.nickname,
               nickName: localStorage.getItem('nickname'),
               categoryId: selected,

@@ -6,17 +6,6 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 
-// const EditorBox = new Editor({
-//   el: document.querySelector('#editor'),
-//   previewStyle: 'vertical',
-//   toolbarItems: [
-//     ['heading', 'bold', 'italic', 'strike'],
-//     ['hr', 'quote'],
-//     // ...
-//   ],
-//   // ...
-// });
-
 const EditToastUi = ({ editorRef }) => {
   return (
     <Editor
