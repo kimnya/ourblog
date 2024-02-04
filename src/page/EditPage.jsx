@@ -105,7 +105,7 @@ const EditPage = () => {
             content: content,
             // nickName: getProfileApi.data.data.nickname,
             nickName: window.localStorage.getItem('nickname'),
-            categoryId: selected,
+            categoryId: 1,
           };
           postContentApi.mutate(data);
 
@@ -151,7 +151,7 @@ const EditPage = () => {
               content: content,
               // nickName: getProfileApi.data.data.nickname,
               nickName: window.localStorage.getItem('nickname'),
-              categoryId: selected,
+              categoryId: 1,
             };
             postContentApi.mutate(data);
             console.log('d', data);

@@ -5,14 +5,13 @@ import { useQuery } from '@tanstack/react-query';
 import { userArticleRead } from '../axios/api';
 import ArticleListBox from '../components/ArticleListBox';
 
-const ArticleListBoxStyle = styled.div`
+const ArticleListStyle = styled.div`
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row wrap;
   justify-content: space-between;
-  width: 282px;
-  height: 339px;
-  background-color: #fff;
-  border: 1px solid ${palette.mainGreen};
+  align-content: space-between;
+  width: 1237px;
+  height: 710px;
 
   > .articlePhotoBox {
     width: 282px;
@@ -53,7 +52,7 @@ const UserArticleAll = () => {
   const { data } = userArticle;
 
   return (
-    <ArticleListBoxStyle>
+    <ArticleListStyle>
       <>
         {data.data.map((article) => {
           return (
@@ -63,7 +62,7 @@ const UserArticleAll = () => {
           );
         })}
       </>
-    </ArticleListBoxStyle>
+    </ArticleListStyle>
   );
 };
 

@@ -32,7 +32,7 @@ const AllArticlePage = () => {
     }
   };
   return (
-    <div>
+    <>
       {/* <SideBar
         isTogle={isTogle}
         reactIconsSize={reactIconsSize}
@@ -41,7 +41,7 @@ const AllArticlePage = () => {
       /> */}
       <UserArticleAll />
       <Link onClick={moveWritePge}>글 작성하기</Link>
-    </div>
+    </>
   );
 };
 
