@@ -7,6 +7,7 @@ import { FaHeart } from 'react-icons/fa';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { darken, lighten } from '../styles/ColorMixin';
 import { AnonymousLikeCntRead, articleDetailRead, minusLikeCnt, plusLikeCnt, userLikeCntRead } from '../axios/api';
+import { Viewer } from '@toast-ui/react-editor';
 
 const ReadPageStyle = styled.div`
   width: 70vw;
@@ -99,8 +100,6 @@ const Articleread = () => {
     enabled: false,
   });
 
-  const { content } = articleDetail.data.data[postId - 1];
-
   const posting = articleDetail.data.data.find((post) => {
     if (post.postId == postId) {
       return true;
@@ -139,7 +138,7 @@ const Articleread = () => {
             <p>삭제</p>
           </div>
         </div>
-        {posting && <div id='contents' dangerouslySetInnerHTML={{ __html: content }} />}
+        {posting && <Viewer initialValue={posting.content} />}
       </ReadPageStyle>
     </>
   );

@@ -39,7 +39,6 @@ const ArticleListBoxStyle = styled.div`
       height: 77px;
       color: #aaa;
     }
-    border: 1px solid #000;
   }
   > .articleEctBox {
     display: flex;
@@ -86,7 +85,11 @@ const ArticleListBox = ({ article }) => {
         }}
       >
         <div id={id} className='articlePhotoBox'>
-          <img id={id} src={imageUrl} alt={`${writer}의 썸네일`} />
+          {imageUrl !== '' ? (
+            <img id={id} src={imageUrl} alt={`${writer}의 썸네일`} />
+          ) : (
+            <p id={id}>{trimTagContent}</p>
+          )}
         </div>
 
         <div id={id}>
