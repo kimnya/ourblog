@@ -36,8 +36,14 @@ const HeaderStyled = styled.div`
 const Header = () => {
   const [isTogle, setTogle] = useState({
     darkMode: false,
+    logined: false,
   });
 
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      setTogle((prev) => ({ ...prev, logined: !prev.logined }));
+    }
+  }, []);
   const darkModeToggleHandler = () => {
     setTogle((prev) => ({ ...prev, darkMode: !prev.darkMode }));
   };
@@ -52,6 +58,7 @@ const Header = () => {
   const logoutSubmit = (evt) => {
     evt.preventDefault();
     localStorage.removeItem('accessToken');
+    setTogle((prev) => ({ ...prev, logined: !prev.logined }));
   };
   const reactIconsSize = '22px';
 

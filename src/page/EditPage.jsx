@@ -58,9 +58,7 @@ const EditBoxStyle = styled.div`
 `;
 
 const EditPage = () => {
-  const key = localStorage.getItem('accessToken');
   const [selected, setSelected] = useState();
-  const [nickname, setNickname] = useState(localStorage.getItem('accessToken'));
   const [title, setTitle] = useState();
   const navgate = useNavigate();
   const editorRef = useRef();
@@ -74,11 +72,11 @@ const EditPage = () => {
     },
   });
 
-  const getCategory = useQuery({
-    queryKey: ['getCategory'],
-    queryFn: getCategories,
-  });
-  console.log('editpageGetCategory', getCategory); //getCategory.data.categories
+  // const getCategory = useQuery({
+  //   queryKey: ['getCategory'],
+  //   queryFn: getCategories,
+  // });
+  // console.log('editpageGetCategory', getCategory); //getCategory.data.categories
 
   // const getProfileApi = useQuery({
   //   queryKey: ['getProfile', key],
@@ -106,7 +104,7 @@ const EditPage = () => {
             title: title,
             content: content,
             // nickName: getProfileApi.data.data.nickname,
-            nickName: nickname,
+            nickName: window.localStorage.getItem('nickname'),
             categoryId: selected,
           };
           postContentApi.mutate(data);
@@ -131,7 +129,7 @@ const EditPage = () => {
           }}
           value={title || ''}
         />
-        <select onChange={selectCategory} value={selected}>
+        {/* <select onChange={selectCategory} value={selected}>
           {getCategory.data.categories.map((category) => {
             return (
               <option key={category.id} value={category.id}>
@@ -139,7 +137,7 @@ const EditPage = () => {
               </option>
             );
           })}
-        </select>
+        </select> */}
 
         <EditToastUi editorRef={editorRef} />
         <Button
@@ -152,7 +150,7 @@ const EditPage = () => {
               title: title,
               content: content,
               // nickName: getProfileApi.data.data.nickname,
-              nickName: nickname,
+              nickName: window.localStorage.getItem('nickname'),
               categoryId: selected,
             };
             postContentApi.mutate(data);

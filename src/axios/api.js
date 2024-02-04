@@ -51,7 +51,7 @@ export const anonymousLikeCntReadApi = async ({ queryKey }) => {
 //로그인한 유저를 위한 좋아요 호출
 export const likeCntReadApi = async ({ queryKey }) => {
   const response = await axios.get(`http://localhost:8081/heart/user/${queryKey[1]}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: { Authorization: `Bearer ${queryKey[2]}` },
   });
   return response;
 };
@@ -170,8 +170,15 @@ export const postContent = async (data) => {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         'Access-Control-Allow-Origin': 'http://localhost:8081/',
       },
+      maxBodyLength: 1000000000,
+      maxContentLength: 10000000000,
     },
   );
+  console.log(data);
+  console.log(typeof data.title);
+  console.log(typeof data.content);
+  console.log(typeof data.nickName);
+  console.log(typeof data.categoryId);
   return reponse;
 };
 

@@ -58,7 +58,7 @@ const UserArticleAll = () => {
         {data.data.map((article) => {
           return (
             <>
-              <ArticleListBox key={article.id} article={article} />;
+              <ArticleListBox key={article.id} article={article} />
             </>
           );
         })}

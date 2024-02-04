@@ -15,7 +15,9 @@ const EditToastUi = ({ editorRef }) => {
       previewHighlight={false} //프리뷰에 바탕색 입히기
       hideModeSwitch={true} //마크다운,wiswig탭 숨김
       ref={editorRef}
-      //   theme={'dark'}
+      initialValue={' '} // 글 수정 시 사용
+      initialEditType='markdown' // wysiwyg & markdown
+      // theme={'dark'}
       width={'50vw'}
       height={'90%'}
       plugins={[colorSyntax]}
@@ -25,4 +27,3 @@ const EditToastUi = ({ editorRef }) => {
 };
 
 export default EditToastUi;
-// https://bloodstrawberry.tistory.com/1268

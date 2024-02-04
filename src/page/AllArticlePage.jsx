@@ -33,12 +33,12 @@ const AllArticlePage = () => {
   };
   return (
     <div>
-      <SideBar
+      {/* <SideBar
         isTogle={isTogle}
         reactIconsSize={reactIconsSize}
         sideBarToggleHandler={sideBarToggleHandler}
         editToggleHandler={editToggleHandler}
-      />
+      /> */}
       <UserArticleAll />
       <Link onClick={moveWritePge}>글 작성하기</Link>
     </div>

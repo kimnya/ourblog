@@ -51,6 +51,7 @@ const ArticleListBoxStyle = styled.div`
 `;
 
 const ArticleListBox = ({ article }) => {
+  const key = localStorage.getItem('accessToken') !== null;
   const { title, writer, createdDate, content, id } = article;
   const [timeAgo] = useTimeStamp(createdDate);
   let imageUrl = '';
@@ -63,15 +64,15 @@ const ArticleListBox = ({ article }) => {
   const navigate = useNavigate();
 
   const likeCntRead = useQuery({
-    queryKey: ['likeCnt', id],
+    queryKey: ['likeCnt', id, key],
     queryFn: likeCntReadApi,
-    enabled: localStorage.getItem('accessToken') !== null && article.id !== null,
+    enabled: !!article.id && !!key,
   });
 
   const anonymousLikeCntRead = useQuery({
-    queryKey: ['anonymousLikeCnt', id],
+    queryKey: ['anonymousLikeCnt', id, key],
     queryFn: anonymousLikeCntReadApi,
-    enabled: localStorage.getItem('accessToken') == null && article.id !== null,
+    enabled: !!article.id && !key,
   });
 
   return (
