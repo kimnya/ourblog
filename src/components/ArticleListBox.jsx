@@ -54,7 +54,7 @@ const ArticleListBoxStyle = styled.div`
 `;
 
 const ArticleListBox = ({ article }) => {
-  const key = localStorage.getItem('accessToken');
+  const key = sessionStorage.getItem('accessToken');
   const { title, writer, createdDate, content, id } = article;
   const [timeAgo] = useTimeStamp(createdDate);
   let imageUrl = '';
@@ -75,7 +75,7 @@ const ArticleListBox = ({ article }) => {
   const anonymousLikeCntRead = useQuery({
     queryKey: ['anonymousLikeCnt', id, key],
     queryFn: anonymousLikeCntReadApi,
-    enabled: !!article.id && localStorage.getItem('accessToken') === null,
+    enabled: !!article.id && sessionStorage.getItem('accessToken') === null,
   });
 
   return (
@@ -112,7 +112,7 @@ const ArticleListBox = ({ article }) => {
               {writer}
             </span>
             <FaRegHeart id={id} />
-            {localStorage.getItem('accessToken')
+            {sessionStorage.getItem('accessToken')
               ? likeCntRead.data.data.heartCount
               : anonymousLikeCntRead.data.data.heartCount}
           </p>

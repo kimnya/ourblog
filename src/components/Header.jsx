@@ -43,6 +43,8 @@ const Header = () => {
   useEffect(() => {
     if (sessionStorage.getItem('accessToken')) {
       setTogle((prev) => ({ ...prev, logined: !prev.logined }));
+    } else {
+      setTogle((prev) => ({ ...prev, logined: false }));
     }
   }, []);
   const darkModeToggleHandler = () => {
@@ -53,7 +55,7 @@ const Header = () => {
     queryFn: getProfile,
     enabled: !!key,
   });
-  // console.log('header profile', getProfileApi);
+  console.log('header profile', getProfileApi);
   const navigate = useNavigate();
 
   const logoutSubmit = (evt) => {
@@ -84,7 +86,7 @@ const Header = () => {
           />
           {!!key ? (
             <p>
-              {getProfileApi && getProfileApi.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
+              {getProfileApi && getProfileApi.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
               <Button
                 width='80px'
                 onClick={() => {

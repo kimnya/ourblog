@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GlobalStyle } from './styles/GlobalStyle';
 import Router from './components/Router';
 
@@ -8,7 +8,6 @@ function App() {
       <GlobalStyle />
 
       <Router />
-      {/* <EditToastUi /> */}
     </>
   );
 }

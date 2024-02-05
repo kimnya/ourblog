@@ -24,7 +24,7 @@ const AllArticlePage = () => {
 
   const moveWritePge = (evt) => {
     evt.preventDefault();
-    if (localStorage.getItem('accessToken')) {
+    if (sessionStorage.getItem('accessToken')) {
       navigate('/write');
     } else {
       alert('로그인 해주세요');

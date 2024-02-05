@@ -75,8 +75,7 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
   };
 
   const { commentId, reply, createdDate, author, imageUrl, email } = comment;
-  console.log('commentAuthor', author);
-  console.log('nickname', localStorage.getItem('nickname'));
+
   return (
     <>
       <CommentBoxStyle>

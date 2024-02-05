@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie } from '../components/cookie';
+import { getCookie, setCookie } from '../components/cookie';
 
 // 게시물리스트 호출
 export const articleListRead = async () => {
@@ -11,39 +11,28 @@ export const articleListRead = async () => {
 
 //프로필 호출
 export const getProfile = async ({ queryKey }) => {
-  const response = await axios
-    .get('http://localhost:8081/member/myPage', {
-      headers: { Authorization: `Bearer ${queryKey[1]}` },
-    })
-    .then((response) => {
-      return response.data;
-    })
-    .catch(async (error) => {
-      console.log(refreshToken);
-      if (error.response.status === 500) {
-        await axios
-          .post(
-            'http://localhost:8081/member/reissue',
-            { refreshToken: refreshToken },
-            {
-              headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
-            },
-          )
-          .then(async (response) => {
-            console.log('reissue 성공 ');
-            const accessToken = response.data.accessToken;
-            sessionStorage.setItem('accessToken', accessToken);
-            await axios
-              .get('http://localhost:8081/member/myPage', {
-                headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
-              })
-              .catch((error) => {
-                console.log('reissue 실패 ');
-                console.log('reissueError', error);
-              });
-          });
-      }
-    });
+  const response = await axios.get('http://localhost:8081/member/myPage', {
+    headers: { Authorization: `Bearer ${queryKey[1]}` },
+  });
+
+  return response;
+};
+
+//리프레쉬토큰으로 accessToken 재 호출
+export const recallToken = async () => {
+  console.log('리이슈되고있다');
+  let refreshToken = getCookie('refreshToken');
+  let accessToken = sessionStorage.getItem('accessToken');
+  const response = await axios.post(
+    'http://localhost:8081/member/reissue',
+    { refreshToken: refreshToken, accessToken: accessToken },
+    {},
+  );
+  console.log('reissue 성공 ');
+  accessToken = response.data.accessToken;
+  refreshToken = response.data.refreshToken;
+  sessionStorage.setItem('accessToken', accessToken);
+  setCookie('refreshToken', refreshToken);
 
   return response;
 };
@@ -190,8 +179,8 @@ export const postContent = async (data) => {
 
 //회원탈퇴 호출
 export const deleteProfile = async () => {
-  localStorage.clear;
-  sessionStorage.clear;
+  localStorage.clear();
+  sessionStorage.clear();
 
   const response = await axios.delete('http://localhost:8081/profile/member', {
     headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },

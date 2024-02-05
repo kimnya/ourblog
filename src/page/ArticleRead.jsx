@@ -100,13 +100,13 @@ const Articleread = () => {
   const likeCntUser = useQuery({
     queryKey: ['userLikeCnt', postId],
     queryFn: userLikeCntRead,
-    enabled: localStorage.getItem('accessToken') !== null,
+    enabled: sessionStorage.getItem('accessToken') !== null,
   });
 
   const likeCntAnonimous = useQuery({
     queryKey: ['AnonimousLikeCnt', postId],
     queryFn: AnonymousLikeCntRead,
-    enabled: localStorage.getItem('accessToken') == null,
+    enabled: sessionStorage.getItem('accessToken') == null,
   });
 
   const plusLikeCntApi = useMutation({
@@ -142,7 +142,7 @@ const Articleread = () => {
           <div className='postInfoBox'>
             <p id='writer'>{posting.writer}</p>
             <p id='date'>{postingDate}</p>
-            {localStorage.getItem('accessToken') == null ? (
+            {sessionStorage.getItem('accessToken') == null ? (
               <p className='heartBox'>
                 <FaRegHeart onClick={() => alert('로그인 후 이용할 수 있습니다.')} />
                 {likeCntAnonimous.data.data.heartCount}

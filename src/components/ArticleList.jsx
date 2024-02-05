@@ -19,7 +19,7 @@ const ArticleList = () => {
     queryKey: ['articleRead'],
     queryFn: articleListRead,
   });
-  console.log('article', articleAll);
+  // console.log('article', articleAll);
 
   const { data } = articleAll;
 
