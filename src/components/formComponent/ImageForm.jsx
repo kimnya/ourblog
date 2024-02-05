@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Input from '../Input';
 import { useForm } from 'react-hook-form';
 import Button from '../Button';
@@ -34,15 +34,12 @@ const InputStyle = styled.div`
 const ImageForm = ({ imagetoggleButton }) => {
   const queryClient = useQueryClient();
   const [attachment, setAttachment] = useState();
+  const [save, setSave] = useState(true);
 
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-    getValues,
-    reset,
-    resetField,
-    setFocus,
   } = useForm();
 
   const imageHandler = async () => {
@@ -53,6 +50,7 @@ const ImageForm = ({ imagetoggleButton }) => {
         getDownloadURL(snapshot.ref).then((url) => {
           console.log(url);
           setAttachment(url);
+          setSave(false);
         });
       });
     } catch (error) {
@@ -93,16 +91,7 @@ const ImageForm = ({ imagetoggleButton }) => {
             placehoder='사진을 선택해주세요.'
           />
           {errors.imageFile && <Modal>{errors.imageFile.message}</Modal>}
-          <Button
-            onSubmit={handleSubmit((data) => {
-              // console.log(data.imageFile);
-              editimage.mutate(attachment);
-              imagetoggleButton();
-              console.log(attachment);
-            })}
-          >
-            저장
-          </Button>
+          <Button disabled={save}>저장</Button>
         </form>
       </InputStyle>
     </>

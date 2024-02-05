@@ -9,7 +9,8 @@ const CommentBoxStyle = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
-  width: 30vw;
+  width: 50vw;
+
   padding: 20px;
   border-bottom: 1px solid ${palette.mainGreen};
 
@@ -73,7 +74,9 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
     }
   };
 
-  const { commentId, reply, createdDate, author, imageUrl } = comment;
+  const { commentId, reply, createdDate, author, imageUrl, email } = comment;
+  console.log('commentAuthor', author);
+  console.log('nickname', localStorage.getItem('nickname'));
   return (
     <>
       <CommentBoxStyle>
@@ -88,36 +91,39 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
           </div>
           <p className='comment'> {!!type ? <textarea onChange={editComment} defaultValue={reply} /> : reply}</p>
         </div>
-        <div className='linkBox'>
-          {!!type ? (
+
+        {email !== localStorage.getItem('email') ? null : (
+          <div className='linkBox'>
+            {!!type ? (
+              <Link
+                id={id}
+                onClick={() => {
+                  if (editConmmentValue == '') {
+                    alert('댓글을 작성해주세요');
+                  } else {
+                    articleCommentEdit(commentId, editConmmentValue, setComments, postId);
+                    setType(false);
+                    setEditComment('');
+                  }
+                }}
+              >
+                저장
+              </Link>
+            ) : (
+              <Link id={id} onClick={editHandler}>
+                수정
+              </Link>
+            )}
             <Link
               id={id}
-              onClick={() => {
-                if (editConmmentValue == '') {
-                  alert('댓글을 작성해주세요');
-                } else {
-                  articleCommentEdit(commentId, editConmmentValue, setComments, postId);
-                  setType(false);
-                  setEditComment('');
-                }
+              onClick={(evt) => {
+                articleCommentDelete(commentId, setComments, postId);
               }}
             >
-              저장
+              삭제
             </Link>
-          ) : (
-            <Link id={id} onClick={editHandler}>
-              수정
-            </Link>
-          )}
-          <Link
-            id={id}
-            onClick={(evt) => {
-              articleCommentDelete(commentId, setComments, postId);
-            }}
-          >
-            삭제
-          </Link>
-        </div>
+          </div>
+        )}
       </CommentBoxStyle>
     </>
   );
