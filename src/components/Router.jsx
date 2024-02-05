@@ -10,6 +10,7 @@ import Articleread from '../page/ArticleRead';
 import MyInfoPage from '../page/myInfoPage';
 import AllArticlePage from '../page/AllArticlePage';
 import PrivateRoute from '../utill/PrivateRoute';
+import ConfirmLogin from '../utill/ConfirmLogin';
 
 const Router = () => {
   return (
@@ -18,16 +19,19 @@ const Router = () => {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<MainPage />} />
+
+            {/* <Route element={<ConfirmLogin />}> */}
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            {/* </Route> */}
             <Route path='/search' element={<SearchPage />} />
             <Route path='/readPage/:postId' element={<Articleread />} />
             <Route path='/category/:categoryName' element={<AllArticlePage />} />
             <Route path='/articleAll' element={<AllArticlePage />} />
-            {/* <Route element={<PrivateRoute />}> */}
-            <Route path='/myPage' element={<MyInfoPage />} />
-            <Route path='/write' element={<EditPage />} />
-            {/* </Route> */}
+            <Route element={<PrivateRoute />}>
+              <Route path='/myPage' element={<MyInfoPage />} />
+              <Route path='/write' element={<EditPage />} />
+            </Route>
           </Route>
         </Routes>
       </Suspense>

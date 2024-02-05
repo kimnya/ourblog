@@ -49,8 +49,7 @@ const Login = () => {
             alert('로그인이 완료됐습니다. 좋은하루 보내세요');
             const accessToken = response.data.accessToken;
             const refreshToken = response.data.refreshToken;
-            localStorage.setItem('accessToken', accessToken);
-
+            sessionStorage.setItem('accessToken', accessToken);
             setCookie('refreshToken', refreshToken);
             navigate('/');
           }

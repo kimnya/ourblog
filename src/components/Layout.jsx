@@ -28,7 +28,7 @@ const Layout = () => {
   return (
     <>
       {/* <Shadow> */}
-      <Header isTogle={isTogle} reactIconsSize={reactIconsSize} darkModeToggleHandler={darkModeToggleHandler} />s
+      <Header isTogle={isTogle} reactIconsSize={reactIconsSize} darkModeToggleHandler={darkModeToggleHandler} />
       <Main>
         <Outlet />
       </Main>

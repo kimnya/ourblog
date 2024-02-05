@@ -34,14 +34,14 @@ const HeaderStyled = styled.div`
 `;
 
 const Header = () => {
-  const key = localStorage.getItem('accessToken');
+  const key = sessionStorage.getItem('accessToken');
   const [isTogle, setTogle] = useState({
     darkMode: false,
     logined: false,
   });
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
+    if (sessionStorage.getItem('accessToken')) {
       setTogle((prev) => ({ ...prev, logined: !prev.logined }));
     }
   }, []);
@@ -58,14 +58,11 @@ const Header = () => {
 
   const logoutSubmit = (evt) => {
     evt.preventDefault();
-    localStorage.removeItem('accessToken');
+    sessionStorage.removeItem('accessToken');
     setTogle((prev) => ({ ...prev, logined: !prev.logined }));
+    localStorage.clear();
   };
   const reactIconsSize = '22px';
-
-  useEffect(() => {
-    localStorage.setItem('nickname', getProfileApi.data.nickname);
-  }, []);
 
   return (
     <>

@@ -8,7 +8,7 @@ const MainPage = () => {
 
   const moveWritePge = (evt) => {
     evt.preventDefault();
-    if (localStorage.getItem('accessToken')) {
+    if (sessionStorage.getItem('accessToken')) {
       navigate('/write');
     } else {
       alert('로그인 해주세요');
@@ -19,7 +19,7 @@ const MainPage = () => {
   return (
     <>
       <ArticleList />
-      <Link to='/write'>글 작성하기</Link>
+      <Link onClick={moveWritePge}>글 작성하기</Link>
     </>
   );
 };

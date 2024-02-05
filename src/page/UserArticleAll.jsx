@@ -46,7 +46,7 @@ const UserArticleAll = () => {
   const userArticle = useQuery({
     queryKey: ['userArticle'],
     queryFn: userArticleRead,
-    enabled: localStorage.getItem('accessToken') !== null,
+    enabled: sessionStorage.getItem('accessToken') !== null,
   });
 
   const { data } = userArticle;

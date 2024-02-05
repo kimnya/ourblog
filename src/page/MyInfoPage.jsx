@@ -143,7 +143,7 @@ const MyInfoPage = () => {
       deleteMyInfo.mutate();
     }
   };
-  const key = localStorage.getItem('accessToken');
+  const key = sessionStorage.getItem('accessToken');
   const getProfileApi = useQuery({ queryKey: ['getProfile', key], queryFn: getProfile });
   console.log(getProfileApi);
 

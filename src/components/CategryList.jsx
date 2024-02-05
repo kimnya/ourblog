@@ -57,7 +57,7 @@ const CategoryBox = styled.div`
 `;
 
 const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
-  const key = localStorage.getItem('accessToken');
+  const key = sessionStorage.getItem('accessToken');
 
   const categoryArray = useQuery({
     queryKey: ['getCategory'],
@@ -79,7 +79,7 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
           <Link onClick={sideBarToggleHandler} to='/'>
             Home
           </Link>
-          {!localStorage.getItem('accessToken') ? (
+          {!sessionStorage.getItem('accessToken') ? (
             <p>로그인을 하시면 개인 카테고리가 나옵니다.</p>
           ) : (
             <>

@@ -234,7 +234,7 @@ export const editPasswordProfile = async (data) => {
     'http://localhost:8081/profile/passwordUpdate',
     { newPassword: data },
     {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
     },
   );
 
@@ -248,7 +248,7 @@ export const editimageProfile = async (data) => {
     'http://localhost:8081/profile/imageUpdate',
     { imageUrl: data },
     {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
     },
   );
 
@@ -258,7 +258,7 @@ export const editimageProfile = async (data) => {
 //댓글 호출
 export const articleCommentRead = async (postId, setComments) => {
   const response = await axios.get(`http://localhost:8081/comment/list/${postId}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
 
   setComments(response.data);
@@ -272,11 +272,11 @@ export const articleCommentCreate = async (data) => {
     `http://localhost:8081/comment/create/${data['postId']}`,
     { reply: data.reply },
     {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
     },
   );
   const newList = await axios.get(`http://localhost:8081/comment/list/${data['postId']}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
 
   data.setComments(newList.data);
@@ -286,12 +286,12 @@ export const articleCommentCreate = async (data) => {
 //댓글 삭제 호출
 export const articleCommentDelete = async (commentId, setComments, postId) => {
   const response = await axios.delete(`http://localhost:8081/comment/delete/${commentId}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
 
   alert('댓글이 삭제 되었습니다.');
   const newList = await axios.get(`http://localhost:8081/comment/list/${postId}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
 
   setComments(newList.data);
@@ -307,12 +307,12 @@ export const articleCommentEdit = async (commentId, reply, setComments, postId) 
       reply: reply,
     },
     {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
     },
   );
 
   const newList = await axios.get(`http://localhost:8081/comment/list/${postId}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
 
   setComments(newList.data);
