@@ -9,7 +9,7 @@ export const articleListRead = async () => {
   return response;
 };
 
-//프로필닉네임 호출
+//프로필 호출
 export const getProfile = async ({ queryKey }) => {
   const response = await axios
     .get('http://localhost:8081/member/myPage', {
@@ -26,16 +26,16 @@ export const getProfile = async ({ queryKey }) => {
             'http://localhost:8081/member/reissue',
             { refreshToken: refreshToken },
             {
-              headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+              headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
             },
           )
           .then(async (response) => {
             console.log('reissue 성공 ');
             const accessToken = response.data.accessToken;
-            localStorage.setItem('accessToken', accessToken);
+            sessionStorage.setItem('accessToken', accessToken);
             await axios
               .get('http://localhost:8081/member/myPage', {
-                headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+                headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
               })
               .catch((error) => {
                 console.log('reissue 실패 ');
@@ -67,7 +67,7 @@ export const getCategories = async () => {
   const response = await axios
     .get('http://localhost:8081/member/categories', {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
       },
     })
     .then((response) => {
@@ -81,7 +81,7 @@ export const createCategory = async () => {
   const response = await axios.post(
     'http://localhost:8081/category/create',
     { categoryName: '' },
-    { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
+    { headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` } },
   );
 
   return response; //return 값 넣어주자
@@ -91,7 +91,7 @@ export const createCategory = async () => {
 export const deleteCategory = async (categoryId) => {
   const response = await axios.delete(`http://localhost:8081/category/${categoryId}`, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
     },
   });
   return response;
@@ -113,7 +113,7 @@ export const searchArticleRead = async ({ queryKey }) => {
 //회원용 아티클 전체리스트 호출
 export const userArticleRead = async () => {
   const response = await axios.get('http://localhost:8081/category/all', {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
   return response;
 };
@@ -127,7 +127,7 @@ export const articleDetailRead = async ({ queryKey }) => {
 //회원용 상세보기 좋아요 호출
 export const userLikeCntRead = async ({ queryKey }) => {
   const response = axios.get(`http://localhost:8081/heart/user/${queryKey[1]}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
   return response;
 };
@@ -144,7 +144,7 @@ export const plusLikeCnt = async ({ queryKey }) => {
     `http://localhost:8081/heart/post/${queryKey[1]}`,
     {}, //post api호출에서 body부분 명시해야함 안하면 500에러
     {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
     },
   );
   return response;
@@ -155,7 +155,7 @@ export const minusLikeCnt = async ({ queryKey }) => {
     `http://localhost:8081/heart/delete/${queryKey[1]}`,
 
     {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
     },
   );
   return response;
@@ -173,7 +173,7 @@ export const postContent = async (data) => {
     },
     {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
         'Access-Control-Allow-Origin': 'http://localhost:8081/',
       },
       maxBodyLength: 1000000000,
@@ -191,9 +191,10 @@ export const postContent = async (data) => {
 //회원탈퇴 호출
 export const deleteProfile = async () => {
   localStorage.clear;
+  sessionStorage.clear;
 
   const response = await axios.delete('http://localhost:8081/profile/member', {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
 
   return response;
@@ -206,7 +207,7 @@ export const editNicknameProfile = async (data) => {
     'http://localhost:8081/profile/nicknameUpdate',
     { nickname: data },
     {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
     },
   );
 
@@ -220,7 +221,7 @@ export const editEmailProfile = async (data) => {
     'http://localhost:8081/profile/emailUpdate',
     { email: data },
     {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
     },
   );
 
