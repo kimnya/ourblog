@@ -13,7 +13,7 @@ const ButtonStyled = styled.button`
 
   ${({
     width = '50px',
-    height = '25px',
+    $height = '25px',
     $buttonColor = 'mainGreen',
     $fontColor = 'white',
     $fontSize = '12px',
@@ -21,7 +21,7 @@ const ButtonStyled = styled.button`
     $borderRadius = '4px',
   }) => css`
     width: ${width};
-    height: ${height};
+    height: ${$height};
     color: ${palette[$fontColor]};
     font-weight: ${$fontWeight};
     font-size: ${$fontSize};

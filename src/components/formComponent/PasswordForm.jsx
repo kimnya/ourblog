@@ -73,15 +73,7 @@ const PasswordForm = ({ passwordtoggleButton }) => {
             $placeholder='password'
           />
           {errors.password && <Modal>{errors.password.message}</Modal>}
-          <Button
-            onSubmit={handleSubmit((data) => {
-              console.log(data);
-              passwordtoggleButton();
-            })}
-          >
-            {' '}
-            저장
-          </Button>
+          <Button> 저장</Button>
         </form>
       </InputStyle>
     </>

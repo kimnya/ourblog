@@ -16,25 +16,31 @@ export const getProfile = async ({ queryKey }) => {
       headers: { Authorization: `Bearer ${queryKey[1]}` },
     })
     .then((response) => {
-      return response;
+      return response.data;
     })
     .catch(async (error) => {
-      console.log(error.response);
+      console.log(refreshToken);
       if (error.response.status === 500) {
         await axios
           .post(
             'http://localhost:8081/member/reissue',
-            { refreshToken: getCookie(refreshToken) },
+            { refreshToken: refreshToken },
             {
               headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
             },
           )
           .then(async (response) => {
+            console.log('reissue 성공 ');
             const accessToken = response.data.accessToken;
             localStorage.setItem('accessToken', accessToken);
-            await axios.get('http://localhost:8081/member/myPage', {
-              headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-            });
+            await axios
+              .get('http://localhost:8081/member/myPage', {
+                headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+              })
+              .catch((error) => {
+                console.log('reissue 실패 ');
+                console.log('reissueError', error);
+              });
           });
       }
     });
@@ -114,7 +120,7 @@ export const userArticleRead = async () => {
 
 // 아티클 상세보기 호촐
 export const articleDetailRead = async ({ queryKey }) => {
-  const response = await axios.get(`http://localhost:8081/posting/${queryKey[1]}`);
+  const response = await axios.get(`http://localhost:8081/posting/detail/${queryKey[1]}`);
   return response;
 };
 
@@ -184,7 +190,8 @@ export const postContent = async (data) => {
 
 //회원탈퇴 호출
 export const deleteProfile = async () => {
-  console.log('호출');
+  localStorage.clear;
+
   const response = await axios.delete('http://localhost:8081/profile/member', {
     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
   });
@@ -244,6 +251,71 @@ export const editimageProfile = async (data) => {
       headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 'Content-Type': 'application/json' },
     },
   );
+
+  return response;
+};
+
+//댓글 호출
+export const articleCommentRead = async (postId, setComments) => {
+  const response = await axios.get(`http://localhost:8081/comment/list/${postId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+  });
+
+  setComments(response.data);
+
+  return response;
+};
+
+//댓글 작성 호출
+export const articleCommentCreate = async (data) => {
+  const response = await axios.post(
+    `http://localhost:8081/comment/create/${data['postId']}`,
+    { reply: data.reply },
+    {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    },
+  );
+  const newList = await axios.get(`http://localhost:8081/comment/list/${data['postId']}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+  });
+
+  data.setComments(newList.data);
+  return response;
+};
+
+//댓글 삭제 호출
+export const articleCommentDelete = async (commentId, setComments, postId) => {
+  const response = await axios.delete(`http://localhost:8081/comment/delete/${commentId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+  });
+
+  alert('댓글이 삭제 되었습니다.');
+  const newList = await axios.get(`http://localhost:8081/comment/list/${postId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+  });
+
+  setComments(newList.data);
+
+  return response;
+};
+
+//댓글 수정 호출
+export const articleCommentEdit = async (commentId, reply, setComments, postId) => {
+  const response = await axios.put(
+    `http://localhost:8081/comment/update/${commentId}`,
+    {
+      reply: reply,
+    },
+    {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    },
+  );
+
+  const newList = await axios.get(`http://localhost:8081/comment/list/${postId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+  });
+
+  setComments(newList.data);
 
   return response;
 };

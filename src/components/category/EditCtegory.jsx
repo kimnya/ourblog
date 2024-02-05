@@ -47,6 +47,7 @@ const EditCtegoryStyile = styled.div`
 const EditCtegory = ({ setFocus, queryArgument }) => {
   const [editName, setName] = useState();
   const queryClient = useQueryClient();
+
   const categoryArray = useQuery({
     queryKey: ['getCategory', queryArgument],
     queryFn: getCategories,

@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import Button from '../components/Button';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { deleteProfile } from '../axios/api';
+import { deleteProfile, getProfile } from '../axios/api';
 import EditProfile from '../components/editProfile';
+import { useNavigate } from 'react-router-dom';
 
 const PageStyle = styled.div`
   display: flex;
@@ -90,6 +91,7 @@ const Mybox2 = styled(MyBox1)`
 `;
 
 const MyInfoPage = () => {
+  const navigate = useNavigate();
   const [toggle, setToggle] = useState({
     nickname: false,
     email: false,
@@ -137,14 +139,13 @@ const MyInfoPage = () => {
 
   const deleteconFirmButton = () => {
     if (confirm('정말로 삭제하시겠습니까?')) {
+      navigate('/');
       deleteMyInfo.mutate();
     }
   };
-
-  const getProfileApi = useQuery({ queryKey: ['getProfile'], queryFn: profileApi });
+  const key = localStorage.getItem('accessToken');
+  const getProfileApi = useQuery({ queryKey: ['getProfile', key], queryFn: getProfile });
   console.log(getProfileApi);
-
-  const { data } = getProfileApi.data;
 
   return (
     <>
@@ -155,16 +156,16 @@ const MyInfoPage = () => {
             <Mybox2>
               <div className='profileBox'>
                 <div>
-                  <img src={data.imageUrl} alt='' />
-                  <p>{data.nickname}</p>
+                  <img src={getProfileApi.data.imageUrl} alt='' />
+                  <p>{getProfileApi.data.nickname}</p>
                 </div>
-                <Button onClick={imagetoggleButton} width='155px' heith='34px'>
+                <Button onClick={imagetoggleButton} width='155px' $heigth='34px'>
                   사진수정
                 </Button>
                 {toggle.image && <EditProfile imagetoggleButton={imagetoggleButton} type='image' />}
               </div>
               <div className='nicknameBox'>
-                {data.nickname}
+                {getProfileApi.data.nickname}
                 <Button
                   id='nickname'
                   onClick={() => {
@@ -176,7 +177,7 @@ const MyInfoPage = () => {
                 {toggle.nickname && <EditProfile nicknametoggleButton={nicknametoggleButton} type='nickname' />}
               </div>
               <div className='emailBox'>
-                {data.email}
+                {getProfileApi.data.email}
                 <Button onClick={emailtoggleButton}>수정</Button>
                 {toggle.email && <EditProfile emailtoggleButton={emailtoggleButton} type='email' />}
               </div>
@@ -188,7 +189,7 @@ const MyInfoPage = () => {
 
               <div className='deleteBox'>
                 <p>계정 삭제를 원하신다면 눌러주세요.</p>
-                <Button onClick={deleteconFirmButton} $buttonColor='mainOrange' width='70px' heith='25px'>
+                <Button onClick={deleteconFirmButton} $buttonColor='mainOrange' width='70px' $heigth='25px'>
                   회원탈퇴
                 </Button>
               </div>
