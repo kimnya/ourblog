@@ -19,8 +19,10 @@ const ArticleList = () => {
     queryKey: ['articleRead'],
     queryFn: articleListRead,
   });
+  console.log('article', articleAll);
 
   const { data } = articleAll;
+
   return (
     <>
       {/* 리스트갯수에 따라 margin값 조절 */}

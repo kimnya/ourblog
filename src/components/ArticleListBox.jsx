@@ -19,6 +19,8 @@ const ArticleListBoxStyle = styled.div`
   > .articlePhotoBox {
     width: 282px;
     height: 154px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     > img {
       display: inline-block;
@@ -35,6 +37,8 @@ const ArticleListBoxStyle = styled.div`
     }
   }
   > .articleTxtBox {
+    overflow: hidden;
+    text-overflow: ellipsis;
     > p {
       height: 77px;
       color: #aaa;

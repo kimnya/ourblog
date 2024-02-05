@@ -65,7 +65,7 @@ const NicknameForm = ({ nicknametoggleButton }) => {
             {...register('nickname', {
               required: 'nickname을 입력해주세요.',
               pattern: {
-                value: /^[a-zA-z가-힣]{1,30}$/,
+                value: /^[a-zA-z가-힣0-9]{1,30}$/,
                 message: '특수기호나 숫자를 사용할 수 없습니다.',
               },
               onBlur: async () => {
@@ -99,14 +99,7 @@ const NicknameForm = ({ nicknametoggleButton }) => {
           />
 
           {errors.nickname && <Modal>{errors.nickname.message}</Modal>}
-          <Button
-            onSubmit={handleSubmit((data) => {
-              console.log(data);
-              nicknametoggleButton();
-            })}
-          >
-            저장
-          </Button>
+          <Button>저장</Button>
         </form>
       </InputStyle>
     </>

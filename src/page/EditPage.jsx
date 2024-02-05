@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Input from '../components/Input';
 import { palette } from '../styles/palette';
@@ -7,6 +7,7 @@ import { getCategories, getProfile, postContent } from '../axios/api';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import EditToastUi from '../components/EditToastUi';
+import { onUploadImage } from '../utill/makeShortImageUrl';
 
 const EditBoxStyle = styled.div`
   display: flex;
@@ -92,6 +93,11 @@ const EditPage = () => {
   const preventSubmit = (evt) => {
     evt.preventDefault();
   };
+
+  useEffect(() => {
+    editorRef.current.getInstance().removeHook('addImageBlobHook');
+    editorRef.current.getInstance().addHook('addImageBlobHook', onUploadImage);
+  }, []);
 
   return (
     <EditBoxStyle>

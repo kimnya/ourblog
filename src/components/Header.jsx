@@ -34,6 +34,7 @@ const HeaderStyled = styled.div`
 `;
 
 const Header = () => {
+  const key = localStorage.getItem('accessToken');
   const [isTogle, setTogle] = useState({
     darkMode: false,
     logined: false,
@@ -47,12 +48,12 @@ const Header = () => {
   const darkModeToggleHandler = () => {
     setTogle((prev) => ({ ...prev, darkMode: !prev.darkMode }));
   };
-  const key = localStorage.getItem('accessToken');
   const getProfileApi = useQuery({
     queryKey: ['getProfile', key],
     queryFn: getProfile,
     enabled: !!key,
   });
+  // console.log('header profile', getProfileApi);
   const navigate = useNavigate();
 
   const logoutSubmit = (evt) => {
@@ -82,7 +83,7 @@ const Header = () => {
           />
           {!!key ? (
             <p>
-              {getProfileApi && getProfileApi.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
+              {getProfileApi && getProfileApi.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
               <Button
                 width='80px'
                 onClick={() => {

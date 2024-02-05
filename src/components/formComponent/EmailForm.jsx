@@ -29,9 +29,7 @@ const InputStyle = styled.div`
 
 const EmailForm = ({ emailtoggleButton }) => {
   const queryClient = useQueryClient();
-  const preventSubmit = (evt) => {
-    evt.preventDefault();
-  };
+
   const {
     register,
     handleSubmit,
@@ -48,6 +46,10 @@ const EmailForm = ({ emailtoggleButton }) => {
       await queryClient.invalidateQueries(['myInfo']);
     },
   });
+
+  const preventSubmit = (evt) => {
+    evt.preventDefault();
+  };
 
   return (
     <>
@@ -98,15 +100,7 @@ const EmailForm = ({ emailtoggleButton }) => {
             id='email'
             $placeholder='email'
           />
-          <Button
-            className='submitBtn'
-            onSubmit={handleSubmit((data) => {
-              console.log(data);
-              emailtoggleButton();
-            })}
-          >
-            저장
-          </Button>
+          <Button className='submitBtn'>저장</Button>
           {errors.email && <Modal>{errors.email.message}</Modal>}
         </form>
       </InputStyle>
