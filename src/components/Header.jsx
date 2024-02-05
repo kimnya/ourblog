@@ -63,6 +63,10 @@ const Header = () => {
   };
   const reactIconsSize = '22px';
 
+  useEffect(() => {
+    localStorage.setItem('nickname', getProfileApi.data.nickname);
+  }, []);
+
   return (
     <>
       {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}

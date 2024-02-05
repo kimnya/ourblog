@@ -160,14 +160,16 @@ const Articleread = () => {
               ))
             )}
           </div>
-          <div className='editBox'>
-            <p>수정</p>
-            <p>삭제</p>
-          </div>
+          {posting.email === localStorage.getItem('email') ? (
+            <div className='editBox'>
+              <p>수정</p>
+              <p>삭제</p>
+            </div>
+          ) : null}
         </div>
         {posting && <Viewer initialValue={posting.content} />}
-        <Comment />
       </ReadPageStyle>
+      <Comment />
     </>
   );
 };

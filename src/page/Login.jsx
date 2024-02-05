@@ -50,6 +50,7 @@ const Login = () => {
             const accessToken = response.data.accessToken;
             const refreshToken = response.data.refreshToken;
             localStorage.setItem('accessToken', accessToken);
+
             setCookie('refreshToken', refreshToken);
             navigate('/');
           }
@@ -66,6 +67,7 @@ const Login = () => {
       <Form
         onSubmit={handleSubmit((data) => {
           loginSubmit(data);
+          localStorage.setItem('email', data.email);
           reset();
           setFocus('email');
         })}

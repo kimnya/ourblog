@@ -15,6 +15,7 @@ const CommentListStyle = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
 
   > form {
     display: flex;
@@ -47,7 +48,7 @@ const CommentListStyle = styled.div`
 `;
 
 const CommentArea = styled.textarea`
-  width: 30vw;
+  width: 50vw;
   min-height: 80px;
   padding: 20px;
   border: 1px solid ${palette.mainGreen};
