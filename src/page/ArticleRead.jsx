@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import { darken } from '../styles/ColorMixin';
@@ -80,6 +80,7 @@ const Title = styled.h2`
 `;
 
 const Articleread = () => {
+  const [heartCnt, setHeartCnt] = useState();
   const queryClient = useQueryClient();
 
   const {
@@ -97,32 +98,35 @@ const Articleread = () => {
   });
   // console.log('a', articleDetail);
 
+  const key = sessionStorage.getItem('accessToken');
   const likeCntUser = useQuery({
-    queryKey: ['userLikeCnt', postId],
+    queryKey: ['userLikeCnt', postId, key],
     queryFn: userLikeCntRead,
-    enabled: sessionStorage.getItem('accessToken') !== null,
+    enabled: !!key,
   });
 
   const likeCntAnonimous = useQuery({
     queryKey: ['AnonimousLikeCnt', postId],
     queryFn: AnonymousLikeCntRead,
-    enabled: sessionStorage.getItem('accessToken') == null,
+    enabled: !key,
   });
 
   const plusLikeCntApi = useMutation({
-    queryFn: plusLikeCnt,
-    // onError: (error) => {
-    //   alert('로그인 후 이용할 수 있습니다.');
-    // },
+    mutationFn: plusLikeCnt,
+    onError: () => {
+      alert('로그인 후 이용할 수 있습니다.');
+    },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['userLikeCnt'] });
+      await queryClient.invalidateQueries({ queryKey: ['userLikeCnt', postId] });
+      await queryClient.invalidateQueries({ queryKey: ['AnonimousLikeCnt', postId] });
     },
   });
 
   const minusLikeCntApi = useMutation({
-    queryFn: minusLikeCnt,
+    mutationFn: minusLikeCnt,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['userLikeCnt'] });
+      await queryClient.invalidateQueries({ queryKey: ['userLikeCnt', postId] });
+      await queryClient.invalidateQueries({ queryKey: ['AnonimousLikeCnt', postId] });
     },
   });
 
@@ -142,7 +146,7 @@ const Articleread = () => {
           <div className='postInfoBox'>
             <p id='writer'>{posting.writer}</p>
             <p id='date'>{postingDate}</p>
-            {sessionStorage.getItem('accessToken') == null ? (
+            {sessionStorage.getItem('accessToken') === null ? (
               <p className='heartBox'>
                 <FaRegHeart onClick={() => alert('로그인 후 이용할 수 있습니다.')} />
                 {likeCntAnonimous.data.data.heartCount}
@@ -155,7 +159,8 @@ const Articleread = () => {
               )) ||
               (!!likeCntUser.data.data.check && (
                 <p className='heartBox'>
-                  <FaHeart onClick={() => minusLikeCntApi.mutate(postId)} /> {likeCntUser.data.data.heartCount}
+                  <FaHeart onClick={() => minusLikeCntApi.mutate(postId)} />
+                  {likeCntUser.data.data.heartCount}
                 </p>
               ))
             )}

@@ -29,11 +29,10 @@ const Router = () => {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<MainPage />} />
-
-            {/* <Route element={<ConfirmLogin />}> */}
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            {/* </Route> */}
+            <Route element={<ConfirmLogin />}>
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+            </Route>
             <Route path='/search' element={<SearchPage />} />
             <Route path='/readPage/:postId' element={<Articleread />} />
             <Route path='/category/:categoryName' element={<AllArticlePage />} />
