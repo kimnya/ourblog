@@ -59,13 +59,11 @@ const EditBoxStyle = styled.div`
 `;
 
 const EditPage = () => {
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(); //카테고리 아이디 담는 스테이트
   const [title, setTitle] = useState();
   const navgate = useNavigate();
   const editorRef = useRef();
-
   const queryClient = useQueryClient();
-
   const postContentApi = useMutation({
     mutationFn: postContent,
     onSuccess: async () => {
@@ -79,12 +77,13 @@ const EditPage = () => {
   // });
   // console.log('editpageGetCategory', getCategory); //getCategory.data.categories
 
-  // const getProfileApi = useQuery({
-  //   queryKey: ['getProfile', key],
-  //   queryFn: getProfile,
-  //   enabled: !!key,
-  // });
-  // console.log('editpageGetProfileApi', getProfileApi); //getCategory.data.categories
+  const key = sessionStorage.getItem('accessToken');
+  const getProfileApi = useQuery({
+    queryKey: ['getProfile', key],
+    queryFn: getProfile,
+    enabled: !!key,
+  });
+  console.log('editpageGetProfileApi', getProfileApi);
 
   const selectCategory = (evt) => {
     setSelected(evt.target.value);
@@ -109,8 +108,7 @@ const EditPage = () => {
           const data = {
             title: title,
             content: content,
-            // nickName: getProfileApi.data.data.nickname,
-            nickName: window.localStorage.getItem('nickname'),
+            nickName: getProfileApi.data.data.nickname,
             categoryId: 1,
           };
           postContentApi.mutate(data);
@@ -155,8 +153,7 @@ const EditPage = () => {
             const data = {
               title: title,
               content: content,
-              // nickName: getProfileApi.data.data.nickname,
-              nickName: window.localStorage.getItem('nickname'),
+              nickName: getProfileApi.data.data.nickname,
               categoryId: 1,
             };
             postContentApi.mutate(data);

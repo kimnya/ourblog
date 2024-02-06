@@ -12,14 +12,18 @@ import AllArticlePage from '../page/AllArticlePage';
 import PrivateRoute from '../utill/PrivateRoute';
 import ConfirmLogin from '../utill/ConfirmLogin';
 import { recallToken } from '../axios/api';
+import { useMutation } from '@tanstack/react-query';
 
 const Router = () => {
+  const recallAccessToken = useMutation({
+    mutationFn: recallToken,
+  });
   useEffect(() => {
     const SILENT_REFRESH_TIME = 1000 * 60 * 25;
     setInterval(() => {
       if (document.hasFocus()) {
         console.log('api호출');
-        recallToken();
+        recallAccessToken.mutate();
       }
     }, SILENT_REFRESH_TIME);
   }, []);
@@ -29,11 +33,10 @@ const Router = () => {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<MainPage />} />
-
-            {/* <Route element={<ConfirmLogin />}> */}
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            {/* </Route> */}
+            <Route element={<ConfirmLogin />}>
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+            </Route>
             <Route path='/search' element={<SearchPage />} />
             <Route path='/readPage/:postId' element={<Articleread />} />
             <Route path='/category/:categoryName' element={<AllArticlePage />} />

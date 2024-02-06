@@ -23,11 +23,10 @@ export const recallToken = async () => {
   console.log('리이슈되고있다');
   let refreshToken = getCookie('refreshToken');
   let accessToken = sessionStorage.getItem('accessToken');
-  const response = await axios.post(
-    'http://localhost:8081/member/reissue',
-    { refreshToken: refreshToken, accessToken: accessToken },
-    {},
-  );
+  const response = await axios.post('http://localhost:8081/member/reissue', {
+    refreshToken: refreshToken,
+    accessToken: accessToken,
+  });
   console.log('reissue 성공 ');
   accessToken = response.data.accessToken;
   refreshToken = response.data.refreshToken;
@@ -115,38 +114,41 @@ export const articleDetailRead = async ({ queryKey }) => {
 
 //회원용 상세보기 좋아요 호출
 export const userLikeCntRead = async ({ queryKey }) => {
-  const response = axios.get(`http://localhost:8081/heart/user/${queryKey[1]}`, {
-    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
+  const response = await axios.get(`http://localhost:8081/heart/user/${queryKey[1]}`, {
+    headers: { Authorization: `Bearer ${queryKey[2]}` },
   });
   return response;
 };
 
 // 비회원용 상세보기 좋아요 호출
-export const AnonymousLikeCntRead = ({ queryKey }) => {
-  const response = axios.get(`http://localhost:8081/heart/anonymous/${queryKey[1]}`);
+export const AnonymousLikeCntRead = async ({ queryKey }) => {
+  const response = await axios.get(`http://localhost:8081/heart/anonymous/${queryKey[1]}`);
 
   return response;
 };
 //좋아요 플러스 호출
-export const plusLikeCnt = async ({ queryKey }) => {
+export const plusLikeCnt = async (postId) => {
+  console.log('성공');
   const response = await axios.post(
-    `http://localhost:8081/heart/post/${queryKey[1]}`,
+    `http://localhost:8081/heart/post/${postId}`,
     {}, //post api호출에서 body부분 명시해야함 안하면 500에러
     {
       headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
     },
   );
+
   return response;
 };
 //좋아요 마이너스 호출
-export const minusLikeCnt = async ({ queryKey }) => {
+export const minusLikeCnt = async (postId) => {
   const response = await axios.delete(
-    `http://localhost:8081/heart/delete/${queryKey[1]}`,
+    `http://localhost:8081/heart/delete/${postId}`,
 
     {
       headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
     },
   );
+
   return response;
 };
 
