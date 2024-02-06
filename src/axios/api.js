@@ -23,11 +23,10 @@ export const recallToken = async () => {
   console.log('리이슈되고있다');
   let refreshToken = getCookie('refreshToken');
   let accessToken = sessionStorage.getItem('accessToken');
-  const response = await axios.post(
-    'http://localhost:8081/member/reissue',
-    { refreshToken: refreshToken, accessToken: accessToken },
-    {},
-  );
+  const response = await axios.post('http://localhost:8081/member/reissue', {
+    refreshToken: refreshToken,
+    accessToken: accessToken,
+  });
   console.log('reissue 성공 ');
   accessToken = response.data.accessToken;
   refreshToken = response.data.refreshToken;
