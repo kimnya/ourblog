@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Input from '../components/Input';
 import { palette } from '../styles/palette';
@@ -8,6 +8,7 @@ import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import EditToastUi from '../components/EditToastUi';
 import { onUploadImage } from '../utill/makeShortImageUrl';
+import { useTheme } from '../context/ThemeProvider';
 
 const EditBoxStyle = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ const EditBoxStyle = styled.div`
     }
 
     > input {
-      background-color: #ddd;
+      background: ${({ theme }) => theme.inputColor};
       font-size: 30px;
       padding: 5px;
       width: 100%;
@@ -59,6 +60,16 @@ const EditBoxStyle = styled.div`
 `;
 
 const EditPage = () => {
+  const [ThemeMode] = useTheme();
+  const [, setMode] = useState();
+  const darkMode = useCallback(() => {
+    setMode({});
+    console.log('렌더링?');
+  }, []);
+
+  useEffect(() => {
+    darkMode();
+  }, [ThemeMode]);
   const [selected, setSelected] = useState(); //카테고리 아이디 담는 스테이트
   const [title, setTitle] = useState();
   const navgate = useNavigate();
@@ -143,7 +154,7 @@ const EditPage = () => {
           })}
         </select> */}
 
-        <EditToastUi editorRef={editorRef} />
+        <EditToastUi ThemeMode={ThemeMode} editorRef={editorRef} />
         <Button
           className='submitBtn'
           onSubmit={(evt) => {

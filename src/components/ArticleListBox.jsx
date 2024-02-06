@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
-import useTimeStamp from '../components/customHook/articleDate';
+import useTimeStamp from '../customHook/articleDate';
 import { FaRegHeart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -13,7 +13,7 @@ const ArticleListBoxStyle = styled.div`
   justify-content: space-between;
   width: 282px;
   height: 339px;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.articleColor};
   border: 1px solid ${palette.mainGreen};
 
   > .articlePhotoBox {
@@ -24,7 +24,7 @@ const ArticleListBoxStyle = styled.div`
 
     > img {
       display: inline-block;
-      width: 100%;
+      width: 99%;
       height: 100%;
     }
     > p {
@@ -70,6 +70,7 @@ const ArticleListBox = ({ article }) => {
     queryKey: ['likeCnt', id, key],
     queryFn: likeCntReadApi,
     enabled: !!article.id && !!key,
+    staleTime: 1000 * 30,
   });
 
   const anonymousLikeCntRead = useQuery({

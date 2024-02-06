@@ -1,17 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
-
 export const GlobalStyle = createGlobalStyle`
 
 *{
     box-sizing: border-box;
 }
 
-html,
-body {
-	width: 100%;
-	height: 100%;
-	background-color: #EDEDED;
-}
 
 html,
 body,
@@ -82,7 +75,7 @@ textarea {
 }
 
 a:link {
-	color: #222;
+	
 	text-decoration: none;
 }
 a:visited {
@@ -111,15 +104,23 @@ fieldset {
 label,
 button {
 	cursor: pointer;
+	color: ${({ theme }) => theme.txtColor}; 
 }
 
 body {
-	color: #222;
+	width: 100%;
+	height: 100%;
+	background: ${({ theme }) => theme.bgColor};
+	color: ${({ theme }) => theme.txtColor}; 
 	font-size: 12px;
-	/* font-size:0.8em; */
 	line-height: 1.2;
 	font-family: 'Nanum Gothic', 돋움, 굴림;
+	a{
+		color: ${({ theme }) => theme.txtColor};
+	}	
 }
+
+
 
 .text-center {
 	height: 100px;

@@ -3,6 +3,17 @@ import ArticleList from '../components/ArticleList';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 
+const MainpageStyle = styled.div`
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+
+  > a {
+    margin: 60px auto;
+
+    color: ${({ theme }) => theme.txtColor};
+  }
+`;
 const MainPage = () => {
   const navigate = useNavigate();
 
@@ -18,8 +29,10 @@ const MainPage = () => {
 
   return (
     <>
-      <ArticleList />
-      <Link onClick={moveWritePge}>글 작성하기</Link>
+      <MainpageStyle>
+        <ArticleList />
+        <Link onClick={moveWritePge}>글 작성하기</Link>
+      </MainpageStyle>
     </>
   );
 };

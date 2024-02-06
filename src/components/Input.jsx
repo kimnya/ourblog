@@ -13,11 +13,12 @@ const InputStyled = styled.input`
   ${({ width = '362px', height = '30px', $borderColor = 'mainGreen', $fontColor = 'maingray' }) => css`
     width: ${width};
     height: ${height};
-    color: ${palette[$fontColor]};
+    color: ${({ theme }) => theme.txtColor};
     border: 1px solid ${palette[$borderColor]};
     &:focus {
       border: 4px solid ${palette[$borderColor]};
     }
+    background-color: ${({ theme }) => theme.inputColor};
   `}
 `;
 // placehoder를 쓰지 말자는 반응도 있다. 고려해볼것

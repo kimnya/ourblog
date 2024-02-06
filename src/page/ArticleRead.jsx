@@ -70,6 +70,11 @@ const ReadPageStyle = styled.div`
       }
     }
   }
+  .toastui-editor-contents {
+    p {
+      color: ${({ theme }) => theme.txtColor};
+    }
+  }
 `;
 const Title = styled.h2`
   display: flex;
