@@ -51,6 +51,8 @@ const CommentArea = styled.textarea`
   width: 50vw;
   min-height: 80px;
   padding: 20px;
+  color: ${({ theme }) => theme.txtColor};
+  background: ${({ theme }) => theme.inputColor};
   border: 1px solid ${palette.mainGreen};
   outline: none;
 `;

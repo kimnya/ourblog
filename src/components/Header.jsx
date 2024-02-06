@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import SideBar from './SideBar';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getProfile } from '../axios/api';
+import { useTheme } from '../context/ThemeProvider';
 
 const HeaderStyled = styled.div`
   display: flex;
@@ -28,12 +29,14 @@ const HeaderStyled = styled.div`
     > p {
       > a {
         margin-right: 30px;
+        color: ${({ theme }) => theme.txtColor};
       }
     }
   }
 `;
 
 const Header = () => {
+  const [ThemeMode, toggleTheme] = useTheme();
   const key = sessionStorage.getItem('accessToken');
   const [isTogle, setTogle] = useState({
     darkMode: false,
@@ -73,10 +76,10 @@ const Header = () => {
       <HeaderStyled>
         <Title />
         <div className='mainpageIcons'>
-          {isTogle.darkMode ? (
-            <IoSunny size={reactIconsSize} onClick={darkModeToggleHandler} />
+          {ThemeMode === 'light' ? (
+            <IoSunny size={reactIconsSize} onClick={toggleTheme} />
           ) : (
-            <FaMoon size={reactIconsSize} onClick={darkModeToggleHandler} />
+            <FaMoon size={reactIconsSize} onClick={toggleTheme} />
           )}
           <IoSearch
             size={reactIconsSize}

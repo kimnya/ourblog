@@ -57,6 +57,10 @@ const CommentBoxStyle = styled.div`
     left: 0;
     top: 0;
   }
+  .editArea {
+    background: ${({ theme }) => theme.inputColor};
+    color: ${({ theme }) => theme.txtColor};
+  }
 `;
 
 const CommentBox = ({ postId, setComments, comment, id }) => {
@@ -88,7 +92,10 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
               <p className='date'> {createdDate}</p>
             </div>
           </div>
-          <p className='comment'> {!!type ? <textarea onChange={editComment} defaultValue={reply} /> : reply}</p>
+          <p className='comment'>
+            {' '}
+            {!!type ? <textarea className='editArea' onChange={editComment} defaultValue={reply} /> : reply}
+          </p>
         </div>
 
         {email !== localStorage.getItem('email') ? null : (

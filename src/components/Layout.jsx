@@ -8,7 +8,6 @@ import Shadow from './Shadow';
 const Layout = () => {
   const [isTogle, setTogle] = useState({
     sideBar: false,
-    darkMode: false,
     edit: false,
   });
 

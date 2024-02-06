@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from '../page/Login';
 import Register from '../page/Register';
@@ -11,22 +11,8 @@ import MyInfoPage from '../page/myInfoPage';
 import AllArticlePage from '../page/AllArticlePage';
 import PrivateRoute from '../utill/PrivateRoute';
 import ConfirmLogin from '../utill/ConfirmLogin';
-import { recallToken } from '../axios/api';
-import { useMutation } from '@tanstack/react-query';
 
 const Router = () => {
-  const recallAccessToken = useMutation({
-    mutationFn: recallToken,
-  });
-  useEffect(() => {
-    const SILENT_REFRESH_TIME = 1000 * 60 * 25;
-    setInterval(() => {
-      if (document.hasFocus()) {
-        console.log('api호출');
-        recallAccessToken.mutate();
-      }
-    }, SILENT_REFRESH_TIME);
-  }, []);
   return (
     <>
       <Suspense fallback='..loading'>

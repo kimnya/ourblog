@@ -1,12 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+import { toggleDark } from '../utill/toggleDark';
 
-const EditToastUi = ({ editorRef }) => {
+const EditToastUi = ({ editorRef, ThemeMode }) => {
+  useEffect(() => {
+    toggleDark();
+  }, [ThemeMode]);
   return (
     <Editor
       placeholder='당신의 이야기를 적어보세요...'
@@ -17,11 +21,10 @@ const EditToastUi = ({ editorRef }) => {
       ref={editorRef}
       initialValue={' '} // 글 수정 시 사용
       initialEditType='markdown' // wysiwyg & markdown
-      // theme={'dark'}
+      theme={ThemeMode === 'dark' ? 'defaultt' : 'dark'}
       width={'50vw'}
       height={'90%'}
       plugins={[colorSyntax]}
-      toolbarItems={[['bold', 'italic', 'strike'], ['hr'], ['image', 'link'], ['ul', 'ol'], ['code', 'codeblock']]}
     />
   );
 };

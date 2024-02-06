@@ -156,8 +156,8 @@ const MyInfoPage = () => {
             <Mybox2>
               <div className='profileBox'>
                 <div>
-                  <img src={getProfileApi.data.imageUrl} alt='' />
-                  <p>{getProfileApi.data.nickname}</p>
+                  <img src={getProfileApi.data.data.imageUrl} alt={`${getProfileApi.data.data.nickname}의 썸네일`} />
+                  <p>{getProfileApi.data.data.nickname}</p>
                 </div>
                 <Button onClick={imagetoggleButton} width='155px' $heigth='34px'>
                   사진수정
@@ -165,7 +165,7 @@ const MyInfoPage = () => {
                 {toggle.image && <EditProfile imagetoggleButton={imagetoggleButton} type='image' />}
               </div>
               <div className='nicknameBox'>
-                {getProfileApi.data.nickname}
+                {getProfileApi.data.data.nickname}
                 <Button
                   id='nickname'
                   onClick={() => {
@@ -177,7 +177,7 @@ const MyInfoPage = () => {
                 {toggle.nickname && <EditProfile nicknametoggleButton={nicknametoggleButton} type='nickname' />}
               </div>
               <div className='emailBox'>
-                {getProfileApi.data.email}
+                {getProfileApi.data.data.email}
                 <Button onClick={emailtoggleButton}>수정</Button>
                 {toggle.email && <EditProfile emailtoggleButton={emailtoggleButton} type='email' />}
               </div>
