@@ -11,7 +11,7 @@ const ConfirmLogin = () => {
     return <div>이미 로그인 상태입니다.</div>;
   }
 
-  return !!auth ? <Navigate to='/' /> : <Outlet />;
+  return auth ? <Navigate to='/' /> : <Outlet />;
 };
 
 export default ConfirmLogin;

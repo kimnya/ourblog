@@ -45,10 +45,14 @@ const Login = () => {
           password: data.password,
         })
         .then((response) => {
-          if (response.status === 200) {
-            alert('로그인이 완료됐습니다. 좋은하루 보내세요');
-            const accessToken = response.data.accessToken;
-            const refreshToken = response.data.refreshToken;
+          alert('로그인이 완료됐습니다. 좋은하루 보내세요');
+          const accessToken = response.data.accessToken;
+          const refreshToken = response.data.refreshToken;
+          if (data.email === 'admin@naver.com') {
+            sessionStorage.setItem('accessToken', accessToken);
+            console.log(sessionStorage.getItem('accessToken', accessToken));
+            navigate('/admin');
+          } else {
             sessionStorage.setItem('accessToken', accessToken);
             setCookie('refreshToken', refreshToken);
             navigate('/');
@@ -66,6 +70,7 @@ const Login = () => {
       <Form
         onSubmit={handleSubmit((data) => {
           loginSubmit(data);
+
           localStorage.setItem('email', data.email);
           reset();
           setFocus('email');

@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
 import { GlobalStyle } from './styles/GlobalStyle';
 import Router from './components/Router';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProfile, recallToken } from './axios/api';
 import SetTop from './utill/setTop';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
+  const navgate = useNavigate();
   const recallAccessToken = useMutation({
     mutationFn: recallToken,
-    onSuccess: () => {
-      getProfile();
+    onError: () => {
+      navgate('/login');
     },
   });
   useEffect(() => {
-    const SILENT_REFRESH_TIME = 1000 * 60 * 10;
+    const SILENT_REFRESH_TIME = 1000 * 60 * 25;
     const timer = setInterval(() => {
       if (document.hasFocus()) {
         console.log('api호출');

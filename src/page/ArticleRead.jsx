@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import { darken } from '../styles/ColorMixin';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
@@ -12,6 +12,7 @@ import {
   articleCommentCreate,
   articleCommentRead,
   articleDetailRead,
+  deletePost,
   minusLikeCnt,
   plusLikeCnt,
   userLikeCntRead,
@@ -62,10 +63,10 @@ const ReadPageStyle = styled.div`
       display: flex;
       align-items: center;
       font-weight: bold;
-      color: ${palette.mainGreen};
       ${darken(0.1)}
       font-size: 16px;
-      > p {
+      > a {
+        color: ${palette.mainGreen};
         margin-right: 15px;
       }
     }
@@ -87,6 +88,7 @@ const Title = styled.h2`
 const Articleread = () => {
   const [heartCnt, setHeartCnt] = useState();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -135,6 +137,14 @@ const Articleread = () => {
     },
   });
 
+  const deletePostApi = useMutation({
+    mutationFn: deletePost,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['articleRead'] });
+      navigate('/');
+    },
+  });
+
   const posting = articleDetail.data.data.find((post) => {
     if (post.postId == postId) {
       return true;
@@ -172,8 +182,14 @@ const Articleread = () => {
           </div>
           {posting.email === localStorage.getItem('email') ? (
             <div className='editBox'>
-              <p>수정</p>
-              <p>삭제</p>
+              <Link>수정</Link>
+              <Link
+                onClick={() => {
+                  deletePostApi.mutate(postId);
+                }}
+              >
+                삭제
+              </Link>
             </div>
           ) : null}
         </div>

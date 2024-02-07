@@ -10,6 +10,7 @@ import { toggleDark } from '../utill/toggleDark';
 const EditToastUi = ({ editorRef, ThemeMode }) => {
   useEffect(() => {
     toggleDark();
+    console.log(localStorage.getItem('theme'));
   }, [ThemeMode]);
   return (
     <Editor

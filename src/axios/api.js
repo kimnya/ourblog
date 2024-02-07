@@ -165,10 +165,7 @@ export const postContent = async (data) => {
     {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
-        'Access-Control-Allow-Origin': 'http://localhost:8081/',
       },
-      maxBodyLength: 1000000000,
-      maxContentLength: 10000000000,
     },
   );
   console.log(data);
@@ -176,6 +173,17 @@ export const postContent = async (data) => {
   console.log(typeof data.content);
   console.log(typeof data.nickName);
   console.log(typeof data.categoryId);
+  return reponse;
+};
+
+//포스팅 삭제 호출
+export const deletePost = async (postId) => {
+  const reponse = axios.delete(`http://localhost:8081/posting/${postId}`, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+    },
+  });
+
   return reponse;
 };
 

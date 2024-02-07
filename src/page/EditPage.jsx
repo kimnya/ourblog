@@ -61,15 +61,6 @@ const EditBoxStyle = styled.div`
 
 const EditPage = () => {
   const [ThemeMode] = useTheme();
-  const [, setMode] = useState();
-  const darkMode = useCallback(() => {
-    setMode({});
-    console.log('렌더링?');
-  }, []);
-
-  useEffect(() => {
-    darkMode();
-  }, [ThemeMode]);
   const [selected, setSelected] = useState(); //카테고리 아이디 담는 스테이트
   const [title, setTitle] = useState();
   const navgate = useNavigate();

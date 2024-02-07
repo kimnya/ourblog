@@ -39,11 +39,11 @@ const HeaderStyled = styled.div`
 
 const Header = () => {
   const [ThemeMode, toggleTheme] = useTheme();
-  const key = sessionStorage.getItem('accessToken');
   const [isTogle, setTogle] = useState({
-    darkMode: false,
     logined: false,
   });
+  const navigate = useNavigate();
+  const key = sessionStorage.getItem('accessToken');
 
   useEffect(() => {
     if (sessionStorage.getItem('accessToken')) {
@@ -61,7 +61,6 @@ const Header = () => {
     enabled: !!key,
   });
   console.log('header profile', getProfileApi);
-  const navigate = useNavigate();
 
   const logoutSubmit = (evt) => {
     evt.preventDefault();
