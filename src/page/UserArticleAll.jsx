@@ -55,11 +55,7 @@ const UserArticleAll = () => {
     <ArticleListStyle>
       <>
         {data.data.map((article) => {
-          return (
-            <>
-              <ArticleListBox key={article.id} article={article} />
-            </>
-          );
+          return <ArticleListBox key={article.id} article={article} />;
         })}
       </>
     </ArticleListStyle>

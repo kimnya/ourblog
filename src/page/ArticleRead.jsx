@@ -123,7 +123,7 @@ const Articleread = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['userLikeCnt', postId] });
-      await queryClient.invalidateQueries({ queryKey: ['AnonimousLikeCnt', postId] });
+      await queryClient.invalidateQueries({ queryKey: ['likeCnt'] });
     },
   });
 
@@ -131,7 +131,7 @@ const Articleread = () => {
     mutationFn: minusLikeCnt,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['userLikeCnt', postId] });
-      await queryClient.invalidateQueries({ queryKey: ['AnonimousLikeCnt', postId] });
+      await queryClient.invalidateQueries({ queryKey: ['likeCnt'] });
     },
   });
 

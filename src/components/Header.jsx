@@ -28,7 +28,9 @@ const HeaderStyled = styled.div`
     }
     > p {
       > a {
-        margin-right: 30px;
+        &:nth-child(2) {
+          margin-right: 30px;
+        }
         color: ${({ theme }) => theme.txtColor};
       }
     }
@@ -89,7 +91,8 @@ const Header = () => {
           />
           {!!key ? (
             <p>
-              {getProfileApi && getProfileApi.data.data.nickname}/<Link onClick={logoutSubmit}>로그아웃</Link>
+              {getProfileApi && <Link to='/myPage'>{getProfileApi.data.data.nickname}</Link>}/
+              <Link onClick={logoutSubmit}>로그아웃</Link>
               <Button
                 width='80px'
                 onClick={() => {
