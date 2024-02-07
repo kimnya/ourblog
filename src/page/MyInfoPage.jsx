@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import Button from '../components/Button';
@@ -6,6 +6,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { deleteProfile, getProfile } from '../axios/api';
 import EditProfile from '../components/editProfile';
 import { useNavigate } from 'react-router-dom';
+import { IsToggleCtx } from '../context/IsToggleProvider';
 
 const PageStyle = styled.div`
   display: flex;
@@ -93,13 +94,8 @@ const Mybox2 = styled(MyBox1)`
 `;
 
 const MyInfoPage = () => {
+  const { toggle, setToggle } = useContext(IsToggleCtx);
   const navigate = useNavigate();
-  const [toggle, setToggle] = useState({
-    nickname: false,
-    email: false,
-    password: false,
-    image: false,
-  });
 
   const nicknametoggleButton = () => {
     setToggle((prev) => ({
@@ -137,6 +133,11 @@ const MyInfoPage = () => {
   const deleteMyInfo = useMutation({
     mutationFn: deleteProfile,
     enabled: false,
+    onSuccess: () => {
+      localStorage.clear();
+      sessionStorage.clear();
+      setToggle((prev) => ({ ...prev, logined: !prev.logined }));
+    },
   });
 
   const deleteconFirmButton = () => {

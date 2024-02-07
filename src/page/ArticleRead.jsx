@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import { darken } from '../styles/ColorMixin';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
@@ -22,6 +22,8 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Comment from '../components/CommentList';
+import EditPage from './EditPage';
+import EditPostPage from './EditPostPage';
 
 const ReadPageStyle = styled.div`
   width: 70vw;
@@ -86,26 +88,18 @@ const Title = styled.h2`
 `;
 
 const Articleread = () => {
-  const [heartCnt, setHeartCnt] = useState();
+  const key = sessionStorage.getItem('accessToken');
   const queryClient = useQueryClient();
+  const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, errors },
-    reset,
-    setFocus,
-  } = useForm();
   const { postId } = useParams();
 
   const articleDetail = useQuery({
     queryKey: ['articleDetail', postId],
     queryFn: articleDetailRead,
   });
-  // console.log('a', articleDetail);
+  console.log('a', articleDetail);
 
-  const key = sessionStorage.getItem('accessToken');
   const likeCntUser = useQuery({
     queryKey: ['userLikeCnt', postId, key],
     queryFn: userLikeCntRead,
@@ -141,7 +135,7 @@ const Articleread = () => {
     mutationFn: deletePost,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['articleRead'] });
-      navigate('/');
+      navigate('/articleAll');
     },
   });
 
@@ -154,48 +148,65 @@ const Articleread = () => {
 
   return (
     <>
-      <ReadPageStyle>
-        <Title>{posting.title}</Title>
+      {edit ? (
+        // <EditPostPage
+        //   postId={posting.postId}
+        //   setEdit={setEdit}
+        //   edit={edit}
+        //   prevTitle={posting.title}
+        //   contents={posting.content}
+        // />
+        <Navigate to={`/editPostPage/${postId}`} />
+      ) : (
+        <ReadPageStyle>
+          <Title>{posting.title}</Title>
 
-        <div className='contentsBox'>
-          <div className='postInfoBox'>
-            <p id='writer'>{posting.writer}</p>
-            <p id='date'>{postingDate}</p>
-            {sessionStorage.getItem('accessToken') === null ? (
-              <p className='heartBox'>
-                <FaRegHeart onClick={() => alert('로그인 후 이용할 수 있습니다.')} />
-                {likeCntAnonimous.data.data.heartCount}
-              </p>
-            ) : (
-              (!likeCntUser.data.data.check && (
+          <div className='contentsBox'>
+            <div className='postInfoBox'>
+              <p id='writer'>{posting.writer}</p>
+              <p id='date'>{postingDate}</p>
+              {sessionStorage.getItem('accessToken') === null ? (
                 <p className='heartBox'>
-                  <FaRegHeart onClick={() => plusLikeCntApi.mutate(postId)} /> {likeCntUser.data.data.heartCount}
+                  <FaRegHeart onClick={() => alert('로그인 후 이용할 수 있습니다.')} />
+                  {likeCntAnonimous.data.data.heartCount}
                 </p>
-              )) ||
-              (!!likeCntUser.data.data.check && (
-                <p className='heartBox'>
-                  <FaHeart onClick={() => minusLikeCntApi.mutate(postId)} />
-                  {likeCntUser.data.data.heartCount}
-                </p>
-              ))
-            )}
-          </div>
-          {posting.email === localStorage.getItem('email') ? (
-            <div className='editBox'>
-              <Link>수정</Link>
-              <Link
-                onClick={() => {
-                  deletePostApi.mutate(postId);
-                }}
-              >
-                삭제
-              </Link>
+              ) : (
+                (!likeCntUser.data.data.check && (
+                  <p className='heartBox'>
+                    <FaRegHeart onClick={() => plusLikeCntApi.mutate(postId)} /> {likeCntUser.data.data.heartCount}
+                  </p>
+                )) ||
+                (!!likeCntUser.data.data.check && (
+                  <p className='heartBox'>
+                    <FaHeart onClick={() => minusLikeCntApi.mutate(postId)} />
+                    {likeCntUser.data.data.heartCount}
+                  </p>
+                ))
+              )}
             </div>
-          ) : null}
-        </div>
-        {posting && <Viewer initialValue={posting.content} />}
-      </ReadPageStyle>
-      <Comment />
+            {posting.email === localStorage.getItem('email') ? (
+              <div className='editBox'>
+                <Link
+                  onClick={() => {
+                    setEdit(true);
+                  }}
+                >
+                  수정
+                </Link>
+                <Link
+                  onClick={() => {
+                    deletePostApi.mutate(postId);
+                  }}
+                >
+                  삭제
+                </Link>
+              </div>
+            ) : null}
+          </div>
+          {posting && <Viewer initialValue={posting.content} />}
+        </ReadPageStyle>
+      )}
+      {!edit && <Comment />}
     </>
   );
 };

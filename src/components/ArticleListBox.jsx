@@ -57,25 +57,24 @@ const ArticleListBox = ({ article }) => {
   const key = sessionStorage.getItem('accessToken');
   const { title, writer, createdDate, content, id } = article;
   const [timeAgo] = useTimeStamp(createdDate);
-  let imageUrl = '';
-  const trim = /<[^>]*>?/g;
-  const urlRegex = /(https?:\/\/[^ ]*)/;
-  if (content.match('<img')) {
-    imageUrl = content.match(urlRegex)[1].replace(trim, '').replace(/">\D*/g, '');
-  }
-  const trimTagContent = content.replace(trim, '');
+
+  const markDownTrim = /[#*~!()]*/g;
+  const urlRegex = /(https?:\/\/[^ )]*)/;
+  const urlTrim = /(?<=!)(.*?)(?=\))/g;
+  const imageUrl = content.match(urlRegex);
+  const trimTagContent = content.replace(urlTrim, '').replace(markDownTrim, '');
   const navigate = useNavigate();
 
   const likeCntRead = useQuery({
     queryKey: ['likeCnt', id, key],
     queryFn: likeCntReadApi,
-    enabled: !!article.id && !!key,
+    enabled: id && !!key,
   });
 
   const anonymousLikeCntRead = useQuery({
     queryKey: ['anonymousLikeCnt', id, key],
     queryFn: anonymousLikeCntReadApi,
-    enabled: !!article.id && sessionStorage.getItem('accessToken') === null,
+    enabled: id && sessionStorage.getItem('accessToken') === null,
   });
 
   return (
@@ -89,11 +88,7 @@ const ArticleListBox = ({ article }) => {
         }}
       >
         <div id={id} className='articlePhotoBox'>
-          {imageUrl !== '' ? (
-            <img id={id} src={imageUrl} alt={`${writer}의 썸네일`} />
-          ) : (
-            <p id={id}>{trimTagContent}</p>
-          )}
+          {imageUrl ? <img id={id} src={imageUrl} alt={`${writer}의 썸네일`} /> : <p id={id}>{trimTagContent}</p>}
         </div>
 
         <div id={id}>

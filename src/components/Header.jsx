@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IoSunny } from 'react-icons/io5';
 import Title from './Title';
 import { FaMoon } from 'react-icons/fa';
@@ -10,6 +10,7 @@ import SideBar from './SideBar';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getProfile } from '../axios/api';
 import { useTheme } from '../context/ThemeProvider';
+import { IsToggleCtx } from '../context/IsToggleProvider';
 
 const HeaderStyled = styled.div`
   display: flex;
@@ -39,22 +40,19 @@ const HeaderStyled = styled.div`
 
 const Header = () => {
   const [ThemeMode, toggleTheme] = useTheme();
-  const [isTogle, setTogle] = useState({
-    logined: false,
-  });
+  const { isToggle, setToggle } = useContext(IsToggleCtx);
+
   const navigate = useNavigate();
   const key = sessionStorage.getItem('accessToken');
 
   useEffect(() => {
     if (sessionStorage.getItem('accessToken')) {
-      setTogle((prev) => ({ ...prev, logined: !prev.logined }));
+      setToggle((prev) => ({ ...prev, logined: !prev.logined }));
     } else {
-      setTogle((prev) => ({ ...prev, logined: false }));
+      setToggle((prev) => ({ ...prev, logined: false }));
     }
   }, []);
-  const darkModeToggleHandler = () => {
-    setTogle((prev) => ({ ...prev, darkMode: !prev.darkMode }));
-  };
+
   const getProfileApi = useQuery({
     queryKey: ['getProfile', key],
     queryFn: getProfile,
@@ -64,8 +62,8 @@ const Header = () => {
 
   const logoutSubmit = (evt) => {
     evt.preventDefault();
-    sessionStorage.removeItem('accessToken');
-    setTogle((prev) => ({ ...prev, logined: !prev.logined }));
+    sessionStorage.clear();
+    setToggle((prev) => ({ ...prev, logined: !prev.logined }));
     localStorage.clear();
   };
   const reactIconsSize = '22px';

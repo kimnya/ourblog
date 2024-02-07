@@ -11,11 +11,12 @@ function App() {
   const recallAccessToken = useMutation({
     mutationFn: recallToken,
     onError: () => {
+      sessionStorage.removeItem('accessToken');
       navgate('/login');
     },
   });
   useEffect(() => {
-    const SILENT_REFRESH_TIME = 1000 * 60 * 25;
+    const SILENT_REFRESH_TIME = 1000 * 60 * 15;
     const timer = setInterval(() => {
       if (document.hasFocus()) {
         console.log('api호출');

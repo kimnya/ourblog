@@ -168,14 +168,26 @@ export const postContent = async (data) => {
       },
     },
   );
-  console.log(data);
-  console.log(typeof data.title);
-  console.log(typeof data.content);
-  console.log(typeof data.nickName);
-  console.log(typeof data.categoryId);
   return reponse;
 };
 
+//포스팅 수정호출
+export const editPost = async (data) => {
+  const reponse = axios.put(
+    `http://localhost:8081/posting/${data.postId}`,
+    {
+      title: data.title,
+      content: data.content,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+      },
+    },
+  );
+
+  return reponse;
+};
 //포스팅 삭제 호출
 export const deletePost = async (postId) => {
   const reponse = axios.delete(`http://localhost:8081/posting/${postId}`, {
@@ -189,9 +201,6 @@ export const deletePost = async (postId) => {
 
 //회원탈퇴 호출
 export const deleteProfile = async () => {
-  localStorage.clear();
-  sessionStorage.clear();
-
   const response = await axios.delete('http://localhost:8081/profile/member', {
     headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });

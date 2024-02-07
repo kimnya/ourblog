@@ -104,7 +104,7 @@ const EditPage = () => {
     <EditBoxStyle>
       <form
         onSubmit={(evt) => {
-          const content = editorRef.current.getInstance().getHTML();
+          const content = editorRef.current.getInstance().getMarkdown();
           preventSubmit(evt);
           navgate('/');
           const data = {
