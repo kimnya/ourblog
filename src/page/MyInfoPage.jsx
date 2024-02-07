@@ -47,7 +47,9 @@ const MyBox1 = styled.div`
 const Mybox2 = styled(MyBox1)`
   height: 312px;
   padding: 15px;
-  background-color: ${palette.mainGray};
+  background-color: ${({ theme }) => theme.myPageColor};
+
+  /* ${palette.mainGray}; */
   border-radius: 0;
   color: #fff;
   > .profileBox {
