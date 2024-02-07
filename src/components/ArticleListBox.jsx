@@ -70,7 +70,6 @@ const ArticleListBox = ({ article }) => {
     queryKey: ['likeCnt', id, key],
     queryFn: likeCntReadApi,
     enabled: !!article.id && !!key,
-    staleTime: 1000 * 30,
   });
 
   const anonymousLikeCntRead = useQuery({

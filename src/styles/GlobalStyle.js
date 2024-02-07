@@ -79,13 +79,13 @@ a:link {
 	text-decoration: none;
 }
 a:visited {
-	color: #222;
+	color: ${({ theme }) => theme.txtColor};
 }
 a:hover {
-	color: #222;
+	color: ${({ theme }) => theme.txtColor};
 }
 a:active {
-	color: #222;
+	color: ${({ theme }) => theme.txtColor};
 }
 
 em,

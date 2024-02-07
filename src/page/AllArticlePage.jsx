@@ -3,6 +3,20 @@ import UserArticleAll from './UserArticleAll';
 import ArticleList from '../components/ArticleList';
 import { Link, useNavigate } from 'react-router-dom';
 import SideBar from '../components/SideBar';
+import styled from 'styled-components';
+
+const AllArticleStyle = styled.div`
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+
+  margin-top: 30px;
+
+  a {
+    margin: 60px auto;
+    color: ${({ theme }) => theme.txtColor};
+  }
+`;
 
 const AllArticlePage = () => {
   const navigate = useNavigate();
@@ -33,14 +47,16 @@ const AllArticlePage = () => {
   };
   return (
     <>
-      {/* <SideBar
+      <AllArticleStyle>
+        {/* <SideBar
         isTogle={isTogle}
         reactIconsSize={reactIconsSize}
         sideBarToggleHandler={sideBarToggleHandler}
         editToggleHandler={editToggleHandler}
       /> */}
-      <UserArticleAll />
-      <Link onClick={moveWritePge}>글 작성하기</Link>
+        <UserArticleAll />
+        <Link onClick={moveWritePge}>글 작성하기</Link>
+      </AllArticleStyle>
     </>
   );
 };
