@@ -74,7 +74,7 @@ const ArticleListBox = ({ article }) => {
   const anonymousLikeCntRead = useQuery({
     queryKey: ['anonymousLikeCnt', id, key],
     queryFn: anonymousLikeCntReadApi,
-    enabled: id && sessionStorage.getItem('accessToken') === null,
+    enabled: id && !sessionStorage.getItem('accessToken'),
   });
 
   return (
