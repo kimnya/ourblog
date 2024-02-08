@@ -298,7 +298,6 @@ export const articleCommentDelete = async (commentId, setComments, postId) => {
     headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
 
-  alert('댓글이 삭제 되었습니다.');
   const newList = await axios.get(`http://localhost:8081/comment/list/${postId}`, {
     headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
@@ -325,6 +324,25 @@ export const articleCommentEdit = async (commentId, reply, setComments, postId) 
   });
 
   setComments(newList.data);
+
+  return response;
+};
+//어드민 멤버리스트 호출
+export const adminGetMember = async () => {
+  const response = await axios.get(`http://localhost:8081/admin/members`, {
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
+  });
+
+  return response;
+};
+
+//어드민 멤버삭제 호출
+export const adminDeleteMember = async (memberId) => {
+  const response = await axios.delete(`http://localhost:8081/admin/memberDelete/${memberId}`, {
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
+  });
+
+  console.log('삭제api호출');
 
   return response;
 };

@@ -133,10 +133,11 @@ const MyInfoPage = () => {
   const deleteMyInfo = useMutation({
     mutationFn: deleteProfile,
     enabled: false,
-    onSuccess: () => {
+    onSuccess: async () => {
       localStorage.clear();
       sessionStorage.clear();
       setToggle((prev) => ({ ...prev, logined: !prev.logined }));
+      await queryClient.invalidateQueries({ queryKey: ['adminMember'] });
     },
   });
 

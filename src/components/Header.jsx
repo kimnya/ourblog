@@ -56,7 +56,7 @@ const Header = () => {
   const getProfileApi = useQuery({
     queryKey: ['getProfile', key],
     queryFn: getProfile,
-    enabled: !!key,
+    enabled: !!key && localStorage.getItem('email') !== 'admin@naver.com',
   });
   console.log('header profile', getProfileApi);
 
@@ -86,10 +86,12 @@ const Header = () => {
               navigate('/search');
             }}
           />
-          {!!key ? (
+          {!!key && sessionStorage.getItem('email') !== 'admin@naver.com' ? (
             <p>
               {getProfileApi && <Link to='/myPage'>{getProfileApi.data.data.nickname}</Link>}/
-              <Link onClick={logoutSubmit}>로그아웃</Link>
+              <Link className='adminLogout' onClick={logoutSubmit}>
+                로그아웃
+              </Link>
               <Button
                 width='80px'
                 onClick={() => {
@@ -100,16 +102,19 @@ const Header = () => {
               </Button>
             </p>
           ) : (
-            <Button
-              width='50px'
-              height='25px'
-              $fontColor='mainGray'
-              onClick={() => {
-                navigate('/login');
-              }}
-            >
-              로그인
-            </Button>
+            <p>
+              {sessionStorage.getItem('email') === 'admin@naver.com' && <Link onClick={logoutSubmit}>로그아웃</Link>}
+              <Button
+                width='50px'
+                height='25px'
+                $fontColor='mainGray'
+                onClick={() => {
+                  navigate('/login');
+                }}
+              >
+                {sessionStorage.getItem('email') === 'admin@naver.com' ? '관리자' : '로그인'}
+              </Button>
+            </p>
           )}
         </div>
       </HeaderStyled>

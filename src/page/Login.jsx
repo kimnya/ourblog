@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Title from '../components/Title';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { setCookie } from '../components/cookie';
+import { IsToggleCtx } from '../context/IsToggleProvider';
 
 const Form = styled.form`
   display: flex;
@@ -48,18 +49,17 @@ const Login = () => {
           alert('로그인이 완료됐습니다. 좋은하루 보내세요');
           const accessToken = response.data.accessToken;
           const refreshToken = response.data.refreshToken;
+          sessionStorage.setItem('accessToken', accessToken);
+          setCookie('refreshToken', refreshToken);
           if (data.email === 'admin@naver.com') {
-            sessionStorage.setItem('accessToken', accessToken);
-            console.log(sessionStorage.getItem('accessToken', accessToken));
+            sessionStorage.setItem('email', data.email);
             navigate('/admin');
           } else {
-            sessionStorage.setItem('accessToken', accessToken);
-            setCookie('refreshToken', refreshToken);
             navigate('/');
           }
         });
     } catch (e) {
-      alert('로그인에 실패했습니다');
+      // alert('로그인에 실패했습니다');
       setFocus('email');
     }
   };

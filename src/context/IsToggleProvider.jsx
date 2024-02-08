@@ -11,6 +11,7 @@ const IsToggleProvider = ({ children }) => {
     email: false,
     password: false,
     image: false,
+    admin: false,
   });
   return (
     <>
