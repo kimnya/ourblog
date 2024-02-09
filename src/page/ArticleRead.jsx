@@ -42,7 +42,7 @@ const ReadPageStyle = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 22%;
+      width: 33%;
       #writer {
         font-size: 16px;
         font-weight: bold;
