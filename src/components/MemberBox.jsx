@@ -5,7 +5,7 @@ import { adminDeleteMember } from '../axios/api';
 
 const MemberBox = ({ member }) => {
   const queryClient = useQueryClient();
-  const { memberId, nickname } = member;
+  const { memberId, nickname, email, name } = member;
   const adminDeleteMemberApi = useMutation({
     mutationFn: adminDeleteMember,
     onSuccess: async () => {
@@ -16,7 +16,10 @@ const MemberBox = ({ member }) => {
   return (
     <>
       <div>
+        {name}
+        {email}
         {nickname}
+
         <Link
           onClick={() => {
             adminDeleteMemberApi.mutate(memberId);

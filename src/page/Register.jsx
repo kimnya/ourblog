@@ -68,7 +68,6 @@ const Register = () => {
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
           reset();
-          localStorage.setItem('nickname', data.nickname);
         })}
       >
         <label htmlFor='userName'>userName</label>

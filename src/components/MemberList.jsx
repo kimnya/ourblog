@@ -24,7 +24,7 @@ const MemberList = () => {
     <>
       <MemberListStyle>
         {data &&
-          data.data.map((member) => {
+          data.data.filter((member) => {
             member.memberId > 1;
             return <MemberBox key={member.memberId} member={member} />;
           })}

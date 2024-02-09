@@ -45,20 +45,21 @@ const Header = () => {
   const navigate = useNavigate();
   const key = sessionStorage.getItem('accessToken');
 
-  useEffect(() => {
-    if (sessionStorage.getItem('accessToken')) {
-      setToggle((prev) => ({ ...prev, logined: !prev.logined }));
-    } else {
-      setToggle((prev) => ({ ...prev, logined: false }));
-    }
-  }, []);
-
   const getProfileApi = useQuery({
     queryKey: ['getProfile', key],
     queryFn: getProfile,
     enabled: !!key && localStorage.getItem('email') !== 'admin@naver.com',
   });
   console.log('header profile', getProfileApi);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('accessToken')) {
+      setToggle((prev) => ({ ...prev, logined: !prev.logined }));
+      localStorage.setItem('nickname', getProfileApi.data.data.nickname);
+    } else {
+      setToggle((prev) => ({ ...prev, logined: false }));
+    }
+  }, []);
 
   const logoutSubmit = (evt) => {
     evt.preventDefault();
