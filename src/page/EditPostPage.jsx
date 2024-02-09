@@ -98,9 +98,9 @@ const EditPostPage = () => {
   const editPostApi = useMutation({
     mutationFn: editPost,
     onSuccess: async () => {
+      navigate(`/readPage/${postId}`);
       await queryClient.invalidateQueries({ queryKey: ['articleDetail'] });
       await queryClient.invalidateQueries({ queryKey: ['userArticle'] });
-      console.log('디테일이 바뀐다.');
     },
   });
   // const getCategory = useQuery({
@@ -123,7 +123,6 @@ const EditPostPage = () => {
           onSubmit={(evt) => {
             const content = ediPageRef.current.getInstance().getMarkdown();
             preventSubmit(evt);
-            navigate(`/articleAll`);
             const data = { postId: postId, title: title, content: content };
             editPostApi.mutate(data);
           }}
