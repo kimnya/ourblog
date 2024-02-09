@@ -6,24 +6,18 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
-
+import Markdown from 'react-markdown';
+import { Viewer } from '@toast-ui/react-editor';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Comment from '../components/CommentList';
 import {
   AnonymousLikeCntRead,
-  articleCommentCreate,
-  articleCommentRead,
   articleDetailRead,
   deletePost,
   minusLikeCnt,
   plusLikeCnt,
   userLikeCntRead,
 } from '../axios/api';
-import { Viewer } from '@toast-ui/react-editor';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import Comment from '../components/CommentList';
-import EditPage from './EditPage';
-import EditPostPage from './EditPostPage';
 
 const ReadPageStyle = styled.div`
   width: 70vw;
@@ -203,7 +197,8 @@ const Articleread = () => {
               </div>
             ) : null}
           </div>
-          {posting && <Viewer initialValue={posting.content} />}
+          {/* <Viewer initialValue={posting.content || ''} /> */}
+          <Markdown>{posting.content}</Markdown>
         </ReadPageStyle>
       )}
       {!edit && <Comment />}

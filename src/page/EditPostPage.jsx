@@ -67,13 +67,23 @@ const EditBoxStyle = styled.div`
 `;
 
 const EditPostPage = () => {
+  const { postId } = useParams();
+  const articleDetail = useQuery({
+    queryKey: ['articleDetail', postId],
+    queryFn: articleDetailRead,
+  });
+  console.log(articleDetail);
+  const posting = articleDetail.data.data.find((post) => {
+    if (post.postId == postId) {
+      return true;
+    }
+  });
   const [ThemeMode] = useTheme();
   //   const [selected, setSelected] = useState(); //카테고리 아이디 담는 스테이트
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState(posting.title);
   const ediPageRef = useRef();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { postId } = useParams();
 
   useEffect(() => {
     toggleDark();
@@ -82,13 +92,8 @@ const EditPostPage = () => {
   useEffect(() => {
     ediPageRef.current.getInstance().removeHook('addImageBlobHook');
     ediPageRef.current.getInstance().addHook('addImageBlobHook', onUploadImage);
+    ediPageRef.current.getInstance().setMarkdown(posting.content);
   }, []);
-
-  const articleDetail = useQuery({
-    queryKey: ['articleDetail', postId],
-    queryFn: articleDetailRead,
-  });
-  console.log(articleDetail);
 
   const editPostApi = useMutation({
     mutationFn: editPost,
@@ -110,13 +115,6 @@ const EditPostPage = () => {
   const preventSubmit = (evt) => {
     evt.preventDefault();
   };
-
-  const posting = articleDetail.data.data.find((post) => {
-    if (post.postId == postId) {
-      console.log('postingGOOD');
-      return true;
-    }
-  });
 
   return (
     <>
@@ -159,7 +157,6 @@ const EditPostPage = () => {
             previewHighlight={false} //프리뷰에 바탕색 입히기
             hideModeSwitch={true} //마크다운,wiswig탭 숨김
             ref={ediPageRef}
-            initialValue={posting.content} // 글 수정 시 사용
             initialEditType='markdown' // wysiwyg & markdown
             theme={ThemeMode === 'dark' ? 'defaultt' : 'dark'}
             width={'50vw'}

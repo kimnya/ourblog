@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import useTimeStamp from '../customHook/articleDate';
-import { FaRegHeart } from 'react-icons/fa';
+
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
 import { useQuery } from '@tanstack/react-query';
+import { FaHeart } from 'react-icons/fa';
 import { anonymousLikeCntReadApi, likeCntReadApi } from '../axios/api';
 const ArticleListBoxStyle = styled.div`
   display: flex;
@@ -106,7 +107,7 @@ const ArticleListBox = ({ article }) => {
             <span id={id} className='writer'>
               {writer}
             </span>
-            <FaRegHeart id={id} />
+            <FaHeart id={id} />
             {sessionStorage.getItem('accessToken')
               ? likeCntRead.data.data.heartCount
               : anonymousLikeCntRead.data.data.heartCount}

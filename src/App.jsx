@@ -18,7 +18,7 @@ function App() {
     },
   });
   useEffect(() => {
-    const SILENT_REFRESH_TIME = 1000 * 60 * 15;
+    const SILENT_REFRESH_TIME = 1000 * 60 * 5;
     const timer = setInterval(() => {
       if (document.hasFocus()) {
         console.log('api호출');
