@@ -5,6 +5,13 @@ import { useQuery } from '@tanstack/react-query';
 import { userArticleRead } from '../axios/api';
 import ArticleListBox from '../components/ArticleListBox';
 
+const BlogNameTag = styled.p`
+  margin: 0 auto;
+  color: ${palette.mainGreen};
+  font-weight: bold;
+  font-size: 22px;
+`;
+
 const ArticleListStyle = styled.div`
   display: flex;
   flex-flow: row wrap;
@@ -52,13 +59,14 @@ const UserArticleAll = () => {
   const { data } = userArticle;
 
   return (
-    <ArticleListStyle>
-      <>
+    <>
+      <BlogNameTag>{data.data[0].writer}의 블로그</BlogNameTag>
+      <ArticleListStyle>
         {data.data.map((article) => {
           return <ArticleListBox key={article.id} article={article} />;
         })}
-      </>
-    </ArticleListStyle>
+      </ArticleListStyle>
+    </>
   );
 };
 
