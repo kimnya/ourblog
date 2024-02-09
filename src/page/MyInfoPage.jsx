@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import Button from '../components/Button';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteProfile, getProfile } from '../axios/api';
 import EditProfile from '../components/editProfile';
 import { useNavigate } from 'react-router-dom';
@@ -94,6 +94,7 @@ const Mybox2 = styled(MyBox1)`
 `;
 
 const MyInfoPage = () => {
+  const queryClient = useQueryClient();
   const { toggle, setToggle } = useContext(IsToggleCtx);
   const navigate = useNavigate();
 
@@ -135,16 +136,19 @@ const MyInfoPage = () => {
     enabled: false,
     onSuccess: async () => {
       localStorage.clear();
-      sessionStorage.clear();
+      sessionStorage.removeItem('accessToken');
       setToggle((prev) => ({ ...prev, logined: !prev.logined }));
       await queryClient.invalidateQueries({ queryKey: ['adminMember'] });
+      await queryClient.invalidateQueries({ queryKey: ['articleRead'] });
+      console.log('token', localStorage.getItem('nickname'));
+      console.log('token', sessionStorage.getItem('accessToken'));
     },
   });
 
   const deleteconFirmButton = () => {
     if (confirm('정말로 삭제하시겠습니까?')) {
-      navigate('/');
       deleteMyInfo.mutate();
+      navigate('/');
     }
   };
   const key = sessionStorage.getItem('accessToken');

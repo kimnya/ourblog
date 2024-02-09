@@ -23,11 +23,10 @@ const MemberList = () => {
   return (
     <>
       <MemberListStyle>
-        {data &&
-          data.data.filter((member) => {
-            member.memberId > 1;
-            return <MemberBox key={member.memberId} member={member} />;
-          })}
+        {/* {data &&
+          data.data.filter((member) => member.memberId > 1).map(member) =>{
+           <MemberBox key={member.memberId} member={member} />;
+          }} */}
       </MemberListStyle>
     </>
   );

@@ -66,6 +66,7 @@ const EditPage = () => {
   const navgate = useNavigate();
   const editorRef = useRef();
   const queryClient = useQueryClient();
+
   const postContentApi = useMutation({
     mutationFn: postContent,
     onSuccess: async () => {
@@ -111,15 +112,16 @@ const EditPage = () => {
             title: title,
             content: content,
             nickName: getProfileApi.data.data.nickname,
-            categoryId: 1,
+            categoryId: (getProfileApi.data.data.memberId - 1) * getProfileApi.data.data.memberId,
           };
+          console.log(data.categoryId);
           postContentApi.mutate(data);
 
           console.log('d', data);
           console.log('title', typeof data.title);
           console.log('content', typeof data.content);
           console.log('nickname', typeof data.nickName);
-          console.log('categoryId', typeof data.categoryId);
+          // console.log('categoryId', typeof data.categoryId);
         }}
       >
         <label htmlFor='title'>title</label>
@@ -146,28 +148,7 @@ const EditPage = () => {
         </select> */}
 
         <EditToastUi ThemeMode={ThemeMode} editorRef={editorRef} />
-        <Button
-          className='submitBtn'
-          onSubmit={(evt) => {
-            preventSubmit(evt);
-            const content = editorRef.current.getInstance().getHTML();
-            navgate('/');
-            const data = {
-              title: title,
-              content: content,
-              nickName: getProfileApi.data.data.nickname,
-              categoryId: 1,
-            };
-            postContentApi.mutate(data);
-            console.log('d', data);
-            console.log('title', typeof data.title);
-            console.log('content', typeof data.content);
-            console.log('nickname', typeof data.nickName);
-            console.log('categoryId', typeof data.categoryId);
-          }}
-        >
-          작성완료
-        </Button>
+        <Button className='submitBtn'>작성완료</Button>
       </form>
     </EditBoxStyle>
   );

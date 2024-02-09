@@ -18,6 +18,8 @@ function App() {
     },
   });
   useEffect(() => {
+    console.log('app nickname', localStorage.getItem('nickname'));
+    console.log('app token', sessionStorage.getItem('accessToken'));
     const SILENT_REFRESH_TIME = 1000 * 60 * 5;
     const timer = setInterval(() => {
       if (document.hasFocus()) {
