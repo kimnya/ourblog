@@ -23,47 +23,40 @@ const Form = styled.form`
   }
 `;
 
+const registerSubmit = async (data) => {
+  await axios
+    .post('http://localhost:8081/api/member/join', {
+      headers: {
+        'Content-type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:8081/', // 서버 domain
+      },
+      name: data.userName,
+      email: data.email,
+      password: data.password,
+      nickname: data.nickname,
+    })
+    .then(function (response) {
+      if (response.status === 200) {
+        alert(`반갑습니다. ${data.userName}님`);
+      } else if (response.status === 400) {
+        alert('사용중인 아이디입니다.');
+      }
+    })
+    .catch(function (error) {
+      console.log('회원가입에 실패했습니다');
+    });
+};
 const Register = () => {
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
     getValues,
-    reset,
-    resetField,
-    setFocus,
   } = useForm();
-
-  const registerSubmit = async (data) => {
-    await axios
-      .post('http://localhost:8081/member/join', {
-        headers: {
-          'Content-type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:8081/', // 서버 domain
-        },
-        name: data.userName,
-        email: data.email,
-        password: data.password,
-        nickname: data.nickname,
-      })
-      .then(function (response) {
-        if (response.status === 200) {
-          alert(`반갑습니다. ${data.userName}님`);
-          navigate('/login');
-        }
-      })
-      .catch((err) => {
-        const resp = err.response;
-        if (err.status === 400) {
-          alert(resp.data);
-        }
-      });
-  };
 
   return (
     <>
-      <h1>회원가입</h1>
+      <Title />
       <Form
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
