@@ -66,6 +66,7 @@ const EditPage = () => {
   const navgate = useNavigate();
   const editorRef = useRef();
   const queryClient = useQueryClient();
+  console.log('제목', title);
 
   const postContentApi = useMutation({
     mutationFn: postContent,
@@ -106,22 +107,21 @@ const EditPage = () => {
       <form
         onSubmit={(evt) => {
           const content = editorRef.current.getInstance().getMarkdown();
-          preventSubmit(evt);
-          navgate('/');
-          const data = {
-            title: title,
-            content: content,
-            nickName: getProfileApi.data.data.nickname,
-            categoryId: (getProfileApi.data.data.memberId - 1) * getProfileApi.data.data.memberId,
-          };
-          console.log(data.categoryId);
-          postContentApi.mutate(data);
-
-          console.log('d', data);
-          console.log('title', typeof data.title);
-          console.log('content', typeof data.content);
-          console.log('nickname', typeof data.nickName);
-          // console.log('categoryId', typeof data.categoryId);
+          console.log('본문', content);
+          const categodryId = (getProfileApi.data.data.memberId - 1) * getProfileApi.data.data.memberId;
+          if (content === '' || title === undefined) {
+            alert('을 입력해주세요.');
+          } else {
+            preventSubmit(evt);
+            navgate('/');
+            const data = {
+              title: title,
+              content: content,
+              nickName: getProfileApi.data.data.nickname,
+              // categoryId: categodryId,
+            };
+            postContentApi.mutate(data);
+          }
         }}
       >
         <label htmlFor='title'>title</label>

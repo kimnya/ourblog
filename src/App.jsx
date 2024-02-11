@@ -9,12 +9,15 @@ import { IsToggleCtx } from './context/IsToggleProvider';
 import AdminPage from './page/AdminPage';
 
 function App() {
-  const navgate = useNavigate();
+  const { setToggle } = useContext(IsToggleCtx);
+  const navigate = useNavigate();
   const recallAccessToken = useMutation({
     mutationFn: recallToken,
     onError: () => {
-      sessionStorage.removeItem('accessToken');
-      navgate('/login');
+      console.log('에러');
+      setToggle((prev) => ({ ...prev, logined: false }));
+      sessionStorage.clear();
+      navigate('/login');
     },
   });
   useEffect(() => {

@@ -20,13 +20,21 @@ export const getProfile = async ({ queryKey }) => {
 
 //리프레쉬토큰으로 accessToken 재 호출
 export const recallToken = async () => {
-  console.log('리이슈되고있다');
+  console.log('리이슈호출');
   let refreshToken = getCookie('refreshToken');
   let accessToken = sessionStorage.getItem('accessToken');
-  const response = await axios.post('http://localhost:8081/member/reissue', {
-    refreshToken: refreshToken,
-    accessToken: accessToken,
-  });
+  const response = await axios.post(
+    'http://localhost:8081/member/reissue',
+    {
+      refreshToken: refreshToken,
+      accessToken: accessToken,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+      },
+    },
+  );
   console.log('reissue 성공 ');
   accessToken = response.data.accessToken;
   refreshToken = response.data.refreshToken;
@@ -52,15 +60,12 @@ export const likeCntReadApi = async ({ queryKey }) => {
 
 //카테고리 리스트 호출
 export const getCategories = async () => {
-  const response = await axios
-    .get('http://localhost:8081/member/categories', {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
-      },
-    })
-    .then((response) => {
-      return response.data;
-    });
+  const response = await axios.get('http://localhost:8081/member/categories', {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+    },
+  });
+
   return response;
 };
 
@@ -160,7 +165,7 @@ export const postContent = async (data) => {
       title: data.title,
       content: data.content,
       nickName: data.nickName,
-      categoryId: data.categoryId,
+      // categoryId: data.categoryId,
     },
     {
       headers: {
