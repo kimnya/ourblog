@@ -4,10 +4,6 @@ import { Link } from 'react-router-dom';
 import { adminDeleteMember } from '../axios/api';
 import styled from 'styled-components';
 
-const MemberBoxStyle = styled.tr`
-  font-size: 18px;
-`;
-
 const MemberBox = ({ member }) => {
   const queryClient = useQueryClient();
   const { memberId, nickname, email, name } = member;
