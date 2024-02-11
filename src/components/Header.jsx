@@ -36,6 +36,9 @@ const HeaderStyled = styled.div`
       }
     }
   }
+  .adminLogoutBtn {
+    margin-right: 10px;
+  }
 `;
 
 const Header = () => {
@@ -55,7 +58,6 @@ const Header = () => {
   useEffect(() => {
     if (sessionStorage.getItem('accessToken')) {
       setToggle((prev) => ({ ...prev, logined: !prev.logined }));
-      localStorage.setItem('nickname', getProfileApi.data.data.nickname);
     } else {
       setToggle((prev) => ({ ...prev, logined: false }));
     }
@@ -63,6 +65,7 @@ const Header = () => {
 
   const logoutSubmit = (evt) => {
     evt.preventDefault();
+    navigate('/');
     sessionStorage.clear();
     setToggle((prev) => ({ ...prev, logined: !prev.logined }));
     localStorage.clear();
@@ -104,13 +107,19 @@ const Header = () => {
             </p>
           ) : (
             <p>
-              {sessionStorage.getItem('email') === 'admin@naver.com' && <Link onClick={logoutSubmit}>로그아웃</Link>}
+              {sessionStorage.getItem('email') === 'admin@naver.com' && (
+                <Link className='adminLogoutBtn' onClick={logoutSubmit}>
+                  로그아웃
+                </Link>
+              )}
               <Button
                 width='50px'
                 height='25px'
                 $fontColor='mainGray'
                 onClick={() => {
-                  navigate('/login');
+                  if (sessionStorage.getItem('email') !== 'admin@naver.com') {
+                    navigate('/login');
+                  }
                 }}
               >
                 {sessionStorage.getItem('email') === 'admin@naver.com' ? '관리자' : '로그인'}

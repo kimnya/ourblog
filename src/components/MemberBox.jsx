@@ -2,6 +2,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { adminDeleteMember } from '../axios/api';
+import styled from 'styled-components';
+
+const MemberBoxStyle = styled.tr`
+  font-size: 18px;
+`;
 
 const MemberBox = ({ member }) => {
   const queryClient = useQueryClient();
@@ -15,19 +20,24 @@ const MemberBox = ({ member }) => {
   });
   return (
     <>
-      <div>
-        {name}
-        {email}
-        {nickname}
+      <MemberBoxStyle align='center'>
+        <td>{memberId}</td>
+        <td>{name}</td>
+        <td>{email}</td>
+        <td>{nickname}</td>
 
-        <Link
-          onClick={() => {
-            adminDeleteMemberApi.mutate(memberId);
-          }}
-        >
-          삭제
-        </Link>
-      </div>
+        <td>
+          <Link
+            onClick={() => {
+              if (confirm('정말로 삭제하시겠습니까?')) {
+                adminDeleteMemberApi.mutate(memberId);
+              }
+            }}
+          >
+            삭제
+          </Link>
+        </td>
+      </MemberBoxStyle>
     </>
   );
 };

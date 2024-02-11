@@ -60,7 +60,7 @@ const UserArticleAll = () => {
 
   return (
     <>
-      <BlogNameTag>{`${localStorage.getItem('nickname')}의 블로그`}</BlogNameTag>
+      <BlogNameTag>나의 블로그</BlogNameTag>
       <ArticleListStyle>
         {data.data.map((article) => {
           return <ArticleListBox key={article.id} article={article} />;
