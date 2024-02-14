@@ -14,10 +14,6 @@ const PageStyle = styled.div`
 
 const Pagination = ({ limit, page, totalPosts, setPage }) => {
   const numPages = Math.ceil(totalPosts / limit);
-  const [currPage, setCurrPage] = useState(page);
-  let firstNum = currPage - (currPage % 5) + 1;
-  let lastNum = currPage - (currPage % 5) + 5;
-  console.log('page', numPages);
 
   return (
     <>
@@ -49,7 +45,6 @@ const Pagination = ({ limit, page, totalPosts, setPage }) => {
           })}
         <Button
           onClick={() => {
-            console.log('array', Array(4).fill());
             setPage(page + 1);
           }}
           disabled={page === numPages}

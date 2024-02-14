@@ -33,6 +33,8 @@ const AllArticlePage = () => {
 
   const { data } = userArticle;
 
+  console.log(data);
+
   const limit = 8; // posts가 보일 최대한의 갯수
   const offset = (page - 1) * limit; // 시작점과 끝점을 구하는 offset
 
@@ -63,7 +65,9 @@ const AllArticlePage = () => {
       /> */}
         <UserArticleAll posts={postsData(data.data)} />
         <Link onClick={moveWritePge}>글 작성하기</Link>
-        <Pagination limit={limit} page={page} totalPosts={data.data.length} setPage={setPage} />
+        {data.data.length !== 0 && (
+          <Pagination limit={limit} page={page} totalPosts={data.data.length} setPage={setPage} />
+        )}
       </AllArticleStyle>
     </>
   );
