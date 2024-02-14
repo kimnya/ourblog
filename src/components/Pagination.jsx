@@ -17,6 +17,7 @@ const Pagination = ({ limit, page, totalPosts, setPage }) => {
   const [currPage, setCurrPage] = useState(page);
   let firstNum = currPage - (currPage % 5) + 1;
   let lastNum = currPage - (currPage % 5) + 5;
+  console.log('page', numPages);
 
   return (
     <>
@@ -30,36 +31,26 @@ const Pagination = ({ limit, page, totalPosts, setPage }) => {
         >
           &lt;
         </Button>
-        <Button onClick={() => setPage(firstNum)} aria-current={page === firstNum ? 'page' : null}>
-          {firstNum}
-        </Button>
-        {Array(4)
+
+        {Array(numPages)
           .fill()
           .map((_, i) => {
-            if (i <= 2) {
-              return (
-                <Button
-                  key={i + 1}
-                  onClick={() => {
-                    setPage(firstNum + 1 + i);
-                  }}
-                  aria-current={page === firstNum + 1 + i ? 'page' : null}
-                >
-                  {firstNum + 1 + i}
-                </Button>
-              );
-            } else if (i >= 3) {
-              return (
-                <Button key={i + 1} onClick={() => setPage(lastNum)} aria-current={page === lastNum ? 'page' : null}>
-                  {lastNum}
-                </Button>
-              );
-            }
+            return (
+              <Button
+                key={i + 1}
+                onClick={() => {
+                  setPage(1 + i);
+                }}
+                aria-current={page === 1 + i ? 'page' : null}
+              >
+                {1 + i}
+              </Button>
+            );
           })}
         <Button
           onClick={() => {
+            console.log('array', Array(4).fill());
             setPage(page + 1);
-            setCurrPage(page);
           }}
           disabled={page === numPages}
         >

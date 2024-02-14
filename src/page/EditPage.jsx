@@ -113,7 +113,7 @@ const EditPage = () => {
             alert('을 입력해주세요.');
           } else {
             preventSubmit(evt);
-            navgate('/');
+            navgate('/articleAll');
             const data = {
               title: title,
               content: content,
