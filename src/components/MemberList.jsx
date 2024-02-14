@@ -10,6 +10,7 @@ const MemberListStyle = styled.div`
   flex-flow: column nowrap;
   width: 1237px;
   font-size: 24px;
+
   tr {
     &:last-child {
       font-size: 18px;
@@ -38,14 +39,12 @@ const MemberList = () => {
             </tr>
           </thead>
           <tbody>
-            <tr align='center'>
-              {data &&
-                data.data
-                  .filter((member) => member.memberId > 1)
-                  .map((member) => {
-                    return <MemberBox key={member.memberId} member={member} />;
-                  })}
-            </tr>
+            {data &&
+              data.data
+                .filter((member) => member.memberId > 1)
+                .map((member) => {
+                  return <MemberBox key={member.memberId} member={member} />;
+                })}
           </tbody>
         </table>
       </MemberListStyle>
