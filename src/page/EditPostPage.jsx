@@ -101,6 +101,7 @@ const EditPostPage = () => {
       navigate(`/readPage/${postId}`);
       await queryClient.invalidateQueries({ queryKey: ['articleDetail'] });
       await queryClient.invalidateQueries({ queryKey: ['userArticle'] });
+      await queryClient.invalidateQueries({ queryKey: ['articleRead'] });
     },
   });
   // const getCategory = useQuery({
