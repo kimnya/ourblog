@@ -53,7 +53,6 @@ const Header = () => {
     queryFn: getProfile,
     enabled: !!key && localStorage.getItem('email') !== 'admin@naver.com',
   });
-  console.log('header profile', getProfileApi);
 
   useEffect(() => {
     if (sessionStorage.getItem('accessToken')) {

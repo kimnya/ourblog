@@ -113,12 +113,12 @@ const EditPage = () => {
             alert('을 입력해주세요.');
           } else {
             preventSubmit(evt);
-            navgate('/');
+            navgate('/articleAll');
             const data = {
               title: title,
               content: content,
-              nickName: getProfileApi.data.data.nickname,
-              // categoryId: categodryId,
+              nickname: getProfileApi.data.data.nickname,
+              categoryId: categodryId,
             };
             postContentApi.mutate(data);
           }

@@ -6,7 +6,7 @@ import { userArticleRead } from '../axios/api';
 import ArticleListBox from '../components/ArticleListBox';
 
 const BlogNameTag = styled.p`
-  margin: 0 auto;
+  margin: 30px auto;
   color: ${palette.mainGreen};
   font-weight: bold;
   font-size: 22px;
@@ -49,22 +49,15 @@ const ArticleListStyle = styled.div`
     justify-content: space-between;
   }
 `;
-const UserArticleAll = () => {
-  const userArticle = useQuery({
-    queryKey: ['userArticle'],
-    queryFn: userArticleRead,
-    enabled: sessionStorage.getItem('accessToken') !== null,
-  });
-
-  const { data } = userArticle;
-
+const UserArticleAll = ({ posts }) => {
   return (
     <>
       <BlogNameTag>나의 블로그</BlogNameTag>
       <ArticleListStyle>
-        {data.data.map((article) => {
-          return <ArticleListBox key={article.id} article={article} />;
-        })}
+        {posts &&
+          posts.map((article) => {
+            return <ArticleListBox key={article.id} article={article} />;
+          })}
       </ArticleListStyle>
     </>
   );

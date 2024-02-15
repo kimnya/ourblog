@@ -13,9 +13,13 @@ const ArticleListStyle = styled.div`
   align-items: center;
   /* width: 1237px;
   height: 710px; */
+  > div {
+    margin-bottom: 30px;
+  }
 `;
 
 const Form = styled.form`
+  margin-bottom: 30px;
   > label {
     display: none;
   }
