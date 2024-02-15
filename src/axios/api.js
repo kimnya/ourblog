@@ -9,15 +9,6 @@ export const articleListRead = async () => {
   return response;
 };
 
-//프로필 호출
-export const getProfile = async ({ queryKey }) => {
-  const response = await axios.get('http://localhost:8081/member/myPage', {
-    headers: { Authorization: `Bearer ${queryKey[1]}` },
-  });
-
-  return response;
-};
-
 //리프레쉬토큰으로 accessToken 재 호출
 export const recallToken = async () => {
   console.log('리이슈호출');
@@ -40,6 +31,22 @@ export const recallToken = async () => {
   refreshToken = response.data.refreshToken;
   sessionStorage.setItem('accessToken', accessToken);
   setCookie('refreshToken', refreshToken);
+
+  return response;
+};
+
+//프로필 호출
+export const getProfile = async ({ queryKey }) => {
+  const response = await axios
+    .get('http://localhost:8081/member/myPage', {
+      headers: { Authorization: `Bearer ${queryKey[1]}` },
+    })
+    .catch((error) => {
+      if (error.status === 401) {
+        console.log('401오류');
+        recallToken();
+      }
+    });
 
   return response;
 };
@@ -164,8 +171,8 @@ export const postContent = async (data) => {
     {
       title: data.title,
       content: data.content,
-      nickName: data.nickName,
-      // categoryId: data.categoryId,
+      nickname: data.nickname,
+      categoryId: data.categoryId,
     },
     {
       headers: {

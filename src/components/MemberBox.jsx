@@ -16,22 +16,24 @@ const MemberBox = ({ member }) => {
   });
   return (
     <>
-      <td>{memberId}</td>
-      <td>{name}</td>
-      <td>{email}</td>
-      <td>{nickname}</td>
+      <MemberBoxStyle align={'center'}>
+        <td>{memberId}</td>
+        <td>{name}</td>
+        <td>{email}</td>
+        <td>{nickname}</td>
 
-      <td>
-        <Link
-          onClick={() => {
-            if (confirm('정말로 삭제하시겠습니까?')) {
-              adminDeleteMemberApi.mutate(memberId);
-            }
-          }}
-        >
-          삭제
-        </Link>
-      </td>
+        <td>
+          <Link
+            onClick={() => {
+              if (confirm('정말로 삭제하시겠습니까?')) {
+                adminDeleteMemberApi.mutate(memberId);
+              }
+            }}
+          >
+            삭제
+          </Link>
+        </td>
+      </MemberBoxStyle>
     </>
   );
 };

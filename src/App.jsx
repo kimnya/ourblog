@@ -21,11 +21,9 @@ function App() {
     },
   });
   useEffect(() => {
-    const SILENT_REFRESH_TIME = 1000 * 60 * 5;
+    const SILENT_REFRESH_TIME = 1000 * 60 * 25;
     const timer = setInterval(() => {
-      if (document.hasFocus()) {
-        recallAccessToken.mutate();
-      }
+      recallAccessToken.mutate();
     }, SILENT_REFRESH_TIME);
     return () => {
       clearInterval(timer);
