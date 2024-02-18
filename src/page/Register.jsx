@@ -1,12 +1,10 @@
 import React from 'react';
-
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Input from '../components/Input';
-
 import styled from 'styled-components';
 import Button from '../components/Button';
-import { useNavigate } from 'react-router-dom';
+import Title from '../components/Title';
 
 const Form = styled.form`
   display: flex;
