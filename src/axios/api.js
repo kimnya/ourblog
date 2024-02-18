@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { getCookie, setCookie } from '../components/cookie';
+import { domain } from '../utill/Domain';
 
 // 게시물리스트 호출
 export const articleListRead = async () => {
-  const response = await axios.get('/posting/list', {
+  const response = await axios.get(`${domain}/posting/list`, {
     params: { searchText: '' },
   });
   return response;
