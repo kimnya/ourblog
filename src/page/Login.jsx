@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { setCookie } from '../components/cookie';
 import { IsToggleCtx } from '../context/IsToggleProvider';
+import { baseUrl } from '../utill/baseUrl';
 
 const Form = styled.form`
   display: flex;
@@ -41,7 +42,7 @@ const Login = () => {
   const loginSubmit = async (data) => {
     try {
       await axios
-        .post('http://localhost:8081/member/login', {
+        .post(`${baseUrl}/member/login`, {
           email: data.email,
           password: data.password,
         })

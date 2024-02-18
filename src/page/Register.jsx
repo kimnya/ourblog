@@ -32,11 +32,8 @@ const Register = () => {
   } = useForm();
   const registerSubmit = async (data) => {
     await axios
-      .post('http://localhost:8081/api/member/join', {
-        headers: {
-          'Content-type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:8081/', // 서버 domain
-        },
+      .post(`${baseUrl}/api/member/join`, {
+        headers: {},
         name: data.userName,
         email: data.email,
         password: data.password,
@@ -88,11 +85,7 @@ const Register = () => {
             },
             onBlur: async () => {
               await axios
-                .get(`http://localhost:8081/member/checkEmail`, {
-                  headers: {
-                    'Content-type': 'application/json',
-                    'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
-                  },
+                .get(`${baseUrl}/member/checkEmail`, {
                   params: { email: getValues('email') },
                 })
                 .then((response) => {
@@ -128,11 +121,7 @@ const Register = () => {
             },
             onBlur: async () => {
               await axios
-                .get(`http://localhost:8081/member/checkNickname`, {
-                  headers: {
-                    'Content-type': 'application/json',
-                    'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
-                  },
+                .get(`${baseUrl}/member/checkNickname`, {
                   params: { nickname: getValues('nickname') },
                 })
                 .then((response) => {
