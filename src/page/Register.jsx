@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 import Title from '../components/Title';
 import { baseUrl } from '../utill/baseUrl';
+import { useNavigate } from 'react-router-dom';
 
 const Form = styled.form`
   display: flex;
@@ -23,11 +24,13 @@ const Form = styled.form`
 `;
 
 const Register = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
     getValues,
+    reset,
   } = useForm();
   const registerSubmit = async (data) => {
     await axios
@@ -59,6 +62,8 @@ const Register = () => {
       <Form
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
+          reset();
+          navigate('/login');
         })}
       >
         <label htmlFor='userName'>userName</label>
