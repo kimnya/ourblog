@@ -32,7 +32,7 @@ const Register = () => {
   const registerSubmit = async (data) => {
     await axios
       .post(
-        `${baseUrl}/api/member/join`,
+        `${baseUrl}/member/join`,
         {
           name: data.userName,
           email: data.email,
