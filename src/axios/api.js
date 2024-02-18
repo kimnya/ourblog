@@ -3,7 +3,7 @@ import { getCookie, setCookie } from '../components/cookie';
 
 // 게시물리스트 호출
 export const articleListRead = async () => {
-  const response = await axios.get('https://port-0-ourblog-am952nlsn8cg1z.sel5.cloudtype.app/posting/list', {
+  const response = await axios.get('/api/posting/list', {
     params: { searchText: '' },
   });
   return response;
