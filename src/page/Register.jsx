@@ -31,6 +31,7 @@ const Register = () => {
     formState: { isSubmitting, errors },
     getValues,
     reset,
+    resetField,
   } = useForm();
   const registerSubmit = async (data) => {
     await axios
@@ -47,6 +48,7 @@ const Register = () => {
       .then(function (response) {
         if (response.status === 200) {
           alert(`반갑습니다. ${data.userName}님`);
+          navigate('/login');
         } else if (response.status === 400) {
           alert('사용중인 아이디입니다.');
         }
@@ -63,7 +65,6 @@ const Register = () => {
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
           reset();
-          navigate('/login');
         })}
       >
         <label htmlFor='userName'>userName</label>
