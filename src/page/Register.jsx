@@ -28,17 +28,19 @@ const Register = () => {
     handleSubmit,
     formState: { isSubmitting, errors },
     getValues,
-    reset,
   } = useForm();
   const registerSubmit = async (data) => {
     await axios
-      .post(`${baseUrl}/api/member/join`, {
-        headers: {},
-        name: data.userName,
-        email: data.email,
-        password: data.password,
-        nickname: data.nickname,
-      })
+      .post(
+        `${baseUrl}/api/member/join`,
+        {
+          name: data.userName,
+          email: data.email,
+          password: data.password,
+          nickname: data.nickname,
+        },
+        {},
+      )
       .then(function (response) {
         if (response.status === 200) {
           alert(`반갑습니다. ${data.userName}님`);
