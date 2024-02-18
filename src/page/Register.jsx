@@ -28,6 +28,7 @@ const Register = () => {
     handleSubmit,
     formState: { isSubmitting, errors },
     getValues,
+    reset,
   } = useForm();
   const registerSubmit = async (data) => {
     await axios
