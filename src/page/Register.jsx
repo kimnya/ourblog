@@ -57,7 +57,6 @@ const Register = () => {
       <Form
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
-          reset();
         })}
       >
         <label htmlFor='userName'>userName</label>
