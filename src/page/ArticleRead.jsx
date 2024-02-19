@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import { darken } from '../styles/ColorMixin';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import Markdown from 'react-markdown';
-import { Viewer } from '@toast-ui/react-editor';
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Comment from '../components/CommentList';
 import {
@@ -69,7 +69,12 @@ const ReadPageStyle = styled.div`
   }
   .toastui-editor-contents {
     p {
+      width: 90%;
       color: ${({ theme }) => theme.txtColor};
+      > img {
+        display: inline-block;
+        width: 90%;
+      }
     }
   }
 `;
@@ -129,6 +134,7 @@ const Articleread = () => {
     mutationFn: deletePost,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['articleRead'] });
+      await queryClient.invalidateQueries({ queryKey: ['userArticle'] });
       navigate('/articleAll');
     },
   });
