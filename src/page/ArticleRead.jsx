@@ -80,6 +80,7 @@ const ReadPageStyle = styled.div`
     }
   }
 `;
+
 const Title = styled.h2`
   display: flex;
   justify-content: center;

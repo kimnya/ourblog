@@ -328,7 +328,7 @@ export const articleCommentEdit = async (commentId, reply, setComments, postId) 
     },
   );
 
-  const newList = await axios.get(`http://localhost:8081/comment/list/${postId}`, {
+  const newList = await axios.get(`${baseUrl}/comment/list/${postId}`, {
     headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
   });
 
