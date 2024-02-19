@@ -163,7 +163,7 @@ export const minusLikeCnt = async (postId) => {
 
 //게시물포스팅 호출
 export const postContent = async (data) => {
-  const reponse = axios.post(
+  const response = await axios.post(
     `${baseUrl}/posting/create`,
     {
       title: data.title,
@@ -177,7 +177,7 @@ export const postContent = async (data) => {
       },
     },
   );
-  return reponse;
+  return response;
 };
 
 //포스팅 수정호출
