@@ -89,7 +89,10 @@ const CommentList = () => {
             articleCommentCreate(commentData);
             reset();
           } else {
-            alert('로그인 후 이용해주세요.');
+
+            alert('로그인 후 이용해주세요');
+            reset();
+
           }
         })}
       >
