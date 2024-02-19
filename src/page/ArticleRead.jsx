@@ -70,16 +70,17 @@ const ReadPageStyle = styled.div`
   .contentBox {
     margin-top: 50px;
     p {
-
       display: block;
       width: 100%;
       color: ${({ theme }) => theme.txtColor};
-     
+
       > img {
         width: 100%;
-
+      }
+    }
   }
 `;
+
 const Title = styled.h2`
   display: flex;
   justify-content: center;
