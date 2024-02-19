@@ -67,9 +67,16 @@ const ReadPageStyle = styled.div`
       }
     }
   }
-  .toastui-editor-contents {
+  .contentBox {
+    margin-top: 50px;
     p {
+      display: block;
+      width: 100%;
       color: ${({ theme }) => theme.txtColor};
+      border: 1px solid ${({ theme }) => theme.txtColor};
+      > img {
+        width: 100%;
+      }
     }
   }
 `;
@@ -198,7 +205,7 @@ const Articleread = () => {
             ) : null}
           </div>
           {/* <Viewer initialValue={posting.content || ''} /> */}
-          <Markdown>{posting.content}</Markdown>
+          <Markdown className='contentBox'>{posting.content}</Markdown>
         </ReadPageStyle>
       )}
       {!edit && <Comment />}
