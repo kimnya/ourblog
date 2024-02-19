@@ -76,8 +76,6 @@ const ReadPageStyle = styled.div`
 
       > img {
         width: 100%;
-
-        width: 100%;
       }
     }
   }
