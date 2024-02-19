@@ -85,9 +85,12 @@ const CommentList = () => {
       <form
         onSubmit={handleSubmit((data) => {
           const commentData = { postId: postId, reply: data.comment, setComments: setComments };
-          articleCommentCreate(commentData);
-
-          reset();
+          if (!!sessionStorage.getItem('accessToken')) {
+            articleCommentCreate(commentData);
+            reset();
+          } else {
+            alert('로그인 후 이용해주세요.');
+          }
         })}
       >
         <label htmlFor='comment'>comment</label>
