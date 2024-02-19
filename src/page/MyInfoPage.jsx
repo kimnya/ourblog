@@ -165,7 +165,7 @@ const MyInfoPage = () => {
               <div className='profileBox'>
                 <div>
                   <img
-                    src={`https://ourblog-beta.vercel.app/${getProfileApi.data.data.imageUrl}`}
+                    src={`https://ourblog-beta.vercel.app/assets/${getProfileApi.data.data.imageUrl}`}
                     alt={`${getProfileApi.data.data.nickname}의 썸네일`}
                   />
                   <p>{getProfileApi.data.data.nickname}</p>
