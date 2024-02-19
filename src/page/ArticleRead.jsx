@@ -67,15 +67,17 @@ const ReadPageStyle = styled.div`
       }
     }
   }
-  .toastui-editor-contents {
+  .contentBox {
+    margin-top: 50px;
     p {
-      width: 90%;
+
+      display: block;
+      width: 100%;
       color: ${({ theme }) => theme.txtColor};
+     
       > img {
-        display: inline-block;
-        width: 90%;
-      }
-    }
+        width: 100%;
+
   }
 `;
 const Title = styled.h2`
@@ -204,7 +206,7 @@ const Articleread = () => {
             ) : null}
           </div>
           {/* <Viewer initialValue={posting.content || ''} /> */}
-          <Markdown>{posting.content}</Markdown>
+          <Markdown className='contentBox'>{posting.content}</Markdown>
         </ReadPageStyle>
       )}
       {!edit && <Comment />}
