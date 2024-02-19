@@ -1,11 +1,11 @@
 import React from 'react';
-
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Input from '../components/Input';
-
 import styled from 'styled-components';
 import Button from '../components/Button';
+import Title from '../components/Title';
+import { baseUrl } from '../utill/baseUrl';
 import { useNavigate } from 'react-router-dom';
 
 const Form = styled.form`
@@ -32,38 +32,35 @@ const Register = () => {
     getValues,
     reset,
     resetField,
-    setFocus,
   } = useForm();
-
   const registerSubmit = async (data) => {
     await axios
-      .post('http://localhost:8081/member/join', {
-        headers: {
-          'Content-type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:8081/', // 서버 domain
+      .post(
+        `${baseUrl}/member/join`,
+        {
+          name: data.userName,
+          email: data.email,
+          password: data.password,
+          nickname: data.nickname,
         },
-        name: data.userName,
-        email: data.email,
-        password: data.password,
-        nickname: data.nickname,
-      })
+        {},
+      )
       .then(function (response) {
         if (response.status === 200) {
           alert(`반갑습니다. ${data.userName}님`);
           navigate('/login');
+        } else if (response.status === 400) {
+          alert('사용중인 아이디입니다.');
         }
       })
-      .catch((err) => {
-        const resp = err.response;
-        if (err.status === 400) {
-          alert(resp.data);
-        }
+      .catch(function (error) {
+        console.log('회원가입에 실패했습니다');
       });
   };
 
   return (
     <>
-      <h1>회원가입</h1>
+      <Title />
       <Form
         onSubmit={handleSubmit((data) => {
           registerSubmit(data);
@@ -95,11 +92,7 @@ const Register = () => {
             },
             onBlur: async () => {
               await axios
-                .get(`http://localhost:8081/member/checkEmail`, {
-                  headers: {
-                    'Content-type': 'application/json',
-                    'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
-                  },
+                .get(`${baseUrl}/member/checkEmail`, {
                   params: { email: getValues('email') },
                 })
                 .then((response) => {
@@ -135,11 +128,7 @@ const Register = () => {
             },
             onBlur: async () => {
               await axios
-                .get(`http://localhost:8081/member/checkNickname`, {
-                  headers: {
-                    'Content-type': 'application/json',
-                    'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
-                  },
+                .get(`${baseUrl}/member/checkNickname`, {
                   params: { nickname: getValues('nickname') },
                 })
                 .then((response) => {

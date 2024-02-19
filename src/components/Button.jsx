@@ -33,10 +33,12 @@ const ButtonStyled = styled.button`
   `}
 `;
 
-const Button = ({ children, ...rest }) => {
+const Button = ({ onClick = undefined, children, ...rest }) => {
   return (
     <>
-      <ButtonStyled {...rest}>{children}</ButtonStyled>
+      <ButtonStyled onClick={onClick} {...rest}>
+        {children}
+      </ButtonStyled>
     </>
   );
 };
