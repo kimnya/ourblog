@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import { darken } from '../styles/ColorMixin';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-
+import { useForm } from 'react-hook-form';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import Markdown from 'react-markdown';
-
+import { Viewer } from '@toast-ui/react-editor';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Comment from '../components/CommentList';
 import {
@@ -67,13 +67,15 @@ const ReadPageStyle = styled.div`
       }
     }
   }
-  .toastui-editor-contents {
+  .contentBox {
+    margin-top: 50px;
     p {
-      width: 90%;
+      display: block;
+      width: 100%;
       color: ${({ theme }) => theme.txtColor};
+
       > img {
-        display: inline-block;
-        width: 90%;
+        width: 100%;
       }
     }
   }
@@ -134,7 +136,6 @@ const Articleread = () => {
     mutationFn: deletePost,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['articleRead'] });
-      await queryClient.invalidateQueries({ queryKey: ['userArticle'] });
       navigate('/articleAll');
     },
   });
@@ -204,7 +205,7 @@ const Articleread = () => {
             ) : null}
           </div>
           {/* <Viewer initialValue={posting.content || ''} /> */}
-          <Markdown>{posting.content}</Markdown>
+          <Markdown className='contentBox'>{posting.content}</Markdown>
         </ReadPageStyle>
       )}
       {!edit && <Comment />}
