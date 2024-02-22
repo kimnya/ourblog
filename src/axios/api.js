@@ -275,9 +275,7 @@ export const editimageProfile = async (data) => {
 
 //댓글 호출
 export const articleCommentRead = async (postId, setComments) => {
-  const response = await axios.get(`${baseUrl}/comment/list/${postId}`, {
-    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
-  });
+  const response = await axios.get(`${baseUrl}/comment/list/${postId}`);
 
   setComments(response.data);
 
