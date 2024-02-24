@@ -164,7 +164,10 @@ const MyInfoPage = () => {
             <Mybox2>
               <div className='profileBox'>
                 <div>
-                  <img src={getProfileApi.data.data.imageUrl} alt={`${getProfileApi.data.data.nickname}의 썸네일`} />
+                  <img
+                    src={`https://ourblog-beta.vercel.app/${getProfileApi.data.data.imageUrl}`}
+                    alt={`${getProfileApi.data.data.nickname}의 썸네일`}
+                  />
                   <p>{getProfileApi.data.data.nickname}</p>
                 </div>
                 <Button onClick={imagetoggleButton} width='155px' $heigth='34px'>
