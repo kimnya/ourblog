@@ -2,6 +2,47 @@ import axios from 'axios';
 import { getCookie, setCookie } from '../components/cookie';
 import { baseUrl } from '../utill/baseUrl';
 
+//회원가입 호출
+export const registerSubmit = async (data) => {
+  const response = await axios.post(
+    `${baseUrl}/member/join`,
+    {
+      name: data.userName,
+      email: data.email,
+      password: data.password,
+      nickname: data.nickname,
+    },
+    {},
+  );
+  return response;
+};
+
+//아이디 중복체크 호출
+export const checkEmail = async (email) => {
+  const response = await axios.get(`${baseUrl}/member/checkEmail`, {
+    params: { email: email },
+  });
+  return response;
+};
+
+export const checkNickname = async (nickname) => {
+  const response = await axios.get(`${baseUrl}/member/checkNickname`, {
+    params: { nickname: nickname },
+  });
+
+  return response;
+};
+
+//로그인 호출
+export const loginSubmit = async (data) => {
+  const response = await axios.post(`${baseUrl}/member/login`, {
+    email: data.email,
+    password: data.password,
+  });
+
+  return response;
+};
+
 // 게시물리스트 호출
 export const articleListRead = async () => {
   const response = await axios.get(`${baseUrl}/posting/list`, {

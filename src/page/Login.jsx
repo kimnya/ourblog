@@ -9,6 +9,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { setCookie } from '../components/cookie';
 import { IsToggleCtx } from '../context/IsToggleProvider';
 import { baseUrl } from '../utill/baseUrl';
+import { loginSubmit } from '../axios/api';
+import { useMutation } from '@tanstack/react-query';
 
 const Form = styled.form`
   display: flex;
@@ -39,42 +41,35 @@ const Login = () => {
     setFocus,
   } = useForm();
 
-  const loginSubmit = async (data) => {
-    try {
-      await axios
-        .post(`${baseUrl}/member/login`, {
-          email: data.email,
-          password: data.password,
-        })
-        .then((response) => {
-          alert('로그인이 완료됐습니다. 좋은하루 보내세요');
-          const accessToken = response.data.accessToken;
-          const refreshToken = response.data.refreshToken;
-          sessionStorage.setItem('accessToken', accessToken);
-          setCookie('refreshToken', refreshToken);
-          if (data.email === 'admin@naver.com') {
-            sessionStorage.setItem('email', data.email);
-            navigate('/admin');
-          } else {
-            navigate('/');
-          }
-        });
-    } catch (e) {
+  const loginSubmitApi = useMutation({
+    mutationFn: loginSubmit,
+    onSuccess: (response) => {
+      console.log(response);
+      alert('로그인이 완료됐습니다. 좋은하루 보내세요');
+      const accessToken = response.data.accessToken;
+      const refreshToken = response.data.refreshToken;
+      sessionStorage.setItem('accessToken', accessToken);
+      setCookie('refreshToken', refreshToken);
+      if (response.data.email === 'admin@naver.com') {
+        sessionStorage.setItem('email', response.data.email);
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
+    },
+    onError: () => {
       alert('로그인에 실패했습니다');
       setFocus('email');
-    }
-  };
+    },
+  });
 
   return (
     <>
       <h2>로그인</h2>
       <Form
         onSubmit={handleSubmit((data) => {
-          loginSubmit(data);
-
-          localStorage.setItem('email', data.email);
+          loginSubmitApi.mutate(data);
           reset();
-          setFocus('email');
         })}
       >
         <label htmlFor='email'>email</label>
