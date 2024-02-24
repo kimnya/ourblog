@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import Modal from '../components/Modal';
+import Modal from '../element/Modal';
 
 // 로그인 유저만 접근 가능
 // 비로그인 유저 접근 불가

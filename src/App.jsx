@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { GlobalStyle } from './styles/GlobalStyle';
-import Router from './components/Router';
+import Router from './components/app/Router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProfile, recallToken } from './axios/api';
 import SetTop from './utill/SetTop';

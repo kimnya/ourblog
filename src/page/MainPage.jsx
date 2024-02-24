@@ -1,8 +1,7 @@
-import React, { Suspense } from 'react';
-import ArticleList from '../components/ArticleList';
+import React from 'react';
+import ArticleList from '../components/article/ArticleList';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { palette } from '../styles/palette';
 import { useQuery } from '@tanstack/react-query';
 import { articleListRead } from '../axios/api';
 

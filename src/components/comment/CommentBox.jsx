@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { palette } from '../styles/palette';
-import { articleCommentDelete, articleCommentEdit } from '../axios/api';
+import { palette } from '../../styles/palette';
+import { articleCommentDelete, articleCommentEdit } from '../../axios/api';
 
 const CommentBoxStyle = styled.div`
   display: flex;

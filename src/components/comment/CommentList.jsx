@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { articleCommentCreate, articleCommentDelete, articleCommentEdit, articleCommentRead } from '../axios/api';
+import { articleCommentCreate, articleCommentDelete, articleCommentEdit, articleCommentRead } from '../../axios/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import Button from './Button';
-import Input from './Input';
+import Button from '../../element/Button';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import CommentBox from './CommentBox';
-import { palette } from '../styles/palette';
-import Modal from './Modal';
+import { palette } from '../../styles/palette';
 
 const CommentListStyle = styled.div`
   display: flex;

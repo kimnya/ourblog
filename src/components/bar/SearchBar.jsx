@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Input from './Input';
+import Input from '../../element/Input';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { searchArticleRead } from '../axios/api';
+import { searchArticleRead } from '../../axios/api';
 import { useQuery } from '@tanstack/react-query';
-import ArticleListBox from './ArticleListBox';
+import ArticleListBox from '../article/ArticleListBox';
 
 const ArticleListStyle = styled.div`
   display: flex;

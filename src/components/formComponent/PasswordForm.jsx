@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from '../Button';
-import Input from '../Input';
+import Button from '../../element/Button';
+import Input from '../../element/Input';
 import { useForm } from 'react-hook-form';
-import Modal from '../Modal';
+import Modal from '../../element/Modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { editNicknameProfile, editPasswordProfile } from '../../axios/api';
 import styled from 'styled-components';

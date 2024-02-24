@@ -1,10 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import Input from '../Input';
+import Input from '../../element/Input';
 import styled from 'styled-components';
 import axios from 'axios';
-import Modal from '../Modal';
-import Button from '../Button';
+import Modal from '../../element/Modal';
+import Button from '../../element/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { editNicknameProfile } from '../../axios/api';
 

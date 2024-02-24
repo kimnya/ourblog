@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie, setCookie } from '../components/cookie';
+import { getCookie, setCookie } from '../utill/cookie';
 import { baseUrl } from '../utill/baseUrl';
 
 //회원가입 호출

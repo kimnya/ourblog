@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Input from '../components/Input';
+import Input from '../element/Input';
 import { palette } from '../styles/palette';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { articleDetailRead, editPost, getCategories, getProfile, postContent } from '../axios/api';
-import Button from '../components/Button';
+import Button from '../element/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import EditToastUi from '../components/EditToastUi';
+import EditToastUi from '../element/EditToastUi';
 import { onUploadImage } from '../utill/makeShortImageUrl';
 import { useTheme } from '../context/ThemeProvider';
 import { Editor } from '@toast-ui/react-editor';

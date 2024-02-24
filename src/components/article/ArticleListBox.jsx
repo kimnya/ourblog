@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { palette } from '../styles/palette';
-import useTimeStamp from '../customHook/articleDate';
+import { palette } from '../../styles/palette';
+import useTimeStamp from '../../customHook/articleDate';
 
 import { useNavigate } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 import { FaHeart } from 'react-icons/fa';
-import { anonymousLikeCntReadApi, likeCntReadApi } from '../axios/api';
+import { anonymousLikeCntReadApi, likeCntReadApi } from '../../axios/api';
 const ArticleListBoxStyle = styled.div`
   display: flex;
   flex-flow: column nowrap;
