@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { adminGetMember } from '../axios/api';
+import { adminGetMember } from '../../axios/api';
 import MemberBox from './MemberBox';
 import { useQuery } from '@tanstack/react-query';
-import { palette } from '../styles/palette';
+import { palette } from '../../styles/palette';
 
 const MemberListStyle = styled.div`
   display: flex;

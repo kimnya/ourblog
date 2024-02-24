@@ -4,13 +4,13 @@ import Title from './Title';
 import { FaMoon } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Button from './Button';
+import Button from '../../element/Button';
 import styled from 'styled-components';
-import SideBar from './SideBar';
+import SideBar from '../bar/SideBar';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getProfile } from '../axios/api';
-import { useTheme } from '../context/ThemeProvider';
-import { IsToggleCtx } from '../context/IsToggleProvider';
+import { getProfile } from '../../axios/api';
+import { useTheme } from '../../context/ThemeProvider';
+import { IsToggleCtx } from '../../context/IsToggleProvider';
 
 const HeaderStyled = styled.div`
   display: flex;

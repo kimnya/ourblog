@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
-import Button from '../components/Button';
+import Button from '../element/Button';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteProfile, getProfile } from '../axios/api';
-import EditProfile from '../components/EditProfile';
+import EditProfile from '../components/member/EditProfile';
 import { useNavigate } from 'react-router-dom';
 import { IsToggleCtx } from '../context/IsToggleProvider';
 

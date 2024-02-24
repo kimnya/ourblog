@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { palette } from '../styles/palette';
+import { palette } from '../../styles/palette';
 import { Link } from 'react-router-dom';
-import EditCtegory from './category/EditCtegory';
+import EditCtegory from './EditCtegory';
 import { FaGear } from 'react-icons/fa6';
 import { FaCheck } from 'react-icons/fa6';
 import { useQuery } from '@tanstack/react-query';
-import { getCategories, getProfile } from '../axios/api';
+import { getCategories, getProfile } from '../../axios/api';
 
 const CategoryBox = styled.div`
   position: relative;

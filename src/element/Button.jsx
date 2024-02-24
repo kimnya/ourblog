@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from '../styles/palette';
-import { darken } from './../styles/ColorMixin';
+import { darken } from '../styles/ColorMixin';
 
 const ButtonStyled = styled.button`
   display: inline-flex;

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Input from '../Input';
+import Input from '../../element/Input';
 import { useForm } from 'react-hook-form';
-import Button from '../Button';
-import Modal from '../Modal';
+import Button from '../../element/Button';
+import Modal from '../../element/Modal';
 import { storage } from '../../fireBase/Firebase';
 import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

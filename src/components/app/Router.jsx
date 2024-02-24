@@ -1,18 +1,18 @@
 import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Login from '../page/Login';
-import Register from '../page/Register';
-import SearchPage from '../page/SearchPage';
+import Login from '../../page/Login';
+import Register from '../../page/Register';
+import SearchPage from '../../page/SearchPage';
 import Layout from './Layout';
-import MainPage from '../page/MainPage';
-import EditPage from '../page/EditPage';
-import Articleread from '../page/ArticleRead';
-import MyInfoPage from '../page/MyInfoPage';
-import AllArticlePage from '../page/AllArticlePage';
-import PrivateRoute from '../utill/PrivateRoute';
-import ConfirmLogin from '../utill/ConfirmLogin';
-import AdminPage from '../page/AdminPage';
-import EditPostPage from '../page/EditPostPage';
+import MainPage from '../../page/MainPage';
+import EditPage from '../../page/EditPage';
+import Articleread from '../../page/ArticleRead';
+import MyInfoPage from '../../page/MyInfoPage';
+import AllArticlePage from '../../page/AllArticlePage';
+import PrivateRoute from '../../utill/PrivateRoute';
+import ConfirmLogin from '../../utill/ConfirmLogin';
+import AdminPage from '../../page/AdminPage';
+import EditPostPage from '../../page/EditPostPage';
 
 const Router = () => {
   return (

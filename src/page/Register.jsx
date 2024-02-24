@@ -1,11 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import Input from '../components/Input';
+import Input from '../element/Input';
 import styled from 'styled-components';
-import Button from '../components/Button';
-import Title from '../components/Title';
-import { baseUrl } from '../utill/baseUrl';
+import Button from '../element/Button';
+import Title from '../components/app/Title';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { checkEmail, checkNickname, registerSubmit } from '../axios/api';
@@ -78,7 +76,7 @@ const Register = () => {
 
   return (
     <>
-      <Title />
+      <h2>회원가입</h2>
       <Form
         onSubmit={handleSubmit((data) => {
           RegisterApi.mutate(data);
