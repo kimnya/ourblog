@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import { darken } from '../styles/ColorMixin';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import Markdown from 'react-markdown';
-import { Viewer } from '@toast-ui/react-editor';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import Comment from '../components/CommentList';
+import Comment from '../components/comment/CommentList';
 import {
   AnonymousLikeCntRead,
   articleDetailRead,

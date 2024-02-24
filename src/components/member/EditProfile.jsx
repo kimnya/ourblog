@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import NicknameForm from './formComponent/NicknameForm';
-import EmailForm from './formComponent/EmailForm';
-import PasswordForm from './formComponent/PasswordForm';
-import ImageForm from './formComponent/ImageForm';
+import NicknameForm from '../formComponent/NicknameForm';
+import EmailForm from '../formComponent/EmailForm';
+import PasswordForm from '../formComponent/PasswordForm';
+import ImageForm from '../formComponent/ImageForm';
 
 const EditBoxStyle = styled.div`
   position: absolute;

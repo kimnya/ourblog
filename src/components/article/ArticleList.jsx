@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ArticleListBox from './ArticleListBox';
 import { useQueries, useQuery } from '@tanstack/react-query';
-import { articleListRead, userArticleRead } from '../axios/api';
+import { articleListRead, userArticleRead } from '../../axios/api';
 
 const ArticleListStyle = styled.div`
   display: flex;
@@ -15,6 +15,7 @@ const ArticleListStyle = styled.div`
 `;
 
 const ArticleList = ({ posts }) => {
+  console.log(posts);
   return (
     <>
       {/* 리스트갯수에 따라 margin값 조절 */}

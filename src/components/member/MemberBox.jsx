@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { adminDeleteMember } from '../axios/api';
+import { adminDeleteMember } from '../../axios/api';
 import styled from 'styled-components';
 
 const MemberBoxStyle = styled.tr`

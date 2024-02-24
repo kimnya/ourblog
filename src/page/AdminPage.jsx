@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MemberList from '../components/MemberList';
+import MemberList from '../components/member/MemberList';
 
 const AdminPage = () => {
   return (

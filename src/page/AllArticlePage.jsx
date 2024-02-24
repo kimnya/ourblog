@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import UserArticleAll from './UserArticleAll';
-import ArticleList from '../components/ArticleList';
+import UserArticleAll from '../components/article/UserArticleAll';
 import { Link, useNavigate } from 'react-router-dom';
-import SideBar from '../components/SideBar';
+import SideBar from '../components/bar/SideBar';
 import styled from 'styled-components';
 import { userArticleRead } from '../axios/api';
 import { useQuery } from '@tanstack/react-query';
-import Pagination from '../components/Pagination';
+import Pagination from '../element/Pagination';
 
 const AllArticleStyle = styled.div`
   display: flex;

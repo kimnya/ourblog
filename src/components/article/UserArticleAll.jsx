@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { palette } from '../styles/palette';
-import { useQuery } from '@tanstack/react-query';
-import { userArticleRead } from '../axios/api';
-import ArticleListBox from '../components/ArticleListBox';
+import { palette } from '../../styles/palette';
+import ArticleListBox from './ArticleListBox';
 
 const BlogNameTag = styled.p`
   margin: 30px auto;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import CategryList from './CategryList';
+import CategryList from '../category/CategryList';
 import { HiXMark } from 'react-icons/hi2';
 import { RxHamburgerMenu } from 'react-icons/rx';
 

@@ -1,6 +1,6 @@
 import React, { Children } from 'react';
 import styled from 'styled-components';
-import { palette } from '../styles/palette';
+import { palette } from '../../styles/palette';
 
 const ShadowBox = styled.div`
   position: relative;
