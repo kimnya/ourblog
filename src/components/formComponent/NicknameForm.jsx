@@ -1,27 +1,37 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../../element/Input';
-import axios from 'axios';
 import Modal from '../../element/Modal';
 import Button from '../../element/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { editNicknameProfile } from '../../axios/api';
+import { checkNickname, editNicknameProfile } from '../../axios/api';
 import { NicknameInputStyle } from './editForm.styles';
 
 const NicknameForm = ({ nicknametoggleButton }) => {
   const queryClient = useQueryClient();
-  const preventSubmit = (evt) => {
-    evt.preventDefault();
-  };
+
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { errors },
     getValues,
-    reset,
     resetField,
     setFocus,
   } = useForm();
+
+  const checkNicknameApi = useMutation({
+    mutationFn: checkNickname,
+    onSuccess: (response) => {
+      if (response.status === 200) {
+        alert('사용가능한 닉네임입니다.');
+      }
+    },
+    onError: () => {
+      alert('중복된 닉네임이 존재합니다.');
+      resetField('nickname');
+      setFocus('nickname');
+    },
+  });
 
   const editNickname = useMutation({
     mutationFn: editNicknameProfile,
@@ -42,40 +52,19 @@ const NicknameForm = ({ nicknametoggleButton }) => {
         >
           <label htmlFor='nickname'>nickname</label>
           <Input
-            autoFocus
             {...register('nickname', {
               required: 'nickname을 입력해주세요.',
               pattern: {
-                value: /^[a-zA-z가-힣0-9]{1,30}$/,
-                message: '특수기호나 숫자를 사용할 수 없습니다.',
+                value: /^[a-zA-z가-힣0-9]{1,8}$/,
+                message: '8자까지 가능하며 특수기호나 숫자를 사용할 수 없습니다.',
               },
-              onBlur: async () => {
-                await axios
-                  .get(`http://localhost:8081/member/checkNickname`, {
-                    headers: {
-                      'Content-type': 'application/json',
-                      'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
-                    },
-                    params: { email: getValues('email') },
-                  })
-                  .then((response) => {
-                    if (response.status === 200) {
-                      if (getValues('email') !== '') {
-                        alert('작성한 닉네임이 이미 있습니다.');
-                      }
-                    }
-                  })
-                  .catch((err) => {
-                    const resp = err.response;
-                    if (resp.status === 400) {
-                      alert(resp.data);
-                      resetField('email');
-                      setFocus('email');
-                    }
-                  });
+              onBlur: () => {
+                const nickname = getValues('nickname');
+                if (nickname !== '') {
+                  checkNicknameApi.mutate(nickname);
+                }
               },
             })}
-            id='nickname'
             $placeholder='nickname'
           />
 
