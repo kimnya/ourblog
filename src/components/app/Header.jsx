@@ -1,45 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { IoSunny } from 'react-icons/io5';
 import Title from './Title';
 import { FaMoon } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../element/Button';
-import styled from 'styled-components';
 import SideBar from '../bar/SideBar';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getProfile } from '../../axios/api';
 import { useTheme } from '../../context/ThemeProvider';
 import { IsToggleCtx } from '../../context/IsToggleProvider';
-
-const HeaderStyle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 50px;
-  min-height: 80px;
-
-  > div {
-  }
-  > .mainpageIcons {
-    display: flex;
-    right: 20px;
-    > * {
-      margin-left: 20px;
-    }
-    > p {
-      > a {
-        &:nth-child(2) {
-          margin-right: 30px;
-        }
-        color: ${({ theme }) => theme.txtColor};
-      }
-    }
-  }
-  .adminLogoutBtn {
-    margin-right: 10px;
-  }
-`;
+import { HeaderStyle } from './app.styles';
 
 const Header = () => {
   const [ThemeMode, toggleTheme] = useTheme();
