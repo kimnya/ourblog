@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import UserArticleAll from '../components/article/UserArticleAll';
 import { Link, useNavigate } from 'react-router-dom';
 import SideBar from '../components/bar/SideBar';
@@ -6,9 +6,11 @@ import { userArticleRead } from '../axios/api';
 import { useQuery } from '@tanstack/react-query';
 import Pagination from '../element/Pagination';
 import { UserAllArticlePageStyle } from './page.styles';
+import { IsToggleCtx } from '../context/IsToggleProvider';
 
 const AllArticlePage = () => {
   const [page, setPage] = useState(1);
+  const { toggle, setToggle } = useContext(IsToggleCtx);
   const navigate = useNavigate();
 
   const userArticle = useQuery({
@@ -18,9 +20,6 @@ const AllArticlePage = () => {
   });
 
   const { data } = userArticle;
-
-  console.log(data);
-
   const limit = 8;
   const offset = (page - 1) * limit;
 
@@ -40,15 +39,24 @@ const AllArticlePage = () => {
       return result;
     }
   };
+
+  const editToggleHandler = () => {
+    setPage((prev) => ({ ...prev, edit: !prev.edit }));
+  };
+  const sideBarToggleHandler = () => {
+    setPage((prev) => ({ ...prev, sideBar: !prev.sideBar }));
+  };
+
+  const reactIconsSize = '22px';
   return (
     <>
       <UserAllArticlePageStyle>
-        {/* <SideBar
-        isTogle={isTogle}
-        reactIconsSize={reactIconsSize}
-        sideBarToggleHandler={sideBarToggleHandler}
-        editToggleHandler={editToggleHandler}
-      /> */}
+        <SideBar
+          toggle={toggle}
+          reactIconsSize={reactIconsSize}
+          sideBarToggleHandler={sideBarToggleHandler}
+          editToggleHandler={editToggleHandler}
+        />
         <UserArticleAll posts={postsData(data.data)} />
         <Link onClick={moveWritePge}>글 작성하기</Link>
         {data.data.length !== 0 && (
