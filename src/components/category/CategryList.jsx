@@ -64,7 +64,7 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
               {!!toggle.edit && <EditCtegory queryArgument={key} setFocus={setFocus} />}
               <ul>
                 {!!categoryArray &&
-                  categoryArray.data.categories.map((category) => {
+                  categoryArray.data.data.categories.map((category) => {
                     const { id, categoryName } = category;
                     return (
                       <li key={id} onClick={sideBarToggleHandler}>
