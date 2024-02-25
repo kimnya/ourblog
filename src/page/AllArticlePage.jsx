@@ -41,10 +41,10 @@ const AllArticlePage = () => {
   };
 
   const editToggleHandler = () => {
-    setPage((prev) => ({ ...prev, edit: !prev.edit }));
+    setToggle((prev) => ({ ...prev, edit: !prev.edit }));
   };
   const sideBarToggleHandler = () => {
-    setPage((prev) => ({ ...prev, sideBar: !prev.sideBar }));
+    setToggle((prev) => ({ ...prev, sideBar: !prev.sideBar }));
   };
 
   const reactIconsSize = '22px';
