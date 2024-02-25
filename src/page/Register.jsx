@@ -1,9 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../element/Input';
-import styled from 'styled-components';
 import Button from '../element/Button';
-import Title from '../components/app/Title';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { checkEmail, checkNickname, registerSubmit } from '../axios/api';

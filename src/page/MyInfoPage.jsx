@@ -17,32 +17,24 @@ const MyInfoPage = () => {
       ...prev,
       nickname: !prev.nickname,
     }));
-
-    console.log(toggle);
   };
   const emailtoggleButton = () => {
     setToggle((prev) => ({
       ...prev,
       email: !prev.email,
     }));
-
-    console.log(toggle);
   };
   const passwordtoggleButton = () => {
     setToggle((prev) => ({
       ...prev,
       password: !prev.password,
     }));
-
-    console.log(toggle);
   };
   const imagetoggleButton = () => {
     setToggle((prev) => ({
       ...prev,
       image: !prev.image,
     }));
-
-    console.log(toggle);
   };
 
   const deleteMyInfo = useMutation({
@@ -67,7 +59,8 @@ const MyInfoPage = () => {
   };
   const key = sessionStorage.getItem('accessToken');
   const getProfileApi = useQuery({ queryKey: ['getProfile', key], queryFn: getProfile });
-  console.log(getProfileApi);
+
+  const src = getProfileApi.data.data.imageUrl.match('https://firebase');
 
   return (
     <>
@@ -79,7 +72,11 @@ const MyInfoPage = () => {
               <div className='profileBox'>
                 <div>
                   <img
-                    src={`https://ourblog-beta.vercel.app/${getProfileApi.data.data.imageUrl}`}
+                    src={
+                      src
+                        ? getProfileApi.data.data.imageUrl
+                        : `https://ourblog-beta.vercel.app/${getProfileApi.data.data.imageUrl}`
+                    }
                     alt={`${getProfileApi.data.data.nickname}의 썸네일`}
                   />
                   <p>{getProfileApi.data.data.nickname}</p>
