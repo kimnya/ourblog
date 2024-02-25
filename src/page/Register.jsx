@@ -7,21 +7,7 @@ import Title from '../components/app/Title';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { checkEmail, checkNickname, registerSubmit } from '../axios/api';
-
-const Form = styled.form`
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-around;
-  height: 320px;
-  & label {
-    display: none;
-  }
-  & small {
-    width: 362px;
-    color: red;
-    font-size: 12px;
-  }
-`;
+import { RegisterForm } from './page.styles';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -77,7 +63,7 @@ const Register = () => {
   return (
     <>
       <h2>회원가입</h2>
-      <Form
+      <RegisterForm
         onSubmit={handleSubmit((data) => {
           RegisterApi.mutate(data);
           reset();
@@ -170,7 +156,7 @@ const Register = () => {
         <Button disabled={isSubmitting} width='362px' height='29px' $borderRadius='none'>
           회원가입
         </Button>
-      </Form>
+      </RegisterForm>
     </>
   );
 };

@@ -1,22 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { adminGetMember } from '../../axios/api';
 import MemberBox from './MemberBox';
 import { useQuery } from '@tanstack/react-query';
 import { palette } from '../../styles/palette';
-
-const MemberListStyle = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  width: 1237px;
-  font-size: 24px;
-
-  tr {
-    &:last-child {
-      font-size: 18px;
-    }
-  }
-`;
+import { MemberListStyle } from './member.styles';
 
 const MemberList = () => {
   const adminGetMemberApi = useQuery({

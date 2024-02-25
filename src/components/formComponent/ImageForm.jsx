@@ -7,30 +7,8 @@ import { storage } from '../../fireBase/Firebase';
 import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { editimageProfile } from '../../axios/api';
-import styled from 'styled-components';
+import { ImageInputStyle } from './editForm.styles';
 
-const InputStyle = styled.div`
-  position: absolute;
-  > form {
-    display: flex;
-
-    > input {
-      width: 88px;
-
-      &:focus {
-        border: none;
-      }
-    }
-    > button {
-      position: absolute;
-      top: 0;
-      left: 100px;
-    }
-  }
-  > label {
-    display: none;
-  }
-`;
 const ImageForm = ({ imagetoggleButton }) => {
   const queryClient = useQueryClient();
   const [attachment, setAttachment] = useState();
@@ -39,7 +17,7 @@ const ImageForm = ({ imagetoggleButton }) => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { errors },
   } = useForm();
 
   const imageHandler = async () => {
@@ -67,7 +45,7 @@ const ImageForm = ({ imagetoggleButton }) => {
 
   return (
     <>
-      <InputStyle>
+      <ImageInputStyle>
         <form
           onSubmit={handleSubmit((data) => {
             console.log(data.imageFile);
@@ -93,7 +71,7 @@ const ImageForm = ({ imagetoggleButton }) => {
           {errors.imageFile && <Modal>{errors.imageFile.message}</Modal>}
           <Button disabled={save}>저장</Button>
         </form>
-      </InputStyle>
+      </ImageInputStyle>
     </>
   );
 };

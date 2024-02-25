@@ -5,36 +5,15 @@ import { useForm } from 'react-hook-form';
 import Modal from '../../element/Modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { editNicknameProfile, editPasswordProfile } from '../../axios/api';
-import styled from 'styled-components';
-
-const InputStyle = styled.div`
-  > form {
-    display: flex;
-    position: relative;
-
-    > input {
-      width: 200px;
-    }
-    > button {
-      position: absolute;
-      top: 0;
-      right: -200px;
-    }
-  }
-  > label {
-    display: none;
-  }
-`;
+import { PasswordInputStyle } from './editForm.styles';
 
 const PasswordForm = ({ passwordtoggleButton }) => {
   const queryClient = useQueryClient();
-  const preventSubmit = (evt) => {
-    evt.preventDefault();
-  };
+
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { errors },
     getValues,
     reset,
     resetField,
@@ -50,7 +29,7 @@ const PasswordForm = ({ passwordtoggleButton }) => {
 
   return (
     <>
-      <InputStyle>
+      <PasswordInputStyle>
         <form
           onSubmit={handleSubmit((data) => {
             console.log(data);
@@ -75,7 +54,7 @@ const PasswordForm = ({ passwordtoggleButton }) => {
           {errors.password && <Modal>{errors.password.message}</Modal>}
           <Button> 저장</Button>
         </form>
-      </InputStyle>
+      </PasswordInputStyle>
     </>
   );
 };

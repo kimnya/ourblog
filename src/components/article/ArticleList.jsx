@@ -1,15 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import ArticleListBox from './ArticleListBox';
-
-const ArticleListStyle = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-content: space-between;
-  width: 1237px;
-  height: 710px;
-`;
+import { ArticleListStyle } from './article.styles';
 
 const ArticleList = ({ posts }) => {
   return (

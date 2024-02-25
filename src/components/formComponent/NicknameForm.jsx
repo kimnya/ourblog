@@ -1,31 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../../element/Input';
-import styled from 'styled-components';
 import axios from 'axios';
 import Modal from '../../element/Modal';
 import Button from '../../element/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { editNicknameProfile } from '../../axios/api';
-
-const InputStyle = styled.div`
-  > form {
-    display: flex;
-    position: relative;
-
-    > input {
-      width: 200px;
-    }
-    > button {
-      position: absolute;
-      top: 0;
-      right: -200px;
-    }
-  }
-  > label {
-    display: none;
-  }
-`;
+import { NicknameInputStyle } from './editForm.styles';
 
 const NicknameForm = ({ nicknametoggleButton }) => {
   const queryClient = useQueryClient();
@@ -51,7 +32,7 @@ const NicknameForm = ({ nicknametoggleButton }) => {
 
   return (
     <>
-      <InputStyle>
+      <NicknameInputStyle>
         <form
           onSubmit={handleSubmit((data) => {
             console.log(data);
@@ -101,7 +82,7 @@ const NicknameForm = ({ nicknametoggleButton }) => {
           {errors.nickname && <Modal>{errors.nickname.message}</Modal>}
           <Button>저장</Button>
         </form>
-      </InputStyle>
+      </NicknameInputStyle>
     </>
   );
 };

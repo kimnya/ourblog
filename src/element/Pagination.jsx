@@ -1,16 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import Button from './Button';
-import styled from 'styled-components';
-import { darken } from '../styles/ColorMixin';
-
-const PageStyle = styled.div`
-  display: flex;
-  margin: 0 auto;
-  [aria-current] {
-    ${darken(0.2)};
-  }
-`;
+import { PageStyle } from './element.styles';
 
 const Pagination = ({ limit, page, totalPosts, setPage }) => {
   const numPages = Math.ceil(totalPosts / limit);

@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import React, { useRef } from 'react';
 import { palette } from '../../styles/palette';
 import { Link } from 'react-router-dom';
 import EditCtegory from './EditCtegory';
@@ -7,54 +6,7 @@ import { FaGear } from 'react-icons/fa6';
 import { FaCheck } from 'react-icons/fa6';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories, getProfile } from '../../axios/api';
-
-const CategoryBox = styled.div`
-  position: relative;
-  height: 92vh;
-  border-top: 1px solid ${palette.mainGreen};
-  box-sizing: border-box;
-
-  > div {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-
-    margin: 0 15px 15px 0;
-    padding-top: 20px;
-    font-size: 18px;
-
-    > a,
-    p {
-      margin: 15px;
-      font-size: 24px;
-    }
-    > span {
-      margin: 15px 0px;
-    }
-    > p {
-      display: flex;
-      align-items: center;
-      > span {
-        margin-left: 5px;
-        transition: all 0.8s;
-      }
-      > span:hover {
-        transform: scale(1.2);
-      }
-    }
-
-    ul > li {
-      margin: 15px 15px 15px 25px;
-    }
-  }
-
-  #all {
-    margin-left: 15px;
-  }
-`;
+import { CategoryBox } from './category.styles';
 
 const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
   const key = sessionStorage.getItem('accessToken');
