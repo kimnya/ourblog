@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { articleCommentDelete, articleCommentEdit } from '../../axios/api';
+import { CommentBoxStyle } from './comment.styles';
 
 const CommentBox = ({ postId, setComments, comment, id }) => {
   const [type, setType] = useState(false);
