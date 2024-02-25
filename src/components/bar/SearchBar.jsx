@@ -1,29 +1,10 @@
 import React from 'react';
 import Input from '../../element/Input';
-import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { searchArticleRead } from '../../axios/api';
 import { useQuery } from '@tanstack/react-query';
 import ArticleListBox from '../article/ArticleListBox';
-
-const ArticleListStyle = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: space-between;
-  align-items: center;
-  /* width: 1237px;
-  height: 710px; */
-  > div {
-    margin-bottom: 30px;
-  }
-`;
-
-const Form = styled.form`
-  margin-bottom: 30px;
-  > label {
-    display: none;
-  }
-`;
+import { SearchArticleListStyle, SearchForm } from './bar.styles';
 
 const SearchBar = () => {
   const { register, handleSubmit } = useForm();
@@ -37,8 +18,8 @@ const SearchBar = () => {
 
   return (
     <>
-      <ArticleListStyle>
-        <Form
+      <SearchArticleListStyle>
+        <SearchForm
           onSubmit={handleSubmit((data) => {
             if (data !== '') {
               searchArticle.refetch();
@@ -53,13 +34,13 @@ const SearchBar = () => {
             $placeholder='검색할 단어를 입력해주세요.'
             autoFocus
           />
-        </Form>
+        </SearchForm>
 
         {data &&
           data.data.map((article) => {
             return <ArticleListBox key={article.id} article={article} />;
           })}
-      </ArticleListStyle>
+      </SearchArticleListStyle>
     </>
   );
 };

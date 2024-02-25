@@ -6,26 +6,7 @@ import Modal from '../../element/Modal';
 import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { editEmailProfile } from '../../axios/api';
-import styled from 'styled-components';
-
-const InputStyle = styled.div`
-  > form {
-    display: flex;
-    position: relative;
-
-    > input {
-      width: 200px;
-    }
-    > button {
-      position: absolute;
-      top: 0;
-      right: -200px;
-    }
-  }
-  > label {
-    display: none;
-  }
-`;
+import { EmailInputStyle } from './editForm.styles';
 
 const EmailForm = ({ emailtoggleButton }) => {
   const queryClient = useQueryClient();
@@ -33,7 +14,7 @@ const EmailForm = ({ emailtoggleButton }) => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { errors },
     getValues,
     reset,
     resetField,
@@ -47,16 +28,11 @@ const EmailForm = ({ emailtoggleButton }) => {
     },
   });
 
-  const preventSubmit = (evt) => {
-    evt.preventDefault();
-  };
-
   return (
     <>
-      <InputStyle>
+      <EmailInputStyle>
         <form
           onSubmit={handleSubmit((data) => {
-            console.log(data);
             editEmail.mutate(data.email);
             emailtoggleButton();
           })}
@@ -103,7 +79,7 @@ const EmailForm = ({ emailtoggleButton }) => {
           <Button className='submitBtn'>저장</Button>
           {errors.email && <Modal>{errors.email.message}</Modal>}
         </form>
-      </InputStyle>
+      </EmailInputStyle>
     </>
   );
 };

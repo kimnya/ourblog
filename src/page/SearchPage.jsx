@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import SearchBar from '../components/bar/SearchBar';
 
 const SearchPage = () => {

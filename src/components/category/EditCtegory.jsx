@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import Input from '../../element/Input';
 import { FaPlus } from 'react-icons/fa6';
 import { FaRegCircleCheck } from 'react-icons/fa6';
@@ -7,42 +6,7 @@ import { FaRegCircleXmark } from 'react-icons/fa6';
 import axios from 'axios';
 import { createCategory, deleteCategory, getCategories } from '../../axios/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
-const EditCtegoryStyile = styled.div`
-  position: absolute;
-  left: 0;
-  top: 184px;
-  width: 100%;
-  background-color: #fff;
-  /* opacity: 50%; */
-  font-size: 18px;
-  > div {
-    display: flex;
-    align-items: center;
-    margin-left: 15px;
-    > span {
-      margin-right: 5px;
-    }
-  }
-  li {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    > span {
-      align-self: center;
-      margin-left: 5px;
-    }
-  }
-  > div {
-    margin: 20px 15px 15px 20px;
-  }
-  > form {
-    width: 100%;
-    label {
-      display: none;
-    }
-  }
-`;
+import { EditCtegoryStyle } from './category.styles';
 
 const EditCtegory = ({ setFocus, queryArgument }) => {
   const [editName, setName] = useState();
@@ -53,7 +17,6 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
     queryFn: getCategories,
     enabled: !!queryArgument,
   });
-  console.log('editCategory', categoryArray); //categoryArray.data.categories
 
   const editValue = (evt, idx) => {
     const newCategryName = [...categoryArray.data.categories];
@@ -67,7 +30,7 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getCategory']);
     },
-  }); //mutation은 mutate()함수로 호출한다.
+  });
 
   const useDeleteCategory = useMutation({
     mutationFn: deleteCategory,
@@ -95,8 +58,7 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
   });
 
   return (
-    <EditCtegoryStyile>
-      {/* 카테고리 갯수만큼 map으로 리턴 */}
+    <EditCtegoryStyle>
       <div>
         <span>카테고리</span>
         <FaPlus
@@ -142,12 +104,11 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
                     }}
                   />
                 </span>
-                {/* map으로 돌렸더니 밸류값이 똑같이 적용되서 수정삭제가 함께 일어남  */}
               </li>
             );
           })}
       </ul>
-    </EditCtegoryStyile>
+    </EditCtegoryStyle>
   );
 };
 

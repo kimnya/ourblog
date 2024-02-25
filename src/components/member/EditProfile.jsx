@@ -4,30 +4,7 @@ import NicknameForm from '../formComponent/NicknameForm';
 import EmailForm from '../formComponent/EmailForm';
 import PasswordForm from '../formComponent/PasswordForm';
 import ImageForm from '../formComponent/ImageForm';
-
-const EditBoxStyle = styled.div`
-  position: absolute;
-  left: ${(props) => {
-    if (props.type === 'image') {
-      return '180px';
-    }
-  }};
-  top: ${(props) => {
-    if (props.type === 'image') {
-      return '30px';
-    }
-  }};
-
-  > input {
-    width: 200px;
-    &:nth-child(2) {
-      left: -450px;
-    }
-  }
-  label {
-    display: none;
-  }
-`;
+import { EditBoxStyle } from './member.styles';
 
 const EditProfile = ({ type, imagetoggleButton, nicknametoggleButton, emailtoggleButton, passwordtoggleButton }) => {
   return (

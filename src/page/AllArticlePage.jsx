@@ -2,26 +2,13 @@ import React, { useState } from 'react';
 import UserArticleAll from '../components/article/UserArticleAll';
 import { Link, useNavigate } from 'react-router-dom';
 import SideBar from '../components/bar/SideBar';
-import styled from 'styled-components';
 import { userArticleRead } from '../axios/api';
 import { useQuery } from '@tanstack/react-query';
 import Pagination from '../element/Pagination';
-
-const AllArticleStyle = styled.div`
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-
-  margin-top: 30px;
-
-  a {
-    margin: 60px auto;
-    color: ${({ theme }) => theme.txtColor};
-  }
-`;
+import { UserAllArticlePageStyle } from './page.styles';
 
 const AllArticlePage = () => {
-  const [page, setPage] = useState(1); //페이지
+  const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
   const userArticle = useQuery({
@@ -34,8 +21,8 @@ const AllArticlePage = () => {
 
   console.log(data);
 
-  const limit = 8; // posts가 보일 최대한의 갯수
-  const offset = (page - 1) * limit; // 시작점과 끝점을 구하는 offset
+  const limit = 8;
+  const offset = (page - 1) * limit;
 
   const moveWritePge = (evt) => {
     evt.preventDefault();
@@ -55,7 +42,7 @@ const AllArticlePage = () => {
   };
   return (
     <>
-      <AllArticleStyle>
+      <UserAllArticlePageStyle>
         {/* <SideBar
         isTogle={isTogle}
         reactIconsSize={reactIconsSize}
@@ -67,7 +54,7 @@ const AllArticlePage = () => {
         {data.data.length !== 0 && (
           <Pagination limit={limit} page={page} totalPosts={data.data.length} setPage={setPage} />
         )}
-      </AllArticleStyle>
+      </UserAllArticlePageStyle>
     </>
   );
 };

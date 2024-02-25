@@ -2,11 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { adminDeleteMember } from '../../axios/api';
-import styled from 'styled-components';
-
-const MemberBoxStyle = styled.tr`
-  font-size: 18px;
-`;
+import { MemberBoxStyle } from './member.styles';
 
 const MemberBox = ({ member }) => {
   const queryClient = useQueryClient();
