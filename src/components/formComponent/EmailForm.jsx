@@ -3,9 +3,8 @@ import { useForm } from 'react-hook-form';
 import Input from '../../element/Input';
 import Button from '../../element/Button';
 import Modal from '../../element/Modal';
-import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { editEmailProfile } from '../../axios/api';
+import { checkEmail, editEmailProfile } from '../../axios/api';
 import { EmailInputStyle } from './editForm.styles';
 
 const EmailForm = ({ emailtoggleButton }) => {
@@ -20,6 +19,20 @@ const EmailForm = ({ emailtoggleButton }) => {
     resetField,
     setFocus,
   } = useForm();
+
+  const checkEmailApi = useMutation({
+    mutationFn: checkEmail,
+    onSuccess: (response) => {
+      if (response.status === 200) {
+        alert('사용가능한 이메일입니다.');
+      }
+    },
+    onError: () => {
+      alert('중복된 아이디가 존재합니다.');
+      resetField('email');
+      setFocus('email');
+    },
+  });
 
   const editEmail = useMutation({
     mutationFn: editEmailProfile,
@@ -45,35 +58,14 @@ const EmailForm = ({ emailtoggleButton }) => {
                 value: /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/,
                 message: 'email 형식을 맞춰 입력해주세요.',
               },
-              onBlur: async () => {
-                await axios
-                  .get(`http://localhost:8081/member/checkEmail`, {
-                    headers: {
-                      'Content-type': 'application/json',
-                      'Access-Control-Allow-Origin': 'http://localhost:8081', // 서버 domain
-                    },
-                    params: { email: getValues('email') },
-                  })
-                  .then((response) => {
-                    if (response.status === 200) {
-                      if (getValues('email') !== '') {
-                        alert('사용가능한 이메일입니다.');
-                      }
-                    }
-                  })
-                  .catch((err) => {
-                    const resp = err.response;
-                    if (resp.status === 400) {
-                      alert(resp.data);
-                      resetField('email');
-                      setFocus('email');
-                    }
-                  });
+              onBlur: () => {
+                const email = getValues('email');
+                if (email !== '') {
+                  checkEmailApi.mutate(email);
+                }
               },
             })}
-            autoFocus
             type='email'
-            id='email'
             $placeholder='email'
           />
           <Button className='submitBtn'>저장</Button>
