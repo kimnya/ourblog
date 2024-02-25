@@ -73,7 +73,6 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
   const editHandler = (evt) => {
     if (evt.target.id == commentId) {
       setType(true);
-      console.log('성공');
     }
   };
 
@@ -85,14 +84,12 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
         <div className='container'>
           <div className='pofileBox'>
             <img src={imageUrl.match('http') ? `${imageUrl}` : `/${imageUrl}`} alt={`${author}의 썸네일`} />
-            {/* 첫 기본 프로필사진은 상대경로로 잡아오고 프로필사진이 바껴서 firebase에 있다면 절대경로에서 잡아온다.  */}
             <div className='authorBox'>
               <p className='author'> {author}</p>
               <p className='date'> {createdDate}</p>
             </div>
           </div>
           <p className='comment'>
-            {' '}
             {!!type ? <textarea className='editArea' onChange={editComment} defaultValue={reply} /> : reply}
           </p>
         </div>
