@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { palette } from '../../styles/palette';
 import useTimeStamp from '../../customHook/articleDate';
-
 import { useNavigate } from 'react-router-dom';
-
 import { useQuery } from '@tanstack/react-query';
 import { FaHeart } from 'react-icons/fa';
 import { anonymousLikeCntReadApi, likeCntReadApi } from '../../axios/api';
+
 const ArticleListBoxStyle = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -58,13 +57,13 @@ const ArticleListBox = ({ article }) => {
   const key = sessionStorage.getItem('accessToken');
   const { title, writer, createdDate, content, id } = article;
   const [timeAgo] = useTimeStamp(createdDate);
+  const navigate = useNavigate();
 
   const markDownTrim = /[#*~!()]*/g;
   const urlRegex = /(https?:\/\/[^ )]*)/;
   const urlTrim = /(?<=!)(.*?)(?=\))/g;
   const imageUrl = content.match(urlRegex);
   const trimTagContent = content.replace(urlTrim, '').replace(markDownTrim, '');
-  const navigate = useNavigate();
 
   const likeCntRead = useQuery({
     queryKey: ['likeCnt', id, key],
@@ -84,7 +83,6 @@ const ArticleListBox = ({ article }) => {
         id={id}
         onClick={(evt) => {
           const postId = evt.target.id;
-          console.log(postId);
           navigate(`/readPage/${postId}`);
         }}
       >

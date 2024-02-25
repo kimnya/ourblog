@@ -12,7 +12,7 @@ import { getProfile } from '../../axios/api';
 import { useTheme } from '../../context/ThemeProvider';
 import { IsToggleCtx } from '../../context/IsToggleProvider';
 
-const HeaderStyled = styled.div`
+const HeaderStyle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -73,9 +73,7 @@ const Header = () => {
 
   return (
     <>
-      {/* 로그아웃 & 닉네임 띄우는 부분 더 이쁘게 */}
-
-      <HeaderStyled>
+      <HeaderStyle>
         <Title />
         <div className='mainpageIcons'>
           {ThemeMode === 'light' ? (
@@ -126,7 +124,7 @@ const Header = () => {
             </p>
           )}
         </div>
-      </HeaderStyled>
+      </HeaderStyle>
     </>
   );
 };

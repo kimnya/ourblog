@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import ArticleListBox from './ArticleListBox';
-import { useQueries, useQuery } from '@tanstack/react-query';
-import { articleListRead, userArticleRead } from '../../axios/api';
 
 const ArticleListStyle = styled.div`
   display: flex;
@@ -15,14 +12,11 @@ const ArticleListStyle = styled.div`
 `;
 
 const ArticleList = ({ posts }) => {
-  console.log(posts);
   return (
     <>
-      {/* 리스트갯수에 따라 margin값 조절 */}
       <ArticleListStyle>
         {posts &&
           posts.map((article) => {
-            // articleList는 객체 그 안에 데이터 객체가 있고 그안에 데이터 배열이 있다. 내가 원하는 건 배열
             return <ArticleListBox key={article.id} article={article} />;
           })}
       </ArticleListStyle>
