@@ -1,21 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import { FooterStyle } from './app.styles';
 
-const FooterStyled = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  address {
-    color: ${({ theme }) => theme.txtColor};
-  }
-`;
 const Footer = () => {
   return (
     <>
-      <FooterStyled>
+      <FooterStyle>
         <address>COPYRIGHTⓒ All rights reserved ㅣ Designed by our.</address>
-      </FooterStyled>
+      </FooterStyle>
     </>
   );
 };

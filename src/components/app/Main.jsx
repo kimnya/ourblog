@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MainStlyed = styled.div`
+const MainStlye = styled.div`
   display: flex;
   flex-flow: column nowrap;
   min-height: 800px;
@@ -19,7 +19,7 @@ const MainStlyed = styled.div`
 const Main = ({ children }) => {
   return (
     <>
-      <MainStlyed>{children}</MainStlyed>
+      <MainStlye>{children}</MainStlye>
     </>
   );
 };

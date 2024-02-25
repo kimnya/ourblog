@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Input from '../../element/Input';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
@@ -26,33 +26,28 @@ const Form = styled.form`
 `;
 
 const SearchBar = () => {
-  const [searchData, setData] = useState();
-  const { register, getValues, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const searchArticle = useQuery({
-    queryKey: ['searchArticles', searchData],
+    queryKey: ['searchArticles'],
     queryFn: searchArticleRead,
-    enabled: searchData !== null,
+    enabled: false,
   });
   const { data } = searchArticle;
-  console.log(searchArticle);
 
   return (
     <>
       <ArticleListStyle>
         <Form
           onSubmit={handleSubmit((data) => {
-            setData(data.search);
-            searchArticle.refetch();
+            if (data !== '') {
+              searchArticle.refetch();
+            }
           })}
         >
           <label htmlFor='search'>검색창</label>
           <Input
-            {...register('search', {
-              // onChange: (evt) => {
-              //   setData(getValues('search'));
-              // },
-            })}
+            {...register('search', {})}
             width='450px'
             height='50px'
             $placeholder='검색할 단어를 입력해주세요.'
@@ -60,16 +55,11 @@ const SearchBar = () => {
           />
         </Form>
 
-        {/* 리스트갯수에 따라 margin값 조절 */}
-
         {data &&
           data.data.map((article) => {
-            // articleList는 객체 그 안에 데이터 객체가 있고 그안에 데이터 배열이 있다. 내가 원하는 건 배열
             return <ArticleListBox key={article.id} article={article} />;
           })}
       </ArticleListStyle>
-
-      {/* 검색기능 searchText 빈문자열이라면 메시지 띄우기 */}
     </>
   );
 };
