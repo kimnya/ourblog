@@ -4,17 +4,17 @@ import { HiXMark } from 'react-icons/hi2';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { SideBarBox, SideBarStyle } from './bar.styles';
 
-const SideBar = ({ sideBarToggleHandler, isTogle, reactIconsSize, editToggleHandler }) => {
+const SideBar = ({ sideBarToggleHandler, toggle, reactIconsSize, editToggleHandler }) => {
   return (
     <>
-      <SideBarStyle id='sideBar' $isTogle={isTogle}>
+      <SideBarStyle id='sideBar' $toggle={toggle}>
         <RxHamburgerMenu size={reactIconsSize} onClick={sideBarToggleHandler} />
-        <SideBarBox $isTogle={isTogle}>
+        <SideBarBox $toggle={toggle}>
           <HiXMark size={reactIconsSize} onClick={sideBarToggleHandler} />
-          {!!isTogle.sideBar && (
+          {!!toggle.sideBar && (
             <CategryList
               sideBarToggleHandler={sideBarToggleHandler}
-              isTogle={isTogle}
+              toggle={toggle}
               editToggleHandler={editToggleHandler}
             />
           )}

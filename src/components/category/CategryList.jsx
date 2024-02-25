@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getCategories, getProfile } from '../../axios/api';
 import { CategoryBox } from './category.styles';
 
-const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
+const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
   const key = sessionStorage.getItem('accessToken');
 
   const categoryArray = useQuery({
@@ -45,7 +45,7 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
                     }}
                   />
                 </span>
-                {!!isTogle.edit && (
+                {!!toggle.edit && (
                   <span>
                     <FaCheck
                       color={palette.mainGreen}
@@ -61,7 +61,7 @@ const CategryList = ({ isTogle, editToggleHandler, sideBarToggleHandler }) => {
               <Link onClick={sideBarToggleHandler} to={'/articleAll'} id='all'>
                 전체보기
               </Link>
-              {!!isTogle.edit && <EditCtegory queryArgument={key} setFocus={setFocus} />}
+              {!!toggle.edit && <EditCtegory queryArgument={key} setFocus={setFocus} />}
               <ul>
                 {!!categoryArray &&
                   categoryArray.data.categories.map((category) => {

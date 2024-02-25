@@ -28,7 +28,7 @@ export const SideBarBox = styled.div`
   justify-content: flex-end;
   position: absolute;
   left: ${(props) => {
-    if (props.$isTogle.sideBar) {
+    if (props.$toggle.sideBar) {
       return '-50px';
     } else {
       return '-999px';
