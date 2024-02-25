@@ -1,20 +1,10 @@
 import React from 'react';
 import ArticleList from '../components/article/ArticleList';
-import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { articleListRead } from '../axios/api';
+import { MainpageStyle } from './page.styles';
 
-const MainpageStyle = styled.div`
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  margin-top: 30px;
-  > a {
-    margin: 60px auto;
-    color: ${({ theme }) => theme.txtColor};
-  }
-`;
 const MainPage = () => {
   const articleAll = useQuery({
     queryKey: ['articleRead'],

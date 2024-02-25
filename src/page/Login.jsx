@@ -1,32 +1,12 @@
-import React, { useContext } from 'react';
-import Title from '../components/app/Title';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../element/Input';
 import Button from '../element/Button';
-import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { setCookie } from '../utill/cookie';
 import { loginSubmit } from '../axios/api';
 import { useMutation } from '@tanstack/react-query';
-
-const Form = styled.form`
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-around;
-  height: 160px;
-  & label {
-    display: none;
-  }
-  & small {
-    width: 362px;
-    color: red;
-    font-size: 12px;
-  }
-  & a {
-    align-self: flex-end;
-    text-decoration: underline;
-  }
-`;
+import { LoginForm } from './page.styles';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -63,7 +43,7 @@ const Login = () => {
   return (
     <>
       <h2>로그인</h2>
-      <Form
+      <LoginForm
         onSubmit={handleSubmit((data) => {
           loginSubmitApi.mutate(data);
           reset();
@@ -96,7 +76,7 @@ const Login = () => {
           로그인
         </Button>
         <Link to='/register'>회원가입</Link>
-      </Form>
+      </LoginForm>
     </>
   );
 };

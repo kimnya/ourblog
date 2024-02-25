@@ -99,3 +99,214 @@ export const RegisterForm = styled.form`
     font-size: 12px;
   }
 `;
+
+export const EditBoxStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  height: 130vh;
+  border: 1px solid #ccc;
+  > form {
+    position: relative;
+    width: 70vw;
+    height: 100%;
+
+    > label {
+      display: none;
+    }
+
+    > input {
+      background: ${({ theme }) => theme.inputColor};
+      font-size: 30px;
+      padding: 5px;
+      width: 100%;
+
+      &:focus {
+        border: none;
+      }
+    }
+    > select {
+      display: flex;
+      font-size: 24px;
+      width: 100%;
+      height: 4vh;
+      background-color: #eee;
+
+      > option {
+        font-size: 24px;
+      }
+    }
+    > .submitBtn {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 4vh;
+      background-color: ${palette.mainGreen};
+      z-index: 10;
+    }
+  }
+`;
+
+export const EditPostBoxStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  height: 130vh;
+  border: 1px solid #ccc;
+  > form {
+    position: relative;
+    width: 70vw;
+    height: 100%;
+
+    > label {
+      display: none;
+    }
+
+    > input {
+      background: ${({ theme }) => theme.inputColor};
+      font-size: 30px;
+      padding: 5px;
+      width: 100%;
+
+      &:focus {
+        border: none;
+      }
+    }
+    > select {
+      display: flex;
+      font-size: 24px;
+      width: 100%;
+      height: 4vh;
+      background-color: #eee;
+
+      > option {
+        font-size: 24px;
+      }
+    }
+    > .submitBtn {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 4vh;
+      background-color: ${palette.mainGreen};
+      z-index: 10;
+    }
+  }
+`;
+
+export const LoginForm = styled.form`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  height: 160px;
+  & label {
+    display: none;
+  }
+  & small {
+    width: 362px;
+    color: red;
+    font-size: 12px;
+  }
+  & a {
+    align-self: flex-end;
+    text-decoration: underline;
+  }
+`;
+
+export const MainpageStyle = styled.div`
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin-top: 30px;
+  > a {
+    margin: 60px auto;
+    color: ${({ theme }) => theme.txtColor};
+  }
+`;
+
+export const PageStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const MyInfoStyle = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  width: 506px;
+  height: 428px;
+
+  > form {
+    .submitButton {
+      margin-top: 30px;
+      align-self: flex-end;
+    }
+  }
+`;
+export const ProfileTitle = styled.h2`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: ${palette.mainGreen};
+  font-weight: bold;
+`;
+
+export const MyBox1 = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  height: 372px;
+  background-color: ${palette.mainGreen};
+  border-radius: 16px 16px 0 0;
+`;
+export const Mybox2 = styled(MyBox1)`
+  height: 312px;
+  padding: 15px;
+  background-color: ${({ theme }) => theme.myPageColor};
+  border-radius: 0;
+  color: #fff;
+  > .profileBox {
+    font-size: 32px;
+    font-weight: bold;
+    > div {
+      width: 33.333333%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > img {
+        display: inline-block;
+        width: 84px;
+        height: 57px;
+      }
+    }
+  }
+  > .profileBox,
+  .nicknameBox,
+  .emailBox,
+  .passwordBox,
+  .deleteBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  .profileBox {
+    > div {
+      width: 100%;
+
+      > p {
+        width: 100%;
+        margin-left: 10px;
+      }
+    }
+  }
+`;

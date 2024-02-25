@@ -1,97 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { palette } from '../styles/palette';
+import React, { useContext } from 'react';
 import Button from '../element/Button';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteProfile, getProfile } from '../axios/api';
 import EditProfile from '../components/member/EditProfile';
 import { useNavigate } from 'react-router-dom';
 import { IsToggleCtx } from '../context/IsToggleProvider';
-
-const PageStyle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MyInfoStyle = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-between;
-  width: 506px;
-  height: 428px;
-
-  > form {
-    .submitButton {
-      margin-top: 30px;
-      align-self: flex-end;
-    }
-  }
-`;
-const Title = styled.h2`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  color: ${palette.mainGreen};
-  font-weight: bold;
-`;
-
-const MyBox1 = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-end;
-  height: 372px;
-  background-color: ${palette.mainGreen};
-  border-radius: 16px 16px 0 0;
-`;
-const Mybox2 = styled(MyBox1)`
-  height: 312px;
-  padding: 15px;
-  background-color: ${({ theme }) => theme.myPageColor};
-
-  /* ${palette.mainGray}; */
-  border-radius: 0;
-  color: #fff;
-  > .profileBox {
-    font-size: 32px;
-    font-weight: bold;
-    > div {
-      width: 33.333333%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      > img {
-        display: inline-block;
-        width: 84px;
-        height: 57px;
-      }
-    }
-  }
-  > .profileBox,
-  .nicknameBox,
-  .emailBox,
-  .passwordBox,
-  .deleteBox {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    margin-bottom: 25px;
-  }
-
-  .profileBox {
-    > div {
-      width: 100%;
-
-      > p {
-        width: 100%;
-        margin-left: 10px;
-      }
-    }
-  }
-`;
+import { MyBox1, MyInfoStyle, Mybox2, PageStyle, ProfileTitle } from './page.styles';
 
 const MyInfoPage = () => {
   const queryClient = useQueryClient();
@@ -159,7 +73,7 @@ const MyInfoPage = () => {
     <>
       <PageStyle>
         <MyInfoStyle>
-          <Title>MY PAGE</Title>
+          <ProfileTitle>MY PAGE</ProfileTitle>
           <MyBox1>
             <Mybox2>
               <div className='profileBox'>
