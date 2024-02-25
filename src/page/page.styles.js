@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { darken } from '../styles/ColorMixin';
 import { palette } from '../styles/palette';
 
