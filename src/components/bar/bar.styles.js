@@ -20,7 +20,7 @@ export const SearchForm = styled.form`
 
 export const SideBarStyle = styled.div`
   left: 0;
-  z-index: 100;
+  z-index: 1000;
 `;
 
 export const SideBarBox = styled.div`
