@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { palette } from '../../styles/palette';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import EditCtegory from './EditCtegory';
 import { FaGear } from 'react-icons/fa6';
 import { FaCheck } from 'react-icons/fa6';
@@ -11,8 +11,10 @@ import { CategoryBox } from './category.styles';
 const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
   const key = sessionStorage.getItem('accessToken');
 
+  const navigate = useNavigate();
+
   const categoryArray = useQuery({
-    queryKey: ['getCategory'],
+    queryKey: ['getCategory', key],
     queryFn: getCategories,
     enabled: !!key,
   });
