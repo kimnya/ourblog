@@ -21,7 +21,7 @@ const Header = () => {
   const getProfileApi = useQuery({
     queryKey: ['getProfile', key],
     queryFn: getProfile,
-    enabled: !!key && localStorage.getItem('email') !== 'admin@naver.com',
+    enabled: !!key && sessionStorage.getItem('email') !== 'admin@naver.com',
   });
 
   useEffect(() => {

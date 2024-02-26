@@ -20,7 +20,7 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
   const { commentId, reply, createdDate, author, imageUrl, email } = comment;
 
   console.log('comment', email);
-  console.log('session', localStorage.getItem('email'));
+  console.log('session', sessionStorage.getItem('email'));
 
   return (
     <>
@@ -38,7 +38,7 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
           </p>
         </div>
 
-        {email != localStorage.getItem('email') ? null : (
+        {email != sessionStorage.getItem('email') ? null : (
           <div className='linkBox'>
             {!!type ? (
               <Link
