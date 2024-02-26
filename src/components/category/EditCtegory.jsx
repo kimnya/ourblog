@@ -4,9 +4,10 @@ import { FaPlus } from 'react-icons/fa6';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { FaRegCircleXmark } from 'react-icons/fa6';
 import axios from 'axios';
-import { createCategory, deleteCategory, getCategories } from '../../axios/api';
+import { createCategory, deleteCategory, getCategories, submitName } from '../../axios/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { EditCtegoryStyle } from './category.styles';
+import { baseUrl } from '../../utill/baseUrl';
 
 const EditCtegory = ({ setFocus, queryArgument }) => {
   const [editName, setName] = useState();
@@ -40,18 +41,8 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
     },
   });
 
-  const submitName = async (categoryId) => {
-    const response = await axios.patch(
-      `http://localhost:8081/category/${categoryId}`,
-      { categoryName: editName },
-      { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
-    );
-    return response;
-  };
-
   const useSubmitName = useMutation({
     mutationFn: submitName,
-    enabled: false,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['getCategory'] });
     },
@@ -90,7 +81,7 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
                 <span>
                   <FaRegCircleCheck
                     onClick={() => {
-                      useSubmitName.mutate(id);
+                      useSubmitName.mutate(id, editName);
                     }}
                   />
                 </span>
