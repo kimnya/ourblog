@@ -60,6 +60,7 @@ const Header = () => {
         />
 
         <Title />
+
         <div className='mainpageIcons'>
           {ThemeMode === 'light' ? (
             <IoSunny size={reactIconsSize} onClick={toggleTheme} />
