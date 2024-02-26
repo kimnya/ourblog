@@ -14,6 +14,7 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
   const categoryArray = useQuery({
     queryKey: ['getCategory'],
     queryFn: getCategories,
+    enabled: !!key,
   });
 
   const getProfileApi = useQuery({
