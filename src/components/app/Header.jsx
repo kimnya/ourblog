@@ -52,14 +52,17 @@ const Header = () => {
   return (
     <>
       <HeaderStyle>
-        <SideBar
-          toggle={toggle}
-          reactIconsSize={reactIconsSize}
-          sideBarToggleHandler={sideBarToggleHandler}
-          editToggleHandler={editToggleHandler}
-        />
+        {sessionStorage.getItem('email') !== 'admin@naver.com' && (
+          <SideBar
+            toggle={toggle}
+            reactIconsSize={reactIconsSize}
+            sideBarToggleHandler={sideBarToggleHandler}
+            editToggleHandler={editToggleHandler}
+          />
+        )}
 
         <Title />
+
         <div className='mainpageIcons'>
           {ThemeMode === 'light' ? (
             <IoSunny size={reactIconsSize} onClick={toggleTheme} />

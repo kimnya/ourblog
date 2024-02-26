@@ -70,7 +70,7 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
 
       <ul>
         {!!categoryArray &&
-          categoryArray.data.categories.map((category, idx) => {
+          categoryArray.data.data.categories.map((category, idx) => {
             const { id, categoryName } = category;
             return (
               <li key={id}>
