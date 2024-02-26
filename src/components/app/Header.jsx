@@ -10,6 +10,7 @@ import { getProfile } from '../../axios/api';
 import { useTheme } from '../../context/ThemeProvider';
 import { IsToggleCtx } from '../../context/IsToggleProvider';
 import { HeaderStyle } from './app.styles';
+import SideBar from '../bar/SideBar';
 
 const Header = () => {
   const [ThemeMode, toggleTheme] = useTheme();
@@ -39,11 +40,25 @@ const Header = () => {
     setToggle((prev) => ({ ...prev, logined: !prev.logined }));
     localStorage.clear();
   };
+
+  const editToggleHandler = () => {
+    setToggle((prev) => ({ ...prev, edit: !prev.edit }));
+  };
+  const sideBarToggleHandler = () => {
+    setToggle((prev) => ({ ...prev, sideBar: !prev.sideBar }));
+  };
   const reactIconsSize = '22px';
 
   return (
     <>
       <HeaderStyle>
+        <SideBar
+          toggle={toggle}
+          reactIconsSize={reactIconsSize}
+          sideBarToggleHandler={sideBarToggleHandler}
+          editToggleHandler={editToggleHandler}
+        />
+
         <Title />
         <div className='mainpageIcons'>
           {ThemeMode === 'light' ? (

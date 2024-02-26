@@ -10,7 +10,7 @@ import { IsToggleCtx } from '../context/IsToggleProvider';
 
 const AllArticlePage = () => {
   const [page, setPage] = useState(1);
-  const { toggle, setToggle } = useContext(IsToggleCtx);
+
   const navigate = useNavigate();
 
   const userArticle = useQuery({
@@ -40,23 +40,9 @@ const AllArticlePage = () => {
     }
   };
 
-  const editToggleHandler = () => {
-    setToggle((prev) => ({ ...prev, edit: !prev.edit }));
-  };
-  const sideBarToggleHandler = () => {
-    setToggle((prev) => ({ ...prev, sideBar: !prev.sideBar }));
-  };
-
-  const reactIconsSize = '22px';
   return (
     <>
       <UserAllArticlePageStyle>
-        <SideBar
-          toggle={toggle}
-          reactIconsSize={reactIconsSize}
-          sideBarToggleHandler={sideBarToggleHandler}
-          editToggleHandler={editToggleHandler}
-        />
         <UserArticleAll posts={postsData(data.data)} />
         <Link onClick={moveWritePge}>글 작성하기</Link>
         {data.data.length !== 0 && (

@@ -19,7 +19,7 @@ export const SearchForm = styled.form`
 `;
 
 export const SideBarStyle = styled.div`
-  left: 20px;
+  left: 0;
 `;
 
 export const SideBarBox = styled.div`
@@ -29,17 +29,17 @@ export const SideBarBox = styled.div`
   position: absolute;
   left: ${(props) => {
     if (props.$toggle.sideBar) {
-      return '-50px';
+      return '0px';
     } else {
       return '-999px';
     }
   }};
-  top: -38px;
+  top: 0px;
   width: 15vw;
   height: 100vh;
   background-color: #fff;
   transition: all 0.5s;
   > svg {
-    margin: 0 0 15px 45px;
+    margin: 0px 0px 20px 20px;
   }
 `;
