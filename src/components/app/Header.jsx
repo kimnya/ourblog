@@ -52,12 +52,14 @@ const Header = () => {
   return (
     <>
       <HeaderStyle>
-        <SideBar
-          toggle={toggle}
-          reactIconsSize={reactIconsSize}
-          sideBarToggleHandler={sideBarToggleHandler}
-          editToggleHandler={editToggleHandler}
-        />
+        {sessionStorage.getItem('emaill') !== 'admin@naver.com' && (
+          <SideBar
+            toggle={toggle}
+            reactIconsSize={reactIconsSize}
+            sideBarToggleHandler={sideBarToggleHandler}
+            editToggleHandler={editToggleHandler}
+          />
+        )}
 
         <Title />
 
