@@ -25,7 +25,6 @@ const Login = () => {
       const accessToken = response.data.accessToken;
       const refreshToken = response.data.refreshToken;
       sessionStorage.setItem('accessToken', accessToken);
-      sessionStorage.setItem('email', accessToken);
       setCookie('refreshToken', refreshToken);
       console.log('data', sessionStorage.getItem('email'));
       if (sessionStorage.getItem('email') === 'admin@naver.com') {
