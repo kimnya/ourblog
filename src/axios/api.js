@@ -126,7 +126,17 @@ export const createCategory = async () => {
     { headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` } },
   );
 
-  return response; //return 값 넣어주자
+  return response;
+};
+
+//카테고리 수정 호출
+export const submitName = async (categoryId, editName) => {
+  const response = await axios.patch(
+    `${baseUrl}/category/${categoryId}`,
+    { categoryName: editName },
+    { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
+  );
+  return response;
 };
 
 //카테고리 삭제 호출
