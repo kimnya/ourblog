@@ -20,7 +20,7 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
   const { commentId, reply, createdDate, author, imageUrl, email } = comment;
 
   console.log('comment', email);
-  console.log('session', sessionStorage('email'));
+  console.log('session', sessionStorage.getItem('email'));
   return (
     <>
       <CommentBoxStyle>
