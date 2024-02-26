@@ -52,7 +52,7 @@ const Header = () => {
   return (
     <>
       <HeaderStyle>
-        {sessionStorage.getItem('emaill') !== 'admin@naver.com' && (
+        {sessionStorage.getItem('email') !== 'admin@naver.com' && (
           <SideBar
             toggle={toggle}
             reactIconsSize={reactIconsSize}
