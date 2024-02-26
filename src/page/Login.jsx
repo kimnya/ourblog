@@ -44,7 +44,7 @@ const Login = () => {
       <h2>로그인</h2>
       <LoginForm
         onSubmit={handleSubmit((data) => {
-          console.log(data);
+          console.log('data', data);
           sessionStorage.setItem('email', data.email);
           loginSubmitApi.mutate(data);
           reset();
