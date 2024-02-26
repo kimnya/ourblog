@@ -20,7 +20,7 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
   });
 
   const editValue = (evt, idx) => {
-    const newCategryName = [...categoryArray.data.categories];
+    const newCategryName = [...categoryArray.data.data.categories];
     newCategryName[idx].categoryName = evt.target.value;
     setName(evt.target.value);
   };
@@ -81,6 +81,7 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
                 <span>
                   <FaRegCircleCheck
                     onClick={() => {
+                      console.log(editName);
                       useSubmitName.mutate(id, editName);
                     }}
                   />
