@@ -14,6 +14,8 @@ export const HeaderStyle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex: 1;
+  position: relative;
   padding: 0 50px;
   min-height: 80px;
 
@@ -68,6 +70,10 @@ export const ShadowBox = styled.div`
 `;
 
 export const TitleLogo = styled.h1`
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 0);
   color: ${palette.mainGreen};
   font-weight: bold;
   font-size: 52px;

@@ -6,10 +6,10 @@ const ArticleList = ({ posts }) => {
   return (
     <>
       <ArticleListStyle>
-        {posts &&
+        {/* {posts &&
           posts.map((article) => {
             return <ArticleListBox key={article.id} article={article} />;
-          })}
+          })} */}
       </ArticleListStyle>
     </>
   );
