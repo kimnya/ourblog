@@ -27,7 +27,7 @@ const Login = () => {
       sessionStorage.setItem('accessToken', accessToken);
       sessionStorage.setItem('email', accessToken);
       setCookie('refreshToken', refreshToken);
-      if (response.data.email === 'admin@naver.com') {
+      if (localStorage.getItem('email') === 'admin@naver.com') {
         navigate('/admin');
       } else {
         navigate('/');
@@ -45,7 +45,7 @@ const Login = () => {
       <LoginForm
         onSubmit={handleSubmit((data) => {
           console.log('data', data);
-          sessionStorage.setItem('email', data.email);
+          localStorage.setItem('email', data.email);
           loginSubmitApi.mutate(data);
           reset();
         })}
