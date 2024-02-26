@@ -8,13 +8,7 @@ const SideBar = ({ sideBarToggleHandler, toggle, reactIconsSize, editToggleHandl
   return (
     <>
       <SideBarStyle id='sideBar' $toggle={toggle}>
-        <RxHamburgerMenu
-          size={reactIconsSize}
-          onClick={() => {
-            sideBarToggleHandler();
-            console.log(toggle);
-          }}
-        />
+        <RxHamburgerMenu size={reactIconsSize} onClick={sideBarToggleHandler} />
         <SideBarBox $toggle={toggle}>
           <HiXMark size={reactIconsSize} onClick={sideBarToggleHandler} />
           {!!toggle.sideBar && (
