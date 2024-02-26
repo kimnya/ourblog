@@ -5,8 +5,7 @@ import { FaMoon } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../element/Button';
-import SideBar from '../bar/SideBar';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getProfile } from '../../axios/api';
 import { useTheme } from '../../context/ThemeProvider';
 import { IsToggleCtx } from '../../context/IsToggleProvider';
@@ -14,7 +13,7 @@ import { HeaderStyle } from './app.styles';
 
 const Header = () => {
   const [ThemeMode, toggleTheme] = useTheme();
-  const { isToggle, setToggle } = useContext(IsToggleCtx);
+  const { toggle, setToggle } = useContext(IsToggleCtx);
 
   const navigate = useNavigate();
   const key = sessionStorage.getItem('accessToken');

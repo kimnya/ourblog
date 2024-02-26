@@ -21,14 +21,14 @@ const Login = () => {
   const loginSubmitApi = useMutation({
     mutationFn: loginSubmit,
     onSuccess: (response) => {
-      console.log(response);
       alert('로그인이 완료됐습니다. 좋은하루 보내세요');
       const accessToken = response.data.accessToken;
       const refreshToken = response.data.refreshToken;
       sessionStorage.setItem('accessToken', accessToken);
+      sessionStorage.setItem('email', accessToken);
       setCookie('refreshToken', refreshToken);
+      sessionStorage.setItem('email', response.data.email);
       if (response.data.email === 'admin@naver.com') {
-        sessionStorage.setItem('email', response.data.email);
         navigate('/admin');
       } else {
         navigate('/');

@@ -35,7 +35,7 @@ const CommentBox = ({ postId, setComments, comment, id }) => {
           </p>
         </div>
 
-        {email !== localStorage.getItem('email') ? null : (
+        {email != sessionStorage.getItem('email') ? null : (
           <div className='linkBox'>
             {!!type ? (
               <Link
