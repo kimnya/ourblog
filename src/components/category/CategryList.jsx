@@ -21,7 +21,6 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
     queryFn: getProfile,
     enabled: !!key,
   });
-  console.log(categoryArray);
 
   const setFocus = useRef();
   return (
