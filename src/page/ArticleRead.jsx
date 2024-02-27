@@ -112,7 +112,7 @@ const Articleread = () => {
                 ))
               )}
             </div>
-            {posting.email === localStorage.getItem('email') ? (
+            {posting.email === sessionStorage.getItem('email') ? (
               <div className='editBox'>
                 <Link
                   onClick={() => {
@@ -131,7 +131,6 @@ const Articleread = () => {
               </div>
             ) : null}
           </div>
-          {/* <Viewer initialValue={posting.content || ''} /> */}
           <Markdown className='contentBox'>{posting.content}</Markdown>
         </ArticleReadPageStyle>
       )}
