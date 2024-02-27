@@ -30,15 +30,16 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
       editToggleHandler();
       console.log('true?', toggle);
     } else if (!!toggle.edit) {
-      categoryArray.data.data.categories.map((category) => {
+      const boolean = categoryArray.data.data.categories.map((category) => {
         if (category.categoryName !== '') {
-          console.log(category.categoryName);
-          editToggleHandler();
-          console.log('flase?', toggle);
+          return true;
         } else {
-          alert('카테고리 이름을 작성해주세요.');
+          return false;
         }
       });
+      if (boolean) {
+        editToggleHandler();
+      }
     }
   };
 
