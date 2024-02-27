@@ -37,6 +37,7 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
           return false;
         }
       });
+      console.log(category.categoryName);
       if (boolean) {
         editToggleHandler();
       }
