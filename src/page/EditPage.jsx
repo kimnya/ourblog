@@ -16,7 +16,6 @@ const EditPage = () => {
   const navgate = useNavigate();
   const editorRef = useRef();
   const queryClient = useQueryClient();
-  console.log('제목', title);
 
   const postContentApi = useMutation({
     mutationFn: postContent,
@@ -88,7 +87,7 @@ const EditPage = () => {
           value={title || ''}
         />
         <select onChange={selectCategory} value={selected}>
-          {getCategory.data.categories.map((category) => {
+          {getCategory.data.data.categories.map((category) => {
             return (
               <option key={category.id} value={category.id}>
                 {category.categoryName}
