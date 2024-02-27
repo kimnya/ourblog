@@ -25,14 +25,17 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
 
   const setFocus = useRef();
 
-  const preventEditToggleHandler = categoryArray.data.data.categories.map((category) => {
-    editToggleHandler();
-    if (!!toggle.edit && category.categoryName !== '') {
+  const preventEditToggleHandler = () => {
+    categoryArray.data.data.categories.map((category) => {
+      if (!!toggle.edit && category.categoryName !== '') {
+        editToggleHandler();
+      } else if (!!toggle.edit && category.categoryName === '') {
+        alert('카테고리이름을 작성해주세요.');
+      }
       editToggleHandler();
-    } else if (!!toggle.edit && category.categoryName === '') {
-      alert('카테고리이름을 작성해주세요.');
-    }
-  });
+    });
+  };
+
   return (
     <>
       <CategoryBox>
