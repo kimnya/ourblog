@@ -16,7 +16,6 @@ const EditPage = () => {
   const navgate = useNavigate();
   const editorRef = useRef();
   const queryClient = useQueryClient();
-  console.log('제목', title);
 
   const postContentApi = useMutation({
     mutationFn: postContent,
@@ -25,11 +24,11 @@ const EditPage = () => {
     },
   });
 
-  // const getCategory = useQuery({
-  //   queryKey: ['getCategory'],
-  //   queryFn: getCategories,
-  // });
-  // console.log('editpageGetCategory', getCategory); //getCategory.data.categories
+  const getCategory = useQuery({
+    queryKey: ['getCategory'],
+    queryFn: getCategories,
+  });
+  console.log('editpageGetCategory', getCategory);
 
   const key = sessionStorage.getItem('accessToken');
   const getProfileApi = useQuery({
@@ -58,8 +57,6 @@ const EditPage = () => {
         onSubmit={(evt) => {
           const content = editorRef.current.getInstance().getMarkdown();
           console.log('본문', content);
-          // const categodryId = (getProfileApi.data.data.memberId - 1) * getProfileApi.data.data.memberId;
-          const categodryId = getProfileApi.data.data.memberId + 4;
 
           if (content === '' || title === undefined) {
             alert('을 입력해주세요.');
@@ -70,7 +67,7 @@ const EditPage = () => {
               title: title,
               content: content,
               nickname: getProfileApi.data.data.nickname,
-              categoryId: categodryId,
+              categoryId: selected,
             };
             postContentApi.mutate(data);
           }
@@ -89,15 +86,15 @@ const EditPage = () => {
           }}
           value={title || ''}
         />
-        {/* <select onChange={selectCategory} value={selected}>
-          {getCategory.data.categories.map((category) => {
+        <select onChange={selectCategory} value={selected}>
+          {getCategory.data.data.categories.map((category) => {
             return (
               <option key={category.id} value={category.id}>
                 {category.categoryName}
               </option>
             );
           })}
-        </select> */}
+        </select>
 
         <EditToastUi ThemeMode={ThemeMode} editorRef={editorRef} />
         <Button className='submitBtn'>작성완료</Button>

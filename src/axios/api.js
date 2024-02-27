@@ -134,8 +134,8 @@ export const submitName = async (categoryId, editName) => {
   console.log('api 호출 editName', editName);
   const response = await axios.patch(
     `${baseUrl}/category/${categoryId}`,
-    { categoryName: `${editName}` },
-    { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
+    { categoryName: editName },
+    { headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` } },
   );
   return response;
 };
@@ -234,7 +234,7 @@ export const postContent = async (data) => {
 
 //포스팅 수정호출
 export const editPost = async (data) => {
-  const reponse = axios.put(
+  const reponse = await axios.put(
     `${baseUrl}/posting/${data.postId}`,
     {
       title: data.title,
