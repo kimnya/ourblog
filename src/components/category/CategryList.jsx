@@ -28,12 +28,12 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
   const preventEditToggleHandler = () => {
     if (!toggle.edit) {
       editToggleHandler();
-      console.log('true?', toggle);
     } else if (!!toggle.edit) {
       const boolean = categoryArray.data.data.categories.map((category) => {
         if (category.categoryName !== '') {
           return true;
         } else {
+          alert('카테고리 이름을 작성해주세요.');
           return false;
         }
       });
