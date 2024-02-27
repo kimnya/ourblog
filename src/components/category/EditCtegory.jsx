@@ -77,7 +77,6 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
                 <span>
                   <FaRegCircleCheck
                     onClick={() => {
-                      console.log(editName);
                       const data = { categoryId: id, categoryName: editName };
                       useSubmitName.mutate(data);
                     }}
