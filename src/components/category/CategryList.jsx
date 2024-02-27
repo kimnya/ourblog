@@ -26,6 +26,7 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
   const setFocus = useRef();
 
   const preventEditToggleHandler = () => {
+    editToggleHandler();
     categoryArray.data.data.categories.map((category) => {
       if (!!toggle.edit && category.categoryName !== '') {
         editToggleHandler();
@@ -33,7 +34,6 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
         alert('카테고리이름을 작성해주세요.');
       }
     });
-    editToggleHandler();
   };
 
   return (
