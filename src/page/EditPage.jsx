@@ -59,7 +59,7 @@ const EditPage = () => {
           const content = editorRef.current.getInstance().getMarkdown();
           console.log('본문', content);
           // const categodryId = (getProfileApi.data.data.memberId - 1) * getProfileApi.data.data.memberId;
-          const categodryId = getProfileApi.data.data.memberId * 4;
+          const categodryId = getProfileApi.data.data.memberId + 4;
 
           if (content === '' || title === undefined) {
             alert('을 입력해주세요.');
