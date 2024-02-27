@@ -35,7 +35,6 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
 
   const useDeleteCategory = useMutation({
     mutationFn: deleteCategory,
-    enabled: false,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['getCategory'] });
     },
