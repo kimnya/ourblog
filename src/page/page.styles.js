@@ -117,10 +117,10 @@ export const EditBoxStyle = styled.div`
     }
 
     > input {
-      background: ${({ theme }) => theme.inputColor};
-      font-size: 30px;
-      padding: 5px;
       width: 100%;
+      padding: 5px;
+      font-size: 30px;
+      background: ${({ theme }) => theme.inputColor};
 
       &:focus {
         border: none;
@@ -128,10 +128,10 @@ export const EditBoxStyle = styled.div`
     }
     > select {
       display: flex;
-      font-size: 24px;
       width: 100%;
       height: 4vh;
-      background-color: #eee;
+      font-size: 24px;
+      background: ${({ theme }) => theme.inputColor};
 
       > option {
         font-size: 24px;

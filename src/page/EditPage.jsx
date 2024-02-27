@@ -11,7 +11,7 @@ import { EditBoxStyle } from './page.styles';
 
 const EditPage = () => {
   const [ThemeMode] = useTheme();
-  const [selected, setSelected] = useState(); //카테고리 아이디 담는 스테이트
+  const [selected, setSelected] = useState();
   const [title, setTitle] = useState();
   const navgate = useNavigate();
   const editorRef = useRef();
