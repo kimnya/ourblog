@@ -3,11 +3,9 @@ import Input from '../../element/Input';
 import { FaPlus } from 'react-icons/fa6';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { FaRegCircleXmark } from 'react-icons/fa6';
-import axios from 'axios';
 import { createCategory, deleteCategory, getCategories, submitName } from '../../axios/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { EditCtegoryStyle } from './category.styles';
-import { baseUrl } from '../../utill/baseUrl';
 
 const EditCtegory = ({ setFocus, queryArgument }) => {
   const [editName, setName] = useState();
@@ -27,7 +25,6 @@ const EditCtegory = ({ setFocus, queryArgument }) => {
 
   const useCreateCategory = useMutation({
     mutationFn: createCategory,
-    enabled: false,
     onSuccess: async () => {
       await queryClient.invalidateQueries(['getCategory']);
     },

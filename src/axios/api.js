@@ -192,7 +192,7 @@ export const plusLikeCnt = async (postId) => {
   console.log('성공');
   const response = await axios.post(
     `${baseUrl}/heart/post/${postId}`,
-    {}, //post api호출에서 body부분 명시해야함 안하면 500에러
+    {},
     {
       headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
     },

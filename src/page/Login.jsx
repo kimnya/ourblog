@@ -26,7 +26,6 @@ const Login = () => {
       const refreshToken = response.data.refreshToken;
       sessionStorage.setItem('accessToken', accessToken);
       setCookie('refreshToken', refreshToken);
-      console.log('data', sessionStorage.getItem('email'));
       if (sessionStorage.getItem('email') === 'admin@naver.com') {
         navigate('/admin');
       } else {
@@ -44,7 +43,6 @@ const Login = () => {
       <h2>로그인</h2>
       <LoginForm
         onSubmit={handleSubmit((data) => {
-          console.log('data', data);
           sessionStorage.setItem('email', data.email);
           loginSubmitApi.mutate(data);
           reset();
