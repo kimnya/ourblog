@@ -131,10 +131,10 @@ export const createCategory = async () => {
 
 //카테고리 수정 호출
 export const submitName = async (categoryId, editName) => {
-  console.log(editName);
+  console.log('api 호출 editName', editName);
   const response = await axios.patch(
     `${baseUrl}/category/${categoryId}`,
-    { categoryName: editName },
+    { categoryName: `${editName}` },
     { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } },
   );
   return response;
