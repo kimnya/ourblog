@@ -26,7 +26,9 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
   const setFocus = useRef();
 
   const preventEditToggleHandler = () => {
-    editToggleHandler();
+    if (!toggle.edit) {
+      editToggleHandler();
+    }
     categoryArray.data.data.categories.map((category) => {
       if (!!toggle.edit && category.categoryName !== '') {
         editToggleHandler();
