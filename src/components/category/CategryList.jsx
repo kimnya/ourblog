@@ -28,14 +28,15 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
   const preventEditToggleHandler = () => {
     if (!toggle.edit) {
       editToggleHandler();
+    } else if (!!toggle.edit) {
+      categoryArray.data.data.categories.map((category) => {
+        if (category.categoryName !== '') {
+          editToggleHandler();
+        } else {
+          alert('카테고리이름을 작성해주세요.');
+        }
+      });
     }
-    categoryArray.data.data.categories.map((category) => {
-      if (!!toggle.edit && category.categoryName !== '') {
-        editToggleHandler();
-      } else if (!!toggle.edit && category.categoryName === '') {
-        alert('카테고리이름을 작성해주세요.');
-      }
-    });
   };
 
   return (
