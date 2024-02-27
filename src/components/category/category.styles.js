@@ -76,10 +76,8 @@ export const EditCtegoryStyle = styled.div`
   > div {
     margin: 20px 15px 15px 20px;
   }
-  > form {
-    width: 100%;
-    label {
-      display: none;
-    }
+
+  label {
+    display: none;
   }
 `;

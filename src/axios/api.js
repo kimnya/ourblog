@@ -131,7 +131,6 @@ export const createCategory = async () => {
 
 //카테고리 수정 호출
 export const submitName = async ({ categoryId, categoryName }) => {
-  console.log('api 호출 editName', categoryName);
   const response = await axios.patch(
     `${baseUrl}/category/${categoryId}`,
     { categoryName: categoryName },
