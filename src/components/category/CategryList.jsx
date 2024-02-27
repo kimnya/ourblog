@@ -11,8 +11,6 @@ import { CategoryBox } from './category.styles';
 const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
   const key = sessionStorage.getItem('accessToken');
 
-  const navigate = useNavigate();
-
   const categoryArray = useQuery({
     queryKey: ['getCategory', key],
     queryFn: getCategories,
@@ -26,6 +24,14 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
   });
 
   const setFocus = useRef();
+
+  const preventEditToggleHandler = categoryArray.data.data.categories.map((category) => {
+    if (category.categoryName !== '') {
+      editToggleHandler();
+    } else {
+      alert('카테고리이름을 작성해주세요.');
+    }
+  });
   return (
     <>
       <CategoryBox>
@@ -33,7 +39,6 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
           <Link
             onClick={() => {
               sideBarToggleHandler();
-              console.log(toggle);
             }}
             to='/'
           >
@@ -46,22 +51,11 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
               <p>
                 {!!getProfileApi && getProfileApi.data.data.nickname}의 카테고리
                 <span>
-                  <FaGear
-                    size={'24px'}
-                    onClick={() => {
-                      editToggleHandler();
-                    }}
-                  />
+                  <FaGear size={'24px'} onClick={preventEditToggleHandler} />
                 </span>
                 {!!toggle.edit && (
                   <span>
-                    <FaCheck
-                      color={palette.mainGreen}
-                      size={'24px'}
-                      onClick={() => {
-                        editToggleHandler();
-                      }}
-                    />
+                    <FaCheck color={palette.mainGreen} size={'24px'} onClick={preventEditToggleHandler} />
                   </span>
                 )}
               </p>
