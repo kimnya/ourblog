@@ -33,7 +33,7 @@ const CategryList = () => {
     } else if (!!toggle.edit) {
       const boolean = categoryArray.data.data.categories.map((category) => {
         console.log(category.categoryName);
-        if (category.categoryName !== '') {
+        if (category.categoryName !== '' || category.categoryName !== null) {
           return true;
         } else {
           alert('카테고리 이름을 작성해주세요.');
