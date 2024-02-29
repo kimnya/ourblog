@@ -35,7 +35,7 @@ const CategryList = () => {
         console.log(category.categoryName);
         if (category.categoryName !== '' || category.categoryName !== null) {
           return true;
-        } else {
+        } else if (category.categoryName === '' || category.categoryName === null) {
           alert('카테고리 이름을 작성해주세요.');
           setToggle((prev) => ({ ...prev, edit: true }));
           console.log(toggle);
