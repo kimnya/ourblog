@@ -30,6 +30,7 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
       editToggleHandler();
     } else if (!!toggle.edit) {
       const boolean = categoryArray.data.data.categories.map((category) => {
+        console.log(category.categoryName);
         if (category.categoryName !== '') {
           return true;
         } else {
@@ -37,10 +38,11 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
           return false;
         }
       });
-      console.log(category.categoryName);
       if (boolean) {
         editToggleHandler();
       }
+    } else {
+      editToggleHandler();
     }
   };
 
