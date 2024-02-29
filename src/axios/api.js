@@ -122,7 +122,7 @@ export const getCategories = async () => {
 export const createCategory = async () => {
   const response = await axios.post(
     `${baseUrl}/category/create`,
-    { categoryName: '' },
+    { categoryName: '새 카테고리' },
     { headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` } },
   );
 

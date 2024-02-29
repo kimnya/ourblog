@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import UserArticleAll from '../components/article/UserArticleAll';
 import { Link, useNavigate } from 'react-router-dom';
-import SideBar from '../components/bar/SideBar';
 import { userArticleRead } from '../axios/api';
 import { useQuery } from '@tanstack/react-query';
 import Pagination from '../element/Pagination';
 import { UserAllArticlePageStyle } from './page.styles';
-import { IsToggleCtx } from '../context/IsToggleProvider';
 
 const AllArticlePage = () => {
   const [page, setPage] = useState(1);
