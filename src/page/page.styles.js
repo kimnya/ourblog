@@ -6,6 +6,7 @@ export const UserAllArticlePageStyle = styled.div`
   display: flex;
   flex-flow: column;
   justify-content: center;
+  position: relative;
   margin-top: 30px;
 
   a {
