@@ -58,7 +58,7 @@ export const ArticleListBoxStyle = styled.div`
 
 export const BlogNameTag = styled.p`
   position: absolute;
-  left: 0;
+  left: -200px;
   top: 0;
   color: ${palette.mainGreen};
   font-weight: bold;
