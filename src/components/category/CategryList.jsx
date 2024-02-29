@@ -81,7 +81,7 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
                     const { id, categoryName } = category;
                     return (
                       <li key={id} onClick={sideBarToggleHandler}>
-                        <Link key={id} to={`/category${categoryName}`}>
+                        <Link key={id} to={`/category/${id}`}>
                           {categoryName}
                         </Link>
                       </li>
