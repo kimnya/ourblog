@@ -42,7 +42,7 @@ const CategryList = () => {
         }
       });
       if (boolean) {
-        setToggle((prev) => ({ ...prev, edit: true }));
+        setToggle((prev) => ({ ...prev, edit: false }));
       }
     } else {
       setToggle((prev) => ({ ...prev, edit: false }));
