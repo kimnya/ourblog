@@ -74,9 +74,6 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
                 )}
               </p>
 
-              <Link onClick={sideBarToggleHandler} to='/articleAll' id='all'>
-                전체보기
-              </Link>
               {!!toggle.edit && <EditCtegory queryArgument={key} setFocus={setFocus} />}
               <ul>
                 {!!categoryArray &&
