@@ -57,6 +57,7 @@ export const ArticleListBoxStyle = styled.div`
 `;
 
 export const BlogNameTag = styled.p`
+  align-self: flex-start;
   margin: 30px 30px;
   color: ${palette.mainGreen};
   font-weight: bold;
