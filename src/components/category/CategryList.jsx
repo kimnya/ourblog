@@ -36,8 +36,9 @@ const CategryList = () => {
         if (category.categoryName !== '') {
           return true;
         } else {
-          setToggle((prev) => ({ ...prev, edit: true }));
           alert('카테고리 이름을 작성해주세요.');
+          setToggle((prev) => ({ ...prev, edit: true }));
+          console.log(toggle);
           return false;
         }
       });
