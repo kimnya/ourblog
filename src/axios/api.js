@@ -166,6 +166,13 @@ export const userArticleRead = async () => {
   return response;
 };
 
+//카테고리별 아티클 리스트 호출
+export const categoryArticleRead = async ({ queryKey }) => {
+  const response = await axios.get(`${baseUrl}/category/${queryKey[1]}`, {
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
+  });
+  return response;
+};
 // 아티클 상세보기 호촐
 export const articleDetailRead = async ({ queryKey }) => {
   const response = await axios.get(`${baseUrl}/posting/detail/${queryKey[1]}`);

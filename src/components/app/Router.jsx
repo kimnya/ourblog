@@ -13,6 +13,7 @@ import PrivateRoute from '../../utill/PrivateRoute';
 import ConfirmLogin from '../../utill/ConfirmLogin';
 import AdminPage from '../../page/AdminPage';
 import EditPostPage from '../../page/EditPostPage';
+import CategoryArticlePage from '../../page/CategoryArticlePage';
 
 const Router = () => {
   return (
@@ -23,7 +24,7 @@ const Router = () => {
             <Route index element={<MainPage />} />
             <Route path='/search' element={<SearchPage />} />
             <Route path='/readPage/:postId' element={<Articleread />} />
-            {/* <Route path='/category/:categoryName' element={<AllArticlePage />} /> */}
+            <Route path='/category/:categoryId' element={<CategoryArticlePage />} />
             <Route path='/articleAll' element={<AllArticlePage />} />
             <Route element={<PrivateRoute />}>
               <Route path='/myPage' element={<MyInfoPage />} />

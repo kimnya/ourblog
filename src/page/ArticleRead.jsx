@@ -26,7 +26,6 @@ const Articleread = () => {
     queryKey: ['articleDetail', postId],
     queryFn: articleDetailRead,
   });
-  console.log('a', articleDetail);
 
   const likeCntUser = useQuery({
     queryKey: ['userLikeCnt', postId, key],

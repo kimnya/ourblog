@@ -43,10 +43,6 @@ export const CategoryBox = styled.div`
       margin: 15px 15px 15px 25px;
     }
   }
-
-  #all {
-    margin-left: 15px;
-  }
 `;
 
 export const EditCtegoryStyle = styled.div`
