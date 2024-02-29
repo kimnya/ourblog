@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { categoryArticleRead } from '../axios/api';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { UserAllArticlePageStyle } from './page.styles';
 import Pagination from '../element/Pagination';
 import CategoryArticleAll from '../components/article/CategoryArticleAll';
