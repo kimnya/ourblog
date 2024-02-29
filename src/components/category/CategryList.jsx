@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { palette } from '../../styles/palette';
 import { Link, useNavigate } from 'react-router-dom';
 import EditCtegory from './EditCtegory';
@@ -7,8 +7,10 @@ import { FaCheck } from 'react-icons/fa6';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories, getProfile } from '../../axios/api';
 import { CategoryBox } from './category.styles';
+import { IsToggleCtx } from '../../context/IsToggleProvider';
 
-const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
+const CategryList = () => {
+  const { toggle, setToggle } = useContext(IsToggleCtx);
   const key = sessionStorage.getItem('accessToken');
 
   const categoryArray = useQuery({
@@ -27,22 +29,23 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
 
   const preventEditToggleHandler = () => {
     if (!toggle.edit) {
-      editToggleHandler();
+      setToggle((prev) => ({ ...prev, edit: true }));
     } else if (!!toggle.edit) {
       const boolean = categoryArray.data.data.categories.map((category) => {
         console.log(category.categoryName);
         if (category.categoryName !== '') {
           return true;
         } else {
+          setToggle((prev) => ({ ...prev, edit: true }));
           alert('카테고리 이름을 작성해주세요.');
           return false;
         }
       });
       if (boolean) {
-        editToggleHandler();
+        setToggle((prev) => ({ ...prev, edit: true }));
       }
     } else {
-      editToggleHandler();
+      setToggle((prev) => ({ ...prev, edit: false }));
     }
   };
 
@@ -52,7 +55,7 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
         <div>
           <Link
             onClick={() => {
-              sideBarToggleHandler();
+              setToggle((prev) => ({ ...prev, sideBar: !prev.sideBar }));
             }}
             to='/'
           >
@@ -74,7 +77,13 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
                 )}
               </p>
 
-              <Link onClick={sideBarToggleHandler} to='/articleAll' id='all'>
+              <Link
+                onClick={() => {
+                  setToggle((prev) => ({ ...prev, sideBar: !prev.sideBar }));
+                }}
+                to='/articleAll'
+                id='all'
+              >
                 전체보기
               </Link>
               {!!toggle.edit && <EditCtegory queryArgument={key} setFocus={setFocus} />}
@@ -83,7 +92,12 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
                   categoryArray.data.data.categories.map((category) => {
                     const { id, categoryName } = category;
                     return (
-                      <li key={id} onClick={sideBarToggleHandler}>
+                      <li
+                        key={id}
+                        onClick={() => {
+                          setToggle((prev) => ({ ...prev, sideBar: !prev.sideBar }));
+                        }}
+                      >
                         <Link key={id} to={`/category${categoryName}`}>
                           {categoryName}
                         </Link>
