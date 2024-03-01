@@ -65,6 +65,7 @@ export const BlogNameTag = styled.p`
   font-size: 22px;
   &:after {
     position: absolute;
+    width: 100vw;
     content: '';
     border: 1px solid #000;
   }
