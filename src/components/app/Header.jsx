@@ -52,6 +52,7 @@ const Header = () => {
   return (
     <>
       <HeaderStyle>
+        <Shadow toggle={toggle} />
         {sessionStorage.getItem('email') !== 'admin@naver.com' && (
           <SideBar
             toggle={toggle}
