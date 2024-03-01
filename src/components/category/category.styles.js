@@ -3,7 +3,7 @@ import { palette } from '../../styles/palette';
 
 export const CategoryBox = styled.div`
   position: relative;
-  height: 92vh;
+  height: 106vh;
   border-top: 1px solid ${palette.mainGreen};
   box-sizing: border-box;
 
