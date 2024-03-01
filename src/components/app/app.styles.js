@@ -72,7 +72,6 @@ export const ShadowBox = styled.div`
   bottom: 0;
   z-index: 1000;
   background-color: ${palette.mainGray};
-  ${lighten(0.1)}
   opacity: 90%;
 `;
 
