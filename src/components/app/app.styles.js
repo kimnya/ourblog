@@ -41,7 +41,7 @@ export const HeaderStyle = styled.div`
   }
 `;
 
-export const MainStlye = styled.div`
+export const MainStyle = styled.div`
   /* display: flex;
   flex-flow: column nowrap;
   min-height: 800px;

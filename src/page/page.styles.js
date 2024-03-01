@@ -3,10 +3,7 @@ import { darken } from '../styles/ColorMixin';
 import { palette } from '../styles/palette';
 
 export const UserAllArticlePageStyle = styled.div`
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  margin-top: 30px;
+  margin-top: 30px auto;
 
   a {
     margin: 60px auto;
@@ -105,7 +102,6 @@ export const EditBoxStyle = styled.div`
   align-items: center;
   margin-top: 30px;
   height: 130vh;
-  border: 1px solid #ccc;
   > form {
     position: relative;
     width: 70vw;
