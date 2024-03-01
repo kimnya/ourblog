@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { palette } from '../../styles/palette';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import EditCtegory from './EditCtegory';
 import { FaGear } from 'react-icons/fa6';
 import { FaCheck } from 'react-icons/fa6';
@@ -25,27 +25,6 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
 
   const setFocus = useRef();
 
-  const preventEditToggleHandler = () => {
-    if (!toggle.edit) {
-      editToggleHandler();
-    } else if (!!toggle.edit) {
-      const boolean = categoryArray.data.data.categories.map((category) => {
-        console.log(category.categoryName);
-        if (category.categoryName !== '') {
-          return true;
-        } else {
-          alert('카테고리 이름을 작성해주세요.');
-          return false;
-        }
-      });
-      if (boolean) {
-        editToggleHandler();
-      }
-    } else {
-      editToggleHandler();
-    }
-  };
-
   return (
     <>
       <CategoryBox>
@@ -65,11 +44,11 @@ const CategryList = ({ toggle, editToggleHandler, sideBarToggleHandler }) => {
               <p>
                 {!!getProfileApi && getProfileApi.data.data.nickname}의 카테고리
                 <span>
-                  <FaGear size={'24px'} onClick={preventEditToggleHandler} />
+                  <FaGear size={'24px'} onClick={editToggleHandler} />
                 </span>
                 {!!toggle.edit && (
                   <span>
-                    <FaCheck color={palette.mainGreen} size={'24px'} onClick={preventEditToggleHandler} />
+                    <FaCheck color={palette.mainGreen} size={'24px'} onClick={editToggleHandler} />
                   </span>
                 )}
               </p>
