@@ -22,13 +22,15 @@ const EditPage = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries(['articleRead']);
     },
+    onError: () => {
+      alert('게시물 작성에 오류가 있었습니다.');
+    },
   });
 
   const getCategory = useQuery({
     queryKey: ['getCategory'],
     queryFn: getCategories,
   });
-  console.log('editpageGetCategory', getCategory);
 
   const key = sessionStorage.getItem('accessToken');
   const getProfileApi = useQuery({
@@ -36,7 +38,6 @@ const EditPage = () => {
     queryFn: getProfile,
     enabled: !!key,
   });
-  console.log('editpageGetProfileApi', getProfileApi);
 
   const selectCategory = (evt) => {
     setSelected(evt.target.value);
@@ -88,6 +89,7 @@ const EditPage = () => {
         />
         <select onChange={selectCategory} value={selected}>
           {getCategory.data.data.categories.map((category) => {
+            <option>'카테고리를 선택해 주세요'</option>;
             return (
               <option key={category.id} value={category.id}>
                 {category.categoryName}
