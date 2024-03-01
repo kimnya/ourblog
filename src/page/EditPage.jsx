@@ -88,8 +88,8 @@ const EditPage = () => {
           value={title || ''}
         />
         <select onChange={selectCategory} value={selected}>
+          <option>'카테고리를 선택해 주세요'</option>;
           {getCategory.data.data.categories.map((category) => {
-            <option>'카테고리를 선택해 주세요'</option>;
             return (
               <option key={category.id} value={category.id}>
                 {category.categoryName}
