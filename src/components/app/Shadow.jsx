@@ -1,8 +1,8 @@
 import React from 'react';
 import { ShadowBox } from './app.styles';
 
-const Shadow = ({ children, toggle }) => {
-  return <ShadowBox $toggle={toggle}>{children}</ShadowBox>;
+const Shadow = ({ toggle }) => {
+  return <ShadowBox $toggle={toggle}></ShadowBox>;
 };
 
 export default Shadow;
