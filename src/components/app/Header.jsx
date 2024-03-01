@@ -11,6 +11,7 @@ import { useTheme } from '../../context/ThemeProvider';
 import { IsToggleCtx } from '../../context/IsToggleProvider';
 import { HeaderStyle } from './app.styles';
 import SideBar from '../bar/SideBar';
+import Shadow from './Shadow';
 
 const Header = () => {
   const [ThemeMode, toggleTheme] = useTheme();
