@@ -5,6 +5,7 @@ import { userArticleRead } from '../axios/api';
 import { useQuery } from '@tanstack/react-query';
 import Pagination from '../element/Pagination';
 import { UserAllArticlePageStyle } from './page.styles';
+import { BlogNameTag } from '../components/article/article.styles';
 
 const AllArticlePage = () => {
   const [page, setPage] = useState(1);
@@ -40,6 +41,7 @@ const AllArticlePage = () => {
 
   return (
     <>
+      <BlogNameTag>나의 블로그</BlogNameTag>
       <UserAllArticlePageStyle>
         <UserArticleAll posts={postsData(data.data)} />
         <Link onClick={moveWritePge}>글 작성하기</Link>
