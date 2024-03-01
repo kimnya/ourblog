@@ -11,13 +11,12 @@ const Layout = () => {
   const reactIconsSize = '22px';
   return (
     <>
-      <Shadow toggle={toggle}>
-        <Header reactIconsSize={reactIconsSize} />
-        <Main>
-          <Outlet />
-        </Main>
-        <Footer />
-      </Shadow>
+      <Shadow toggle={toggle} />
+      <Header reactIconsSize={reactIconsSize} />
+      <Main>
+        <Outlet />
+      </Main>
+      <Footer />
     </>
   );
 };
