@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ShadowBox } from './app.styles';
+import { IsToggleCtx } from '../../context/IsToggleProvider';
 
 const Shadow = ({ children }) => {
-  return <ShadowBox>{children}</ShadowBox>;
+  const { toggle, setToggle } = useContext(IsToggleCtx);
+  return <ShadowBox toggle={toggle}>{children}</ShadowBox>;
 };
 
 export default Shadow;
