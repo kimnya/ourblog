@@ -37,7 +37,7 @@ export const SideBarBox = styled.div`
   }};
   top: 0px;
   width: 15vw;
-  height: 110vh;
+  height: 114vh;
   background-color: #fff;
   transition: all 0.5s;
   > svg {
