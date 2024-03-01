@@ -57,6 +57,13 @@ export const MainStyle = styled.div`
 `;
 
 export const ShadowBox = styled.div`
+  display: ${(props) => {
+    if (props.$toggle.sideBar) {
+      return 'block';
+    } else {
+      return 'none';
+    }
+  }};
   position: relative;
   left: 0;
   top: 0;
@@ -64,7 +71,7 @@ export const ShadowBox = styled.div`
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  z-index: 200;
   background-color: ${palette.mainGray};
   opacity: 60%;
 `;
