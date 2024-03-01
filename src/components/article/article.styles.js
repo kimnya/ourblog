@@ -63,6 +63,11 @@ export const BlogNameTag = styled.p`
   color: ${palette.mainGreen};
   font-weight: bold;
   font-size: 22px;
+  &:after {
+    position: absolute;
+    content: '';
+    border: 1px solid #000;
+  }
 `;
 
 export const UserArticleListStyle = styled.div`
