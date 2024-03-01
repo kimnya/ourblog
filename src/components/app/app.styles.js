@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { palette } from '../../styles/palette';
+import { lighten } from '../../styles/ColorMixin';
 
 export const FooterStyle = styled.div`
   display: flex;
@@ -69,11 +70,10 @@ export const ShadowBox = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  width: 100vw;
-  height: 100vh;
   z-index: 1000;
   background-color: ${palette.mainGray};
-  opacity: 10%;
+  ${lighten(0.1)}
+  opacity: 90%;
 `;
 
 export const TitleLogo = styled.h1`
