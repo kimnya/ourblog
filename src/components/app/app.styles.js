@@ -42,11 +42,11 @@ export const HeaderStyle = styled.div`
 `;
 
 export const MainStyle = styled.div`
-  /* display: flex;
+  display: flex;
   flex-flow: column nowrap;
   min-height: 800px;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
   position: relative;
 
   #sideBar {

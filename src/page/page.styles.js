@@ -3,7 +3,10 @@ import { darken } from '../styles/ColorMixin';
 import { palette } from '../styles/palette';
 
 export const UserAllArticlePageStyle = styled.div`
-  margin-top: 30px auto;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin-top: 30px;
 
   a {
     margin: 60px auto;

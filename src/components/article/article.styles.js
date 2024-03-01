@@ -57,9 +57,9 @@ export const ArticleListBoxStyle = styled.div`
 `;
 
 export const BlogNameTag = styled.p`
-  /* position: absolute;
-  left: -200px;
-  top: 0; */
+  position: absolute;
+  left: 0;
+  top: 0;
   color: ${palette.mainGreen};
   font-weight: bold;
   font-size: 22px;
