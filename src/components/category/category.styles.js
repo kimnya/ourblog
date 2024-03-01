@@ -48,7 +48,7 @@ export const CategoryBox = styled.div`
 export const EditCtegoryStyle = styled.div`
   position: absolute;
   left: 0;
-  top: 100px;
+  top: 150px;
   width: 100%;
   background-color: #fff;
   font-size: 18px;
