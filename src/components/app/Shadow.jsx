@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShadowBox } from './app.styles';
 
-const Shadow = ({ toggle, sideBarToggleHandler }) => {
+const Shadow = ({ toggle, sideBarToggleHandler, editToggleHandler }) => {
   return (
     <ShadowBox
       $toggle={toggle}
