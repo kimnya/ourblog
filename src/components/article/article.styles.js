@@ -58,7 +58,7 @@ export const ArticleListBoxStyle = styled.div`
 
 export const BlogNameTag = styled.p`
   position: absolute;
-  left: 0;
+  left: 150px;
   top: 0;
   color: ${palette.mainGreen};
   font-weight: bold;
@@ -70,6 +70,7 @@ export const UserArticleListStyle = styled.div`
   flex-flow: row wrap;
   justify-content: space-between;
   align-content: space-between;
+  margin-top: 30px;
   width: 1237px;
   height: 710px;
 
