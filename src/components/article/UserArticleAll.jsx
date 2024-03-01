@@ -5,7 +5,6 @@ import { BlogNameTag, UserArticleListStyle } from './article.styles';
 const UserArticleAll = ({ posts }) => {
   return (
     <>
-      <BlogNameTag>나의 블로그</BlogNameTag>
       <UserArticleListStyle>
         {posts &&
           posts.map((article) => {
