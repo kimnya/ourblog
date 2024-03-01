@@ -5,6 +5,7 @@ import { UserAllArticlePageStyle } from './page.styles';
 import Pagination from '../element/Pagination';
 import CategoryArticleAll from '../components/article/CategoryArticleAll';
 import { useQuery } from '@tanstack/react-query';
+import { BlogNameTag } from '../components/article/article.styles';
 
 const CategoryArticlePage = () => {
   const [page, setPage] = useState(1);
@@ -41,6 +42,7 @@ const CategoryArticlePage = () => {
   };
   return (
     <>
+      <BlogNameTag>나의 블로그</BlogNameTag>
       <UserAllArticlePageStyle>
         <CategoryArticleAll posts={postsData(data.data)} />
         <Link onClick={moveWritePge}>글 작성하기</Link>
