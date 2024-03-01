@@ -20,7 +20,9 @@ const SideBar = ({ sideBarToggleHandler, toggle, reactIconsSize, editToggleHandl
             size={reactIconsSize}
             onClick={() => {
               sideBarToggleHandler();
-              editToggleHandler();
+              if (!!toggle.edit) {
+                editToggleHandler();
+              }
             }}
           />
           {!!toggle.sideBar && (
