@@ -58,7 +58,7 @@ export const MainStyle = styled.div`
 
 export const ShadowBox = styled.div`
   display: ${(props) => {
-    if (props.toggle.sideBar) {
+    if (props.$toggle.sideBar) {
       return 'block';
     } else {
       return 'none';
