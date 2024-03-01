@@ -72,7 +72,7 @@ export const ShadowBox = styled.div`
   bottom: 0;
   z-index: 1000;
   background-color: ${palette.mainGray};
-  opacity: 90%;
+  opacity: 80%;
 `;
 
 export const TitleLogo = styled.h1`
