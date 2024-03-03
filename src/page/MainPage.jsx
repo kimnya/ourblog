@@ -36,7 +36,7 @@ const MainPage = () => {
   return (
     <>
       <MainpageStyle>
-        <ArticleList posts={data.data} />
+        <ArticleList posts={data.data.content} />
         <Link onClick={moveWritePge}>글 작성하기</Link>
       </MainpageStyle>
     </>

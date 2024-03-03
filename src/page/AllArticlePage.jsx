@@ -43,7 +43,7 @@ const AllArticlePage = () => {
     <>
       <BlogNameTag>나의 블로그</BlogNameTag>
       <UserAllArticlePageStyle>
-        <UserArticleAll posts={postsData(data.data.content)} />
+        <UserArticleAll posts={postsData(data.data)} />
         <Link onClick={moveWritePge}>글 작성하기</Link>
         {data.data.length !== 0 && (
           <Pagination limit={limit} page={page} totalPosts={data.data.length} setPage={setPage} />
