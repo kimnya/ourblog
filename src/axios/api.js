@@ -46,7 +46,7 @@ export const loginSubmit = async (data) => {
 // 게시물리스트 호출
 export const articleListRead = async () => {
   const response = await axios.get(`${baseUrl}/posting/list`, {
-    params: { searchText: '', page: 0, size: 8 },
+    params: { searchText: '' },
   });
   return response;
 };
