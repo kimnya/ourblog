@@ -13,13 +13,13 @@ const MainPage = () => {
 
   const { data } = articleAll;
 
-  const postsData = (posts) => {
-    let limit = 8;
-    if (posts) {
-      let result = posts.slice(0, limit);
-      return result;
-    }
-  };
+  // const postsData = (posts) => {
+  //   let limit = 8;
+  //   if (posts) {
+  //     let result = posts.slice(0, limit);
+  //     return result;
+  //   }
+  // };
 
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const MainPage = () => {
   return (
     <>
       <MainpageStyle>
-        <ArticleList posts={postsData(data.data)} />
+        <ArticleList posts={data.data} />
         <Link onClick={moveWritePge}>글 작성하기</Link>
       </MainpageStyle>
     </>
