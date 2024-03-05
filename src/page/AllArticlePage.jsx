@@ -19,7 +19,7 @@ const AllArticlePage = () => {
   });
 
   const { data } = userArticle;
-  const limit = 10;
+  const limit = 8;
   const offset = (page - 1) * limit;
 
   const moveWritePge = (evt) => {
