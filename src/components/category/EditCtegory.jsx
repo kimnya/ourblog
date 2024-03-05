@@ -8,7 +8,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { EditCtegoryStyle } from './category.styles';
 
 const EditCtegory = ({ setFocus, queryArgument }) => {
-  const [editName, setName] = useState();
+  const [editName, setName] = useState('새 카테고리');
   const queryClient = useQueryClient();
 
   const categoryArray = useQuery({
