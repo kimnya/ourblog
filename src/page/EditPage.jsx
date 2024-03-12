@@ -60,7 +60,7 @@ const EditPage = () => {
           console.log('본문', content);
 
           if (content === '' || title === undefined) {
-            alert('을 입력해주세요.');
+            alert('제목과 내용을 입력해주세요.');
           } else {
             preventSubmit(evt);
             navgate('/articleAll');
