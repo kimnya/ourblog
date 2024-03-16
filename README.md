@@ -2,35 +2,28 @@
 
 ## vite 사용이유
 
----
-
-> - CRA는 JavaScript로 구성된 Webpack을 사용하는데 속도가 느린편입니다. 평소에는 못느낄 수 있지만 처리해야 할 코드의 양이 많아질 수록 느린 속도를 채감할 수 있습니다.
+- CRA는 JavaScript로 구성된 Webpack을 사용하는데 속도가 느린편입니다. 평소에는 못느낄 수 있지만 처리해야 할 코드의 양이 많아질 수록 느린 속도를 채감할 수 있습니다.
 
 - Vite는 초기에 전체 앱을 번들링하고 변경된 파일만 수정하기 때문에 속도가 빠릅니다.
 
 ## prettier 옵션 설명
 
----
-
-> "bracketSpacing": true,
-> "jsxBracketSameLine": false,
-> "jsxSingleQuote": true,
-> "singleQuote": true,
-> "proseWrap": "preserve",
-> "semi": true,
-> "printWidth": 120,
-> "endOfLine": "lf",
-> "useTabs": false,
-> "tabWidth": 2,
-> "trailingComma": "all",
-> "arrowParens": "always"
+"bracketSpacing": true,
+"jsxBracketSameLine": false,
+"jsxSingleQuote": true,
+"singleQuote": true,
+"proseWrap": "preserve",
+"semi": true,
+"printWidth": 120,
+"endOfLine": "lf",
+"useTabs": false,
+"tabWidth": 2,
+"trailingComma": "all",
+"arrowParens": "always"
 
 ## 사용된 주요 라이브러리
 
----
-
-> - **ReactJS 18.2.0**: 생산성이 좋고 Component별로 관리하여 유지보수가 편하고 가독성이 좋습니다.
-
+- **ReactJS 18.2.0**: 생산성이 좋고 Component별로 관리하여 유지보수가 편하고 가독성이 좋습니다.
 - **TanStack Query 5.0.0**: data fetch에 관련된 많은 기능들을 제공합니다. 직접 핸들링 하는 것 보다 생산성이 좋고 직관적입니다.
 - **axios**: fetch API보다 예외처리가 쉽고 baseUrl,default header를 설정,json serialize, deserialize 생략할 수 있습니다.
 - **toast-ui/react-editor 3.2.3**: react에 맞는 라이브러리 설치가 가능하고 미리보기 기능과 markDown을 지원하기 때문에 사용하였습니다.
@@ -39,11 +32,13 @@
 
 ## 주요기능
 
----
+- JWT를 사용한 로그인 구현
+- fireBase storage를 활용한 프로필 사진 변경 구현
+- 게시물, 카테고리리스트, 댓글 curd(생성,수정,삭제) 구현
+- 게시물 검색 구현
+- 페이지네이션 구현
 
 ## 웹사이트 뷰
-
----
 
 스토리 보드:[ourblogStoryBoard.pdf](https://github.com/kimnya/ourblog/files/14615565/ourblogStoryBoard.pdf)
 
@@ -97,94 +92,92 @@
 
 ## 폴더구조
 
----
-
-> src
-> ┣ axios
-> ┃ ┗ api.js
-> ┣ components
-> ┃ ┣ app
-> ┃ ┃ ┣ app.styles.js
-> ┃ ┃ ┣ Footer.jsx
-> ┃ ┃ ┣ Header.jsx
-> ┃ ┃ ┣ Layout.jsx
-> ┃ ┃ ┣ Main.jsx
-> ┃ ┃ ┣ Router.jsx
-> ┃ ┃ ┣ Shadow.jsx
-> ┃ ┃ ┗ Title.jsx
-> ┃ ┣ article
-> ┃ ┃ ┣ article.styles.js
-> ┃ ┃ ┣ ArticleList.jsx
-> ┃ ┃ ┣ ArticleListBox.jsx
-> ┃ ┃ ┣ CategoryArticleAll.jsx
-> ┃ ┃ ┗ UserArticleAll.jsx
-> ┃ ┣ bar
-> ┃ ┃ ┣ bar.styles.js
-> ┃ ┃ ┣ SearchBar.jsx
-> ┃ ┃ ┗ SideBar.jsx
-> ┃ ┣ category
-> ┃ ┃ ┣ category.styles.js
-> ┃ ┃ ┣ CategryList.jsx
-> ┃ ┃ ┗ EditCtegory.jsx
-> ┃ ┣ comment
-> ┃ ┃ ┣ comment.styles.js
-> ┃ ┃ ┣ CommentBox.jsx
-> ┃ ┃ ┣ CommentList.jsx
-> ┃ ┃ ┗ EditCommentBox.jsx
-> ┃ ┣ formComponent
-> ┃ ┃ ┣ editForm.styles.js
-> ┃ ┃ ┣ EmailForm.jsx
-> ┃ ┃ ┣ ImageForm.jsx
-> ┃ ┃ ┣ NicknameForm.jsx
-> ┃ ┃ ┗ PasswordForm.jsx
-> ┃ ┗ member
-> ┃ ┃ ┣ EditProfile.jsx
-> ┃ ┃ ┣ member.styles.js
-> ┃ ┃ ┣ MemberBox.jsx
-> ┃ ┃ ┗ MemberList.jsx
-> ┣ context
-> ┃ ┣ IsToggleProvider.jsx
-> ┃ ┗ ThemeProvider.jsx
-> ┣ customHook
-> ┃ ┗ articleDate.js
-> ┣ element
-> ┃ ┣ Button.jsx
-> ┃ ┣ EditToastUi.jsx
-> ┃ ┣ element.styles.js
-> ┃ ┣ Input.jsx
-> ┃ ┣ Modal.jsx
-> ┃ ┗ Pagination.jsx
-> ┣ fireBase
-> ┃ ┣ .firebaserc
-> ┃ ┣ Firebase.js
-> ┃ ┣ firebase.json
-> ┃ ┗ storage.rules
-> ┣ page
-> ┃ ┣ AdminPage.jsx
-> ┃ ┣ AllArticlePage.jsx
-> ┃ ┣ ArticleRead.jsx
-> ┃ ┣ CategoryArticlePage.jsx
-> ┃ ┣ EditPage.jsx
-> ┃ ┣ EditPostPage.jsx
-> ┃ ┣ Login.jsx
-> ┃ ┣ MainPage.jsx
-> ┃ ┣ MyInfoPage.jsx
-> ┃ ┣ page.styles.js
-> ┃ ┣ Register.jsx
-> ┃ ┗ SearchPage.jsx
-> ┣ styles
-> ┃ ┣ ColorMixin.js
-> ┃ ┣ GlobalStyle.js
-> ┃ ┣ palette.js
-> ┃ ┗ theme.js
-> ┣ utill
-> ┃ ┣ baseUrl.js
-> ┃ ┣ ConfirmLogin.jsx
-> ┃ ┣ cookie.js
-> ┃ ┣ makeShortImageUrl.js
-> ┃ ┣ PrivateRoute.jsx
-> ┃ ┣ setFocusToEnd.js
-> ┃ ┣ SetTop.js
-> ┃ ┗ toggleDark.js
-> ┣ App.jsx
-> ┗ main.jsx
+src
+┣ axios
+┃ ┗ api.js
+┣ components
+┃ ┣ app
+┃ ┃ ┣ app.styles.js
+┃ ┃ ┣ Footer.jsx
+┃ ┃ ┣ Header.jsx
+┃ ┃ ┣ Layout.jsx
+┃ ┃ ┣ Main.jsx
+┃ ┃ ┣ Router.jsx
+┃ ┃ ┣ Shadow.jsx
+┃ ┃ ┗ Title.jsx
+┃ ┣ article
+┃ ┃ ┣ article.styles.js
+┃ ┃ ┣ ArticleList.jsx
+┃ ┃ ┣ ArticleListBox.jsx
+┃ ┃ ┣ CategoryArticleAll.jsx
+┃ ┃ ┗ UserArticleAll.jsx
+┃ ┣ bar
+┃ ┃ ┣ bar.styles.js
+┃ ┃ ┣ SearchBar.jsx
+┃ ┃ ┗ SideBar.jsx
+┃ ┣ category
+┃ ┃ ┣ category.styles.js
+┃ ┃ ┣ CategryList.jsx
+┃ ┃ ┗ EditCtegory.jsx
+┃ ┣ comment
+┃ ┃ ┣ comment.styles.js
+┃ ┃ ┣ CommentBox.jsx
+┃ ┃ ┣ CommentList.jsx
+┃ ┃ ┗ EditCommentBox.jsx
+┃ ┣ formComponent
+┃ ┃ ┣ editForm.styles.js
+┃ ┃ ┣ EmailForm.jsx
+┃ ┃ ┣ ImageForm.jsx
+┃ ┃ ┣ NicknameForm.jsx
+┃ ┃ ┗ PasswordForm.jsx
+┃ ┗ member
+┃ ┃ ┣ EditProfile.jsx
+┃ ┃ ┣ member.styles.js
+┃ ┃ ┣ MemberBox.jsx
+┃ ┃ ┗ MemberList.jsx
+┣ context
+┃ ┣ IsToggleProvider.jsx
+┃ ┗ ThemeProvider.jsx
+┣ customHook
+┃ ┗ articleDate.js
+┣ element
+┃ ┣ Button.jsx
+┃ ┣ EditToastUi.jsx
+┃ ┣ element.styles.js
+┃ ┣ Input.jsx
+┃ ┣ Modal.jsx
+┃ ┗ Pagination.jsx
+┣ fireBase
+┃ ┣ .firebaserc
+┃ ┣ Firebase.js
+┃ ┣ firebase.json
+┃ ┗ storage.rules
+┣ page
+┃ ┣ AdminPage.jsx
+┃ ┣ AllArticlePage.jsx
+┃ ┣ ArticleRead.jsx
+┃ ┣ CategoryArticlePage.jsx
+┃ ┣ EditPage.jsx
+┃ ┣ EditPostPage.jsx
+┃ ┣ Login.jsx
+┃ ┣ MainPage.jsx
+┃ ┣ MyInfoPage.jsx
+┃ ┣ page.styles.js
+┃ ┣ Register.jsx
+┃ ┗ SearchPage.jsx
+┣ styles
+┃ ┣ ColorMixin.js
+┃ ┣ GlobalStyle.js
+┃ ┣ palette.js
+┃ ┗ theme.js
+┣ utill
+┃ ┣ baseUrl.js
+┃ ┣ ConfirmLogin.jsx
+┃ ┣ cookie.js
+┃ ┣ makeShortImageUrl.js
+┃ ┣ PrivateRoute.jsx
+┃ ┣ setFocusToEnd.js
+┃ ┣ SetTop.js
+┃ ┗ toggleDark.js
+┣ App.jsx
+┗ main.jsx
