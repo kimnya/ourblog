@@ -92,6 +92,7 @@
 
 ## 폴더구조
 
+<pre>
 src
 ┣ axios
 ┃ ┗ api.js
@@ -181,3 +182,4 @@ src
 ┃ ┗ toggleDark.js
 ┣ App.jsx
 ┗ main.jsx
+</pre>
